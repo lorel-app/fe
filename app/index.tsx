@@ -1,19 +1,3 @@
-// import { Text, View, Appearance } from "react-native";
-
-// export default function Index() {
-//   return (
-//     <View
-//       style={{
-//         flex: 1,
-//         justifyContent: "center",
-//         alignItems: "center",
-//       }}
-//     >
-//       <Text>Edit app/index.tsx to edit this screen.</Text>
-//     </View>
-//   );
-// }
-
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
