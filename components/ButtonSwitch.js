@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Switch, View } from "react-native";
 import ThemeContext from "./ThemeContext";
 
-const SwitchButton = () => {
+const ButtonSwitch = () => {
   const { setTheme, theme } = useContext(ThemeContext);
   const [isEnabled, setIsEnabled] = useState(theme === "dark");
 
@@ -12,11 +12,13 @@ const SwitchButton = () => {
   };
 
   return (
-    <View style={{ marginTop: 50 }}>
-      <Switch value={isEnabled} onValueChange={toggleSwitch} />
+    <View>
+      <Switch
+        value={isEnabled}
+        onValueChange={toggleSwitch} />
     </View>
   );
 };
 
-export default SwitchButton;
+export default ButtonSwitch;
 

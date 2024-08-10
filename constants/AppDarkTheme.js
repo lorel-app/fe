@@ -8,7 +8,7 @@ const AppDarkTheme = {
     text: "#dadada",
     card: "#191919",
     border: "#444859",
-    primary: "#f9f9f9",
+    primary: "#333333",
     background: "#000000",
   },
 };
