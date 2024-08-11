@@ -7,6 +7,7 @@ import CustomComponent from "@/components/CustomComponent";
 import ThemeContext from "@/components/ThemeContext";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Tabs from "@/components/navigation/MainTab"
+import Header from "@/components/navigation/Header"
 
 export default function Index() {
   const colorScheme = useColorScheme();
@@ -20,7 +21,7 @@ export default function Index() {
         independent={true}
         theme={theme === "light" ? AppLightTheme : AppDarkTheme}
       >
-        <CustomComponent />
+        <Header />
         <Tabs />
         <StatusBar style="auto" />
       </NavigationContainer>

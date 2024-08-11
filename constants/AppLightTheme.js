@@ -5,7 +5,7 @@ const AppLightTheme = {
   dark: true,
   colors: {
     ...DefaultTheme.colors,
-    text: "#616161",
+    text: "#00000",
     card: "#f9f9f9",
     border: "#9F9F9F",
     primary: "#333333",
