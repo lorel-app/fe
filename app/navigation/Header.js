@@ -4,7 +4,7 @@ import { useTheme } from "@react-navigation/native";
 import LogoSvg from "@/assets/images/LogoMain.svg";
 import ButtonSwitch from "@/components/ButtonSwitch";
 import ButtonIcon from "@/components/ButtonIcon";
-import SignUpModal from "@/app/Auth";
+import SignUpLogInModal from "@/app/Auth";
 
 export default function Header() {
   const { colors } = useTheme();
@@ -22,7 +22,7 @@ export default function Header() {
         />
       </View>
 
-      <SignUpModal
+      <SignUpLogInModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
       />

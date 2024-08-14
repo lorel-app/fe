@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Modal, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
 export default function ModalScreen({ visible, onClose, children }) {
@@ -12,11 +12,13 @@ export default function ModalScreen({ visible, onClose, children }) {
       visible={visible}
       onRequestClose={onClose}
     >
-      <TouchableOpacity style={styles.overlay} onPress={onClose}>
-        <View style={[styles.modalView, { backgroundColor: colors.card }]}>
-          {children}
+      <TouchableWithoutFeedback onPress={() => {}}>
+        <View style={styles.overlay}>
+          <View style={[styles.modalView, { backgroundColor: colors.card }]}>
+            {children}
+          </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 }
