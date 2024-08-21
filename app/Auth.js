@@ -1,103 +1,115 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import ModalScreen from "@/components/ModalScreen";
+import InputPhoneNumber from "@/components/InputPhoneNumber";
 
 export default function SignUpLogInModal({ visible, onClose }) {
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    phoneCountryCode: "DE",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [isSignUp, setIsSignUp] = useState(false);
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+  const handleChange = (key, value) => {
+    setForm((prevForm) => ({ ...prevForm, [key]: value }));
+  };
 
-    const [isSignUp, setIsSignUp] = useState(false); 
+  const handleFormSubmit = () => {
+    const { username, email, phoneNumber, password, confirmPassword } = form;
 
-    const handleFormSubmit = () => {
-        if (isSignUp) {
-            if (!username || !email || !phoneNumber || !password || !confirmPassword) {
-                alert("Please fill in all fields.");
-                return;
-            }
-            if (password !== confirmPassword) {
-                alert("Passwords do not match.");
-                return;
-            }
-            // Handle
-        } else {
-            if (!email || !password) {
-                alert("Please fill in all fields.");
-                return;
-            }
-            // Handle
-        }
-       // onClose();
-    };
+    if (isSignUp) {
+      if (
+        !username ||
+        !email ||
+        !phoneNumber ||
+        !password ||
+        !confirmPassword
+      ) {
+        alert("Please fill in all fields.");
+        return;
+      }
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+      // Handle Sign Up
+    } else {
+      if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+      // Handle Log In
+    }
+    // onClose();
+  };
 
-    return (
-      <ModalScreen visible={visible} onClose={onClose}>
-        <View style={styles.container}>
-          <Text style={styles.title}>{isSignUp ? "Sign Up" : "Log In"}</Text>
+  return (
+    <ModalScreen visible={visible} onClose={onClose}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{isSignUp ? "Sign Up" : "Log In"}</Text>
 
-          {isSignUp && (
-            <TextInput
-              style={styles.input}
-              placeholder="Username"
-              value={username}
-              onChangeText={setUsername}
-            />
-          )}
-
+        {isSignUp && (
           <TextInput
             style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
+            placeholder="Username"
+            value={form.username}
+            onChangeText={(text) => handleChange("username", text)}
           />
+        )}
 
-          {isSignUp && (
-            <TextInput
-              style={styles.input}
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              keyboardType="phone-pad"
-            />
-          )}
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={form.email}
+          onChangeText={(text) => handleChange("email", text)}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
 
+        {isSignUp && (
+          <InputPhoneNumber
+            phoneNumber={form.phoneNumber}
+            setPhoneNumber={(text) => handleChange("phoneNumber", text)}
+            setCountryCode={(code) => handleChange("phoneCountryCode", code)}
+          />
+        )}
+
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={form.password}
+          onChangeText={(text) => handleChange("password", text)}
+          secureTextEntry
+        />
+
+        {isSignUp && (
           <TextInput
             style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
+            placeholder="Confirm Password"
+            value={form.confirmPassword}
+            onChangeText={(text) => handleChange("confirmPassword", text)}
             secureTextEntry
           />
+        )}
 
-          {isSignUp && (
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-            />
-          )}
+        <Button
+          title={isSignUp ? "Sign Up" : "Log In"}
+          onPress={handleFormSubmit}
+        />
 
-          <Button
-            title={isSignUp ? "Sign Up" : "Log In"}
-            onPress={handleFormSubmit}
-          />
+        <Button
+          title={isSignUp ? "Switch to Log In" : "Switch to Sign Up"}
+          onPress={() => setIsSignUp(!isSignUp)}
+        />
 
-          <Button
-            title={isSignUp ? "Switch to Log In" : "Switch to Sign Up"}
-            onPress={() => setIsSignUp(!isSignUp)}
-          />
-
-          <Button title="Close" onPress={onClose} />
-        </View>
-      </ModalScreen>
-    );
+        <Button title="Close" onPress={onClose} />
+      </View>
+    </ModalScreen>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -118,3 +130,4 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 });
+
