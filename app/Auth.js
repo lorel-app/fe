@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import ModalScreen from "@/components/ModalScreen";
 import InputPhoneNumber from "@/components/InputPhoneNumber";
+import { apiCall } from "@/utils/api";
 
 export default function SignUpLogInModal({ visible, onClose }) {
   const [form, setForm] = useState({
     username: "",
     email: "",
+    identity: "",
     phoneCountryCode: "DE",
-    phoneNumber: "",
+    phone: "",
     password: "",
     confirmPassword: "",
   });
@@ -18,14 +20,14 @@ export default function SignUpLogInModal({ visible, onClose }) {
     setForm((prevForm) => ({ ...prevForm, [key]: value }));
   };
 
-  const handleFormSubmit = () => {
-    const { username, email, phoneNumber, password, confirmPassword } = form;
+  const handleFormSubmit = async () => {
+    const { username, email, identity, phone, password, confirmPassword } = form;
 
     if (isSignUp) {
       if (
         !username ||
         !email ||
-        !phoneNumber ||
+        !phone ||
         !password ||
         !confirmPassword
       ) {
@@ -36,21 +38,41 @@ export default function SignUpLogInModal({ visible, onClose }) {
         alert("Passwords do not match.");
         return;
       }
-      // Handle Sign Up
+      try {
+        const data = await apiCall('/auth/signup', 'POST', { username, email, phone, password });
+        alert(data);
+        onLogin(data);
+        return;
+      } catch (error) {
+        alert(error);
+      }
     } else {
-      if (!email || !password) {
+      if (!identity || !password) {
         alert("Please fill in all fields.");
         return;
       }
-      // Handle Log In
+      try {
+        const data = await apiCall('/auth/login', 'POST', { identity, password });
+        onLogin(data);
+        return;
+      } catch (error) {
+        alert(error);
+      }
     }
     // onClose();
+  };
+
+  const onLogin = (data) => {
+    console.log("Login successful:", data);
+    onClose();
   };
 
   return (
     <ModalScreen visible={visible} onClose={onClose}>
       <View style={styles.container}>
-        <Text style={styles.title}>{isSignUp ? "Sign Up" : "Log In"}</Text>
+        <Text style={styles.title}>
+          {isSignUp ? "Sign Up (Step 1/3)" : "Log In"}
+        </Text>
 
         {isSignUp && (
           <TextInput
@@ -63,17 +85,19 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
         <TextInput
           style={styles.input}
-          placeholder="Email"
-          value={form.email}
-          onChangeText={(text) => handleChange("email", text)}
-          keyboardType="email-address"
-          autoCapitalize="none"
+          placeholder={isSignUp ? "Email" : "Username or Email"}
+          value={isSignUp ? form.email : form.identity}
+          onChangeText={
+            isSignUp
+              ? (text) => handleChange("email", text)
+              : (text) => handleChange("identity", text)
+          }
         />
 
         {isSignUp && (
           <InputPhoneNumber
-            phoneNumber={form.phoneNumber}
-            setPhoneNumber={(text) => handleChange("phoneNumber", text)}
+            phoneNumber={form.phone}
+            setPhoneNumber={(text) => handleChange("phone", text)}
             setCountryCode={(code) => handleChange("phoneCountryCode", code)}
           />
         )}
