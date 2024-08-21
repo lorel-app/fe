@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, StyleSheet } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import LogoSvg from "@/assets/images/LogoMain.svg";
-import ButtonSwitch from "../ButtonSwitch";
-import ButtonIcon from "../ButtonIcon"
+import ButtonSwitch from "@/components/ButtonSwitch";
+import ButtonIcon from "@/components/ButtonIcon";
+import SignUpLogInModal from "@/app/Auth";
 
 export default function Header() {
   const { colors } = useTheme();
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={[styles.header, { backgroundColor: colors.background }]}>
@@ -16,9 +18,14 @@ export default function Header() {
         <ButtonIcon
           iconName="account-circle"
           iconSize={30}
-          onPress={() => alert("Will open sign-in/up")}
+          onPress={() => setModalVisible(true)}
         />
       </View>
+
+      <SignUpLogInModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 }
