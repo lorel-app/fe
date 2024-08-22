@@ -1,4 +1,5 @@
-import { BASE_URL } from "@env";
+// import { BASE_URL } from "@env"; > cannot use dotenv
+const BASE_URL= "http://localhost:3000"
 
 export const apiCall = async (endpoint, method = "GET", body = null) => {
   const headers = {
