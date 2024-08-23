@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import ModalScreen from "@/components/ModalScreen";
 import InputPhoneNumber from "@/components/InputPhoneNumber";
-import { signUp, login } from "../utils/api";
+import api from "../utils/api";
 
 export default function SignUpLogInModal({ visible, onClose }) {
   const [form, setForm] = useState({
@@ -34,7 +34,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
         return;
       }
       try {
-        const response = await signUp({
+        const response = await api.signUp({
           username,
           email,
           phone,
@@ -54,7 +54,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
         return;
       }
       try {
-        const response = await login({ identity, password });
+        const response = await api.login({ identity, password });
         if (response.success) {
           onLogin(response.data);
         } else {
@@ -66,15 +66,15 @@ export default function SignUpLogInModal({ visible, onClose }) {
     }
   };
 
-  const onSignUp = (data) => {
-    console.log("Sign up successful:", data);
-    onClose();
-  };
+    const onSignUp = (data) => {
+      console.log("Sign up successful:", data);
+      onClose();
+    };
 
-  const onLogin = (data) => {
-    console.log("Login successful:", data);
-    onClose();
-  };
+    const onLogin = (data) => {
+      console.log("Login successful:", data);
+      onClose();
+    };
   
   return (
     <ModalScreen visible={visible} onClose={onClose}>
