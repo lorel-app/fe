@@ -1,21 +1,45 @@
-// import { BASE_URL } from "@env"; > cannot use dotenv
-const BASE_URL= "http://localhost:3000"
+import axios from 'axios';
 
-export const apiCall = async (endpoint, method = "GET", body = null) => {
-  const headers = {
-    "Content-Type": "application/json",
-  };
+const BASE_URL = "http://localhost:3000";
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : null,
-  });
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Something went wrong!");
+const handleResponse = async (request) => {
+  try {
+    const response = await request;
+    return {
+      success: true,
+      statusCode: response.status || 200,
+      data: response.data,
+    };
+  } catch (error) {
+    if (error.response) {
+      return {
+        success: false,
+        statusCode: error.response.status || -1,
+        error: error.response.data?.message || 'Unknown error',
+      };
+    } else {
+      return {
+        success: false,
+        statusCode: -1,
+        error: 'Unknown error',
+      };
+    }
   }
+};
 
-  return response.json();
+export const signUp = async (body) => {
+  const request = api.post("/auth/signup", body);
+  return handleResponse(request);
+};
+
+export const login = async (body) => {
+  const request = api.post('/auth/login', body);
+  return handleResponse(request);
 };

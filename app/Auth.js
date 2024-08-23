@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import ModalScreen from "@/components/ModalScreen";
 import InputPhoneNumber from "@/components/InputPhoneNumber";
-import { apiCall } from "@/utils/api";
+import { signUp, login } from "../utils/api";
 
 export default function SignUpLogInModal({ visible, onClose }) {
   const [form, setForm] = useState({
@@ -21,16 +21,11 @@ export default function SignUpLogInModal({ visible, onClose }) {
   };
 
   const handleFormSubmit = async () => {
-    const { username, email, identity, phone, password, confirmPassword } = form;
+    const { username, email, identity, phone, password, confirmPassword } =
+      form;
 
     if (isSignUp) {
-      if (
-        !username ||
-        !email ||
-        !phone ||
-        !password ||
-        !confirmPassword
-      ) {
+      if (!username || !email || !phone || !password || !confirmPassword) {
         alert("Please fill in all fields.");
         return;
       }
@@ -39,12 +34,19 @@ export default function SignUpLogInModal({ visible, onClose }) {
         return;
       }
       try {
-        const data = await apiCall('/auth/signup', 'POST', { username, email, phone, password });
-        alert(data);
-        onLogin(data);
-        return;
+        const response = await signUp({
+          username,
+          email,
+          phone,
+          password,
+        });
+        if (response.success) {
+          onSignUp(response.data);
+        } else {
+          alert(response.error);
+        }
       } catch (error) {
-        alert(error);
+        alert(response.error);
       }
     } else {
       if (!identity || !password) {
@@ -52,21 +54,28 @@ export default function SignUpLogInModal({ visible, onClose }) {
         return;
       }
       try {
-        const data = await apiCall('/auth/login', 'POST', { identity, password });
-        onLogin(data);
-        return;
+        const response = await login({ identity, password });
+        if (response.success) {
+          onLogin(response.data);
+        } else {
+          alert(response.error);
+        }
       } catch (error) {
-        alert(error);
+        alert(error.message);
       }
     }
-    // onClose();
+  };
+
+  const onSignUp = (data) => {
+    console.log("Sign up successful:", data);
+    onClose();
   };
 
   const onLogin = (data) => {
     console.log("Login successful:", data);
     onClose();
   };
-
+  
   return (
     <ModalScreen visible={visible} onClose={onClose}>
       <View style={styles.container}>
