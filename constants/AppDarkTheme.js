@@ -1,15 +1,22 @@
 import { DarkTheme } from "@react-navigation/native";
+import { Colors } from "./Colors";
 
 const AppDarkTheme = {
   ...DarkTheme,
-  dark: false,
+  dark: true,
   colors: {
     ...DarkTheme.colors,
-    text: "#dadada",
-    card: "#191919",
-    border: "#444859",
-    primary: "#333333",
-    background: "#000000",
+    background: Colors.black,
+    card: "#2E2E2E",
+    tint: "#171717",
+    accent: Colors.red,
+    primary: Colors.blue,
+    primaryTint: Colors.blueDark,
+    secondary: "#B5BBD1",
+    secondaryTint: "#5C6483",
+    tertiary: "#E88570",
+    text: Colors.white,
+    textAlt: Colors.white,
   },
 };
 

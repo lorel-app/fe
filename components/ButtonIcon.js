@@ -1,31 +1,28 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useTheme } from "@react-navigation/native";
 
 const ButtonIcon = ({
   onPress,
   iconName,
-  iconSize = 30,
+  iconSize,
   iconColor,
   style,
 }) => {
     const { colors } = useTheme();
-    const effectiveIconColor = iconColor || colors.text;
+    const effectiveIconColor = iconColor || colors.primary;
+    const effectiveIconSize = iconSize || 30;
 
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Icon name={iconName} size={iconSize} color={effectiveIconColor} />
+    <TouchableOpacity style={style} onPress={onPress}>
+      <Icon
+        name={iconName}
+        size={effectiveIconSize}
+        color={effectiveIconColor}
+      />
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
-});
 
 export default ButtonIcon;

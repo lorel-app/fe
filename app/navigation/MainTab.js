@@ -3,10 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import HomeScreen from "@/app/screens/Home";
 import ProfileScreen from "@/app/screens/Profile"
+import { useTheme } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
+  const { colors } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -18,13 +20,16 @@ function Tabs() {
           } else if (route.name === "Profile") {
             iconName = focused ? "account-circle" : "account-circle";
           }
-
-          // Return any component that you like here!
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "gray",
+        
+        tabBarActiveTintColor: colors.secondary,
+        tabBarInactiveTintColor: colors.tint,
         tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: colors.card,
+        },
+        headerShown: false,
         // tabBarBadge + tabBarBadgeStyle for notifications
       })}
     >

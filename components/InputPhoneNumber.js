@@ -1,9 +1,13 @@
 import React, { useState, useRef } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { View, Text } from "react-native";
 import PhoneInput from "react-native-phone-input";
 import CountryPicker from "react-native-country-picker-modal";
+import { useTheme } from "@react-navigation/native";
+import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 
 const InputPhoneNumber = ({ phoneNumber, setPhoneNumber, setCountryCode }) => {
+  const { colors } = useTheme();
+  const styles = useGlobalStyles();
   const [showPhoneCountryPicker, setShowPhoneCountryPicker] = useState(false);
   const phoneInput = useRef(null);
 
@@ -19,48 +23,42 @@ const InputPhoneNumber = ({ phoneNumber, setPhoneNumber, setCountryCode }) => {
   };
 
   return (
-      <View style={styles.phoneInput}>
-        <PhoneInput
-          ref={phoneInput}
-          style={styles.input}
-          initialCountry="de"
-          onPressFlag={() => setShowPhoneCountryPicker(true)}
-          onChangePhoneNumber={setPhoneNumber}
-        />
-        <CountryPicker
-          visible={showPhoneCountryPicker}
-          onSelect={handleCountrySelect}
-          onClose={() => setShowPhoneCountryPicker(false)}
-          withFlagButton={false}
-          withCallingCode
-          renderFlagButton={() => null}
-        />
-        <Text style={styles.errorText}>
-          {phoneInput.current?.isValidNumber()
-            ? ""
-            : "Please enter a valid number"}
-        </Text>
-      </View>
+    <View style={[styles.container, { padding: 0 }]}>
+      {/* Fix isFocus state to hide border */}
+      {/* https://www.npmjs.com/package/react-native-phone-input */}
+      <PhoneInput
+        style={styles.input}
+        textStyle={{
+          color: colors.text,
+          fontSize: 16,
+        }}
+        ref={phoneInput}
+        initialCountry="de"
+        onPressFlag={() => setShowPhoneCountryPicker(true)}
+        onChangePhoneNumber={setPhoneNumber}
+        allowZeroAfterCountryCode={false}
+        // Doesn't work with initCountry
+        // textProps={{
+        //   placeholder: "Phone Number",
+        // }}
+      />
+      <CountryPicker
+        visible={showPhoneCountryPicker}
+        onSelect={handleCountrySelect}
+        onClose={() => setShowPhoneCountryPicker(false)}
+        renderFlagButton={() => null}
+        withEmoji={true}
+        withFlag={true}
+        theme={styles.countryPicker}
+      />
+      {/* handle isFocus state */}
+      <Text style={styles.errorText}>
+        {phoneInput.current?.isValidNumber()
+          ? ""
+          : "Please enter a valid number"}
+      </Text>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  phoneInput: {
-    alignItems: "center",
-    width: "100%",
-    marginBottom: 15,
-  },
-  input: {
-    width: "100%",
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  errorText: {
-    color: "red",
-  },
-});
 
 export default InputPhoneNumber;
