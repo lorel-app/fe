@@ -1,9 +1,12 @@
 import React from "react";
-import { Modal, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Modal, View, TouchableWithoutFeedback } from "react-native";
+import ButtonIcon from "@/components/ButtonIcon";
 import { useTheme } from "@react-navigation/native";
+import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 
 export default function ModalScreen({ visible, onClose, children }) {
   const { colors } = useTheme();
+  const styles = useGlobalStyles();
 
   return (
     <Modal
@@ -14,7 +17,14 @@ export default function ModalScreen({ visible, onClose, children }) {
     >
       <TouchableWithoutFeedback onPress={() => {}}>
         <View style={styles.overlay}>
-          <View style={[styles.modalView, { backgroundColor: colors.card }]}>
+          <View style={styles.modalView}>
+            <ButtonIcon
+              style={styles.closeButton}
+              iconName="close"
+              iconSize="15"
+              iconColor={colors.text}
+              onPress={onClose}
+            />
             {children}
           </View>
         </View>
@@ -22,24 +32,3 @@ export default function ModalScreen({ visible, onClose, children }) {
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalView: {
-    margin: 20,
-    borderRadius: 10,
-    padding: 20,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    minWidth: "80%",
-  },
-});

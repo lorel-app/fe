@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import ModalScreen from "@/components/ModalScreen";
 import InputPhoneNumber from "@/components/InputPhoneNumber";
+import ButtonIcon from "@/components/ButtonIcon"
+import Spacer from "@/components/Spacer";
 import api from "../utils/api";
+import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 
 export default function SignUpLogInModal({ visible, onClose }) {
+  const styles = useGlobalStyles();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -15,6 +19,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
     confirmPassword: "",
   });
   const [isSignUp, setIsSignUp] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleChange = (key, value) => {
     setForm((prevForm) => ({ ...prevForm, [key]: value }));
@@ -111,55 +116,50 @@ export default function SignUpLogInModal({ visible, onClose }) {
           />
         )}
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={form.password}
-          onChangeText={(text) => handleChange("password", text)}
-          secureTextEntry
-        />
+        <View style={styles.inputWithIcon}>
+          <TextInput
+            style={styles.text}
+            placeholder="Password"
+            value={form.password}
+            onChangeText={(text) => handleChange("password", text)}
+            secureTextEntry={!passwordVisible}
+          />
+          <ButtonIcon
+            onPress={() => setPasswordVisible(!passwordVisible)}
+            iconName={passwordVisible ? "visibility-off" : "visibility"}
+            iconSize={24}
+          />
+        </View>
 
         {isSignUp && (
-          <TextInput
-            style={styles.input}
-            placeholder="Confirm Password"
-            value={form.confirmPassword}
-            onChangeText={(text) => handleChange("confirmPassword", text)}
-            secureTextEntry
-          />
+          <View style={styles.inputWithIcon}>
+            <TextInput
+              style={styles.text}
+              placeholder="Confirm Password"
+              value={form.confirmPassword}
+              onChangeText={(text) => handleChange("confirmPassword", text)}
+              secureTextEntry={!passwordVisible}
+            />
+            <ButtonIcon
+              onPress={() => setPasswordVisible(!passwordVisible)}
+              iconName={passwordVisible ? "visibility-off" : "visibility"}
+              iconSize={24}
+            />
+          </View>
         )}
 
-        <Button
-          title={isSignUp ? "Sign Up" : "Log In"}
-          onPress={handleFormSubmit}
-        />
-
-        <Button
-          title={isSignUp ? "Switch to Log In" : "Switch to Sign Up"}
-          onPress={() => setIsSignUp(!isSignUp)}
-        />
-
-        <Button title="Close" onPress={onClose} />
+        <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
+          <Text style={styles.buttonText}>
+            {isSignUp ? "Sign Up" : "Log In"}
+          </Text>
+        </TouchableOpacity>
+        <Spacer />
+        <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
+          <Text style={styles.link}>
+            {isSignUp ? "I already have an account" : "Create an account"}
+          </Text>
+        </TouchableOpacity>
       </View>
     </ModalScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  input: {
-    width: "100%",
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-});
