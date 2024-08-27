@@ -11,11 +11,12 @@ const ButtonIcon = ({
   style,
 }) => {
     const { colors } = useTheme();
-    const effectiveIconColor = iconColor || colors.primary;
-    const effectiveIconSize = iconSize || 30;
+    const effectiveIconColor = iconColor || colors.secondaryTint;
+    const effectiveIconSize = iconSize || 24;
+    const effectiveStyle = [{ margin: 3 }, style];
 
   return (
-    <TouchableOpacity style={style} onPress={onPress}>
+    <TouchableOpacity style={effectiveStyle} onPress={onPress}>
       <Icon
         name={iconName}
         size={effectiveIconSize}

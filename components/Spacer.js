@@ -4,7 +4,7 @@ import { View } from "react-native";
 const Spacer = () => (
   <View
     style={{
-      height: 5,
+      height: 50,
       width: "100%",
       opacity: 0,
     }}
