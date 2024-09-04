@@ -1,3 +1,11 @@
+# [1.1.0-dev.1](https://github.com/lorel-app/fe/compare/v1.0.0...v1.1.0-dev.1) (2024-09-04)
+
+
+### Features
+
+* 🫡 components for posts, handle display picture update ([312cf5c](https://github.com/lorel-app/fe/commit/312cf5c75f14c6f6b330bf429392902b2b9fadae))
+* homescreen and posts ([e048e34](https://github.com/lorel-app/fe/commit/e048e3457cb16b2c27c21f79034c88e39e505c36))
+
 # 1.0.0 (2024-08-26)
 
 
