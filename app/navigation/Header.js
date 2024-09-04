@@ -18,7 +18,6 @@ export default function Header() {
       <View style={[styles.headerItems]}>
         <ButtonSwitch />
         <ButtonIcon
-          style={styles.icon}
           iconName="account-circle"
           onPress={() => setModalVisible(true)}
         />

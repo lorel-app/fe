@@ -1,6 +1,14 @@
 import { StyleSheet } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
+const shadowStyle = {
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5, // For Android shadow
+};
+
 export const useGlobalStyles = () => {
   const { colors } = useTheme();
 
@@ -33,8 +41,7 @@ export const useGlobalStyles = () => {
     },
     text: {
       color: colors.text,
-      fontSize: 16,
-      width: "100%",
+      fontSize: 14,
     },
     errorText: {
       color: colors.accent,
@@ -47,7 +54,7 @@ export const useGlobalStyles = () => {
     },
     link: {
       color: colors.primary,
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: "500",
       textAlign: "center",
     },
@@ -81,6 +88,7 @@ export const useGlobalStyles = () => {
       borderRadius: 25,
       width: 150,
       alignSelf: "center",
+      ...shadowStyle,
     },
     closeButton: {
       position: "absolute",
@@ -108,9 +116,6 @@ export const useGlobalStyles = () => {
       alignItems: "center",
       backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
-    icon: {
-      margin: 5,
-    },
     countryPicker: {
       // primaryColor: colors.primary,
       backgroundColor: colors.card,
@@ -120,6 +125,62 @@ export const useGlobalStyles = () => {
       filterPlaceholderTextColor: colors.primary,
       // activeOpacity: 0.1,
       itemHeight: 50,
+    },
+    // make responsive
+    scrollView: {
+      alignItems: "center",
+    },
+    // make responsive
+    post: {
+      width: "100%",
+      maxWidth: 500,
+      alignItems: "center",
+    },
+
+    rowSpan: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+      padding: 10,
+    },
+
+    row: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    profilePic: {
+      margin: 5,
+      borderRadius: 50,
+    },
+    myProfilePic: {
+      margin: 5,
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+    },
+    buttonSmall: {
+      backgroundColor: colors.tint,
+      borderRadius: 5,
+      paddingHorizontal: 5,
+      paddingVertical: 3,
+      margin: 3,
+    },
+
+    postShop: {
+      backgroundColor: colors.card,
+      alignItems: "center",
+      width: "94%",
+      maxWidth: 500,
+      borderRadius: 25,
+    },
+    postShopMedia: {
+      maxWidth: "90%",
+      width: "90%",
+      ...shadowStyle,
+    },
+    postContentMedia: {
+      minWidth: "100%",
     },
   });
 };

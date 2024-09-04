@@ -7,7 +7,7 @@ import Spacer from "@/components/Spacer";
 import api from "../utils/api";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 
-export default function SignUpLogInModal({ visible, onClose }) {
+export default function SignUpLogInModal({ visible, onClose, onLoginSuccess }) {
   const styles = useGlobalStyles();
   const [form, setForm] = useState({
     username: "",
@@ -79,6 +79,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
     const onLogin = (data) => {
       console.log("Login successful:", data);
       onClose();
+      onLoginSuccess();
     };
   
   return (
