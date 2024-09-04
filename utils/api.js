@@ -103,14 +103,37 @@ const login = async (body) => {
   const request = apiInstance.post("/auth/login", body);
   const response = await handleResponse(request);
   if (response.success) {
-    const { accessToken, refreshToken, user } = response.data;
-    console.log("User Data:", user); // user for future use 
+    const { accessToken, refreshToken, user } = response.data; 
     setTokens(accessToken, refreshToken);
   }
   return response;
 };
 
+const getMe = async (body) => {
+  const request = apiInstance.get("/me", body);
+  const response = await handleResponse(request);
+  if (response.success) {
+    return response.data;
+  }
+  return null;
+};
+
+const updateProfilePic = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const request = apiInstance.put("me/display-picture", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  const response = await handleResponse(request);
+  return response;
+}
+
 export default {
   signUp,
   login,
+  getMe,
+  updateProfilePic,
 };

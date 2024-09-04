@@ -10,10 +10,19 @@ const PostShop = ({ user, title, media, price, comment, tags }) => {
   };
   return (
     <View style={styles.postShop}>
-      <Post user={user} title={title} price={price} comment={comment} tags={tags}>
-        <View style={styles.postShopMedia}>
-          <Image resizeMode="contain" source={media} onPress={handlePress} />
-        </View>
+      <Post
+        user={user}
+        title={title}
+        price={price}
+        comment={comment}
+        tags={tags}
+      >
+        <Image
+          style={styles.postShopMedia}
+          resizeMode="contain"
+          source={media}
+          onPress={handlePress}
+        />
       </Post>
     </View>
   );

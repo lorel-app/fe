@@ -150,7 +150,14 @@ export const useGlobalStyles = () => {
       alignItems: "center",
     },
     profilePic: {
-      paddingRight: 5,
+      margin: 5,
+      borderRadius: 50,
+    },
+    myProfilePic: {
+      margin: 5,
+      width: 100,
+      height: 100,
+      borderRadius: 50,
     },
     buttonSmall: {
       backgroundColor: colors.tint,
@@ -163,14 +170,13 @@ export const useGlobalStyles = () => {
     postShop: {
       backgroundColor: colors.card,
       alignItems: "center",
-      alignContent: "center",
       width: "94%",
       maxWidth: 500,
       borderRadius: 25,
     },
     postShopMedia: {
       maxWidth: "90%",
-      // overflow: "hidden",
+      width: "90%",
       ...shadowStyle,
     },
     postContentMedia: {
