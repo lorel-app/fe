@@ -135,6 +135,17 @@ const login = async (body) => {
   return response;
 };
 
+const logout = async () => {
+  const request = apiInstance.post("/auth/logout");
+  const response = await handleResponse(request);
+  if (response.success) {
+    await setTokens(null, null);
+    return {success: true};
+  } else {
+    return {success: false, error: response.error};
+  }
+};
+
 const getMe = async (body) => {
   const request = apiInstance.get("/me", body);
   const response = await handleResponse(request);
@@ -162,6 +173,7 @@ loadTokens();
 export default {
   signUp,
   login,
+  logout,
   getMe,
   updateProfilePic,
 };
