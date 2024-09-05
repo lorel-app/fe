@@ -21,11 +21,13 @@
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
+    "async-storage": "^0.1.0",
     "axios": "^1.7.4",
     "expo": "~51.0.24",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.21",
     "expo-font": "~12.0.9",
+    "expo-image-picker": "~15.0.7",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.20",
     "expo-splash-screen": "~0.27.5",
@@ -37,6 +39,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.74.3",
     "react-native-appearance-control": "^0.3.4",
+    "react-native-async-storage": "^0.0.1",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-image-picker": "^7.1.2",
@@ -48,7 +51,7 @@
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "~0.19.10",
     "uri-scheme": "^1.2.2",
-    "expo-image-picker": "~15.0.7"
+    "@react-native-async-storage/async-storage": "1.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
