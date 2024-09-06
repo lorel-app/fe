@@ -3,8 +3,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BASE_URL = "http://localhost:3000";
 
+let onTokenChange = null;
 let accessToken = null;
 let refreshToken = null;
+
+const setOnTokenChangeCallback = (callback) => {
+  onTokenChange = callback;
+};
 
 const apiInstance = axios.create({
   baseURL: BASE_URL,
@@ -25,7 +30,6 @@ const setTokens = async (access, refresh) => {
       await AsyncStorage.removeItem("accessToken");
       delete apiInstance.defaults.headers["Authorization"];
     }
-
     if (refreshToken) {
       await AsyncStorage.setItem("refreshToken", refreshToken);
     } else {
@@ -135,6 +139,18 @@ const login = async (body) => {
   return response;
 };
 
+const logout = async () => {
+  const request = apiInstance.post("/auth/logout");
+  const response = await handleResponse(request);
+  if (response.success) {
+    await setTokens(null, null);
+    if (onTokenChange) onTokenChange(); // Notify context of the change
+    return { success: true };
+  } else {
+    return { success: false, error: response.error };
+  }
+};
+
 const getMe = async (body) => {
   const request = apiInstance.get("/me", body);
   const response = await handleResponse(request);
@@ -162,6 +178,9 @@ loadTokens();
 export default {
   signUp,
   login,
+  logout,
   getMe,
   updateProfilePic,
+  loadTokens,
+  setOnTokenChangeCallback,
 };
