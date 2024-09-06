@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useContext } from "react";
 import { View, Alert } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import LogoSvg from "@/assets/images/LogoMain.svg";
@@ -6,24 +6,18 @@ import ButtonSwitch from "@/components/ButtonSwitch";
 import ButtonIcon from "@/components/ButtonIcon";
 import SignUpLogInModal from "@/app/Auth";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
-import api from "@/utils/api";
+import AuthContext from "@/utils/authContext";
 
 export default function Header() {
   const { colors } = useTheme();
   const styles = useGlobalStyles();
+  const { isAuthenticated, logout } = useContext(AuthContext);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogout = async () => {
     try {
-      const response = await api.logout();
-      if (response.success) {
-        Alert.alert("Logged out", "You have been successfully logged out.");
-      } else {
-        Alert.alert(
-          "Logout Failed",
-          response.error || "Something went wrong."
-        );
-      }
+      await logout();
+      Alert.alert("Logged out", "You have been successfully logged out.");
     } catch (error) {
       Alert.alert("Error", "An error occurred during logout.");
     }
@@ -34,14 +28,14 @@ export default function Header() {
       <LogoSvg fill={colors.secondary} width={250 / 2.5} height={61 / 2.5} />
       <View style={[styles.headerItems]}>
         <ButtonSwitch />
-        <ButtonIcon
-          iconName="account-circle"
-          onPress={() => setModalVisible(true)}
-        />
-        <ButtonIcon
-          iconName="logout"
-          onPress={handleLogout}
-        />
+        {isAuthenticated ? (
+          <ButtonIcon iconName="logout" onPress={handleLogout} />
+        ) : (
+          <ButtonIcon
+            iconName="account-circle"
+            onPress={() => setModalVisible(true)}
+          />
+        )}
       </View>
       <SignUpLogInModal
         visible={modalVisible}

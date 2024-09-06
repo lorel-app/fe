@@ -7,6 +7,7 @@ import ThemeContext from "@/components/ThemeContext";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Tabs from "./navigation/MainTab"
 import Header from "./navigation/Header"
+import { AuthProvider } from "@/utils/authContext";
 
 export default function Index() {
   const colorScheme = useColorScheme();
@@ -15,15 +16,17 @@ export default function Index() {
   const themeData = { theme, setTheme };
 
   return (
-    <ThemeContext.Provider value={themeData}>
-      <NavigationContainer
-        independent={true}
-        theme={theme === "light" ? AppLightTheme : AppDarkTheme}
-      >
-        <Header />
-        <Tabs />
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </ThemeContext.Provider>
+    <AuthProvider>
+      <ThemeContext.Provider value={themeData}>
+        <NavigationContainer
+          independent={true}
+          theme={theme === "light" ? AppLightTheme : AppDarkTheme}
+        >
+          <Header />
+          <Tabs />
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </ThemeContext.Provider>
+    </AuthProvider>
   );
 }

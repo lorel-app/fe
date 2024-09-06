@@ -15,7 +15,6 @@ const ProfileScreen = () => {
 
   const fetchUser = useCallback(async () => {
     const me = await api.getMe();
-    console.log(me);
     if (me) {
       setUser(me.username);
       setDisplayPicture(me.displayPicture);

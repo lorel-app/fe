@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import ModalScreen from "@/components/ModalScreen";
 import InputPhoneNumber from "@/components/InputPhoneNumber";
-import ButtonIcon from "@/components/ButtonIcon"
+import ButtonIcon from "@/components/ButtonIcon";
 import Spacer from "@/components/Spacer";
-import api from "../utils/api";
+import AuthContext from "@/utils/authContext";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 
-export default function SignUpLogInModal({ visible, onClose, onLoginSuccess }) {
+export default function SignUpLogInModal({ visible, onClose }) {
   const styles = useGlobalStyles();
+  const { login, signUp } = useContext(AuthContext); // Get login and signup methods from context
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -31,57 +32,51 @@ export default function SignUpLogInModal({ visible, onClose, onLoginSuccess }) {
 
     if (isSignUp) {
       if (!username || !email || !phone || !password || !confirmPassword) {
-        alert("Please fill in all fields.");
+        Alert.alert("Error", "Please fill in all fields.");
         return;
       }
       if (password !== confirmPassword) {
-        alert("Passwords do not match.");
+        Alert.alert("Error", "Passwords do not match.");
         return;
       }
       try {
-        const response = await api.signUp({
-          username,
-          email,
-          phone,
-          password,
-        });
+        const response = await signUp({ username, email, phone, password });
         if (response.success) {
           onSignUp(response.data);
         } else {
-          alert(response.error);
+          Alert.alert("Error", response.error);
         }
       } catch (error) {
-        alert(response.error);
+        Alert.alert("Error", error.message);
       }
     } else {
       if (!identity || !password) {
-        alert("Please fill in all fields.");
+        Alert.alert("Error", "Please fill in all fields.");
         return;
       }
       try {
-        const response = await api.login({ identity, password });
+        const response = await login({ identity, password });
         if (response.success) {
           onLogin(response.data);
         } else {
-          alert(response.error);
+          Alert.alert("Error", response.error);
         }
       } catch (error) {
-        alert(error.message);
+        Alert.alert("Error", error.message);
       }
     }
   };
 
-    const onSignUp = (data) => {
-      console.log("Sign up successful:", data);
-      onClose();
-    };
+  const onSignUp = (data) => {
+    console.log("Sign up successful:", data);
+    onClose();
+  };
 
-    const onLogin = (data) => {
-      console.log("Login successful:", data);
-      onClose();
-      onLoginSuccess();
-    };
-  
+  const onLogin = (data) => {
+    console.log("Login successful:", data);
+    onClose();
+  };
+
   return (
     <ModalScreen visible={visible} onClose={onClose}>
       <View style={styles.container}>
