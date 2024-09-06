@@ -1,3 +1,11 @@
+# [1.1.0-dev.2](https://github.com/lorel-app/fe/compare/v1.1.0-dev.1...v1.1.0-dev.2) (2024-09-06)
+
+
+### Features
+
+* 🫡 added logout route ([6c06c35](https://github.com/lorel-app/fe/commit/6c06c350b8bd393f50784ba05f2852adf3b987b1))
+* 🫡 authContext for global user state ([381105c](https://github.com/lorel-app/fe/commit/381105cbfb1568fb2aca7ea2ceb51a08dc983e08))
+
 # [1.1.0-dev.1](https://github.com/lorel-app/fe/compare/v1.0.0...v1.1.0-dev.1) (2024-09-04)
 
 
