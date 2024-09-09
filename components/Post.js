@@ -1,11 +1,11 @@
 import Icon from "react-native-vector-icons/MaterialIcons";
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { useTheme } from "@react-navigation/native";
 import ButtonIcon from "./ButtonIcon";
 
-const Post = ({ user, title, price, comment, tags, children }) => {
+const Post = ({ user, caption, tags, children }) => {
   const styles = useGlobalStyles();
   const { colors } = useTheme();
   return (
@@ -13,8 +13,16 @@ const Post = ({ user, title, price, comment, tags, children }) => {
     <View style={styles.post}>
       <View style={styles.rowSpan}>
         <TouchableOpacity style={styles.row}>
-          <Icon name="circle" size={30} style={styles.profilePic} />
-          {user ? <Text style={styles.text}>{user}</Text> : null}
+          {user.displayPictureThumb ? (
+            <Image
+              source={{ uri: user.displayPictureThumb }}
+              resizeMode="cover"
+              style={styles.profilePic}
+            />
+          ) : (
+            <Icon name="circle" size={24} style={styles.profilePic} />
+          )}
+        <Text style={styles.text}>{user.username}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonSmall}>
           <Text style={styles.text}>Follow</Text>
@@ -23,23 +31,15 @@ const Post = ({ user, title, price, comment, tags, children }) => {
 
       {children}
 
-      {/* temp */}
-      <Icon name="more-horiz" size={30}></Icon>
+      {caption ? <Text style={styles.text}>{caption}</Text> : null}
 
       <View style={styles.rowSpan}>
-        {title ? <Text style={styles.text}>{title}</Text> : null}
-        {price ? <Text style={styles.text}>EUR {price}</Text> : null}
-      </View>
-
-      {comment ? <Text style={styles.text}>{comment}</Text> : null}
-
-      <View style={styles.rowSpan}>
-        <View style={styles.row}>
+        <View style={styles.rowFlex}>
           {tags?.map((tag, index) => (
             <TouchableOpacity key={index} style={styles.buttonSmall}>
               <Text
                 style={{
-                  color: tag.type === 1 ? colors.tertiary : colors.secondary,
+                  color: tag.type === "SUBJECT" ? colors.tertiary : colors.secondary,
                 }}
               >
                 {tag.name}
@@ -47,8 +47,8 @@ const Post = ({ user, title, price, comment, tags, children }) => {
             </TouchableOpacity>
           ))}
         </View>
-        <View style={styles.row}>
-          <Text style={styles.text}>3</Text>
+        <View style={styles.rowFit}>
+          <Text style={styles.text}>999</Text>
           <ButtonIcon
             iconName="chat-bubble-outline"
             onPress={console.log("hi")}

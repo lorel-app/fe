@@ -173,6 +173,14 @@ const updateProfilePic = async (file) => {
   return response;
 };
 
+const allPosts = async (limit = 10, offset = 0) => {
+  const request = apiInstance.get("/", {
+    params: { limit, offset },
+  });
+  const response = await handleResponse(request);
+  return response;
+};
+
 loadTokens();
 
 export default {
@@ -181,6 +189,7 @@ export default {
   logout,
   getMe,
   updateProfilePic,
+  allPosts,
   loadTokens,
   setOnTokenChangeCallback,
 };

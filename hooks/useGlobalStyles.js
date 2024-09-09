@@ -1,5 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
+
+const { width } = Dimensions.get("window");
 
 const shadowStyle = {
   shadowColor: "#000",
@@ -149,8 +151,28 @@ export const useGlobalStyles = () => {
       flexDirection: "row",
       alignItems: "center",
     },
+
+    rowFlex: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      flexShrink: 1,
+      padding: 10,
+    },
+
+    rowFit: {
+      flexDirection: "row",
+      alignItems: "center",
+      flexShrink: 0,
+      margin: 2,
+      //minWidth: "20%",
+    },
+
     profilePic: {
       margin: 5,
+      width: 24,
+      height: 24,
       borderRadius: 50,
     },
     myProfilePic: {
@@ -170,17 +192,51 @@ export const useGlobalStyles = () => {
     postShop: {
       backgroundColor: colors.card,
       alignItems: "center",
-      width: "94%",
+      width: width * 0.94,
       maxWidth: 500,
       borderRadius: 25,
     },
-    postShopMedia: {
-      maxWidth: "90%",
-      width: "90%",
+
+    carouselContainerShop: {
+      width: width,
+      height: width * 0.75,
+      flex: 1,
+    },
+    carouselContainer: {
+      width: width,
+      height: width * 0.75,
+      flex: 1,
+    },
+
+    slide: {
+      width: width,
+      alignItems: "center",
+    },
+    imageShop: {
+      width: width * 0.8,
+      height: width * 0.75,
+      resizeMode: "contain",
+      justifyContent: "flex-end",
       ...shadowStyle,
     },
-    postContentMedia: {
-      minWidth: "100%",
+    image: {
+      width: width,
+      height: width * 0.8,
+      resizeMode: "contain",
+      justifyContent: "flex-end",
+    },
+
+    paginationContainer: {
+      bottom: 0,
+      position: "relative",
+      alignSelf: "center",
+    },
+    pagination: {
+      borderRadius: 20,
+      width: 8,
+      height: 8,
+      marginHorizontal: 4,
+      marginVertical: 4,
     },
   });
 };

@@ -1,82 +1,84 @@
 import { Button } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { PostShop, PostContent } from "@/components/PostTypes"
+import api from "@/utils/api";
+import Spacer from "@/components/Spacer";
 
 const HomeScreen = ({ navigation }) => {
   const styles = useGlobalStyles();
+  const [posts, setPosts] = useState([]);
 
-  const mockPosts = [
-    {
-      user: "artist",
-      title: "Title1",
-      media: require("@/assets/images/MockShop.png"),
-      type: "shop",
-      price: "45",
-      comment: "Lorem ispum",
-      tags: [
-        { name: "nature", type: 1 },
-        { name: "oil", type: 2 },
-        { name: "portrait", type: 1 },
-        { name: "pencil", type: 2 },
-      ],
-    },
-    {
-      user: "arteest",
-      title: "",
-      media: require("@/assets/images/MockVideo.png"),
-      type: "video",
-      price: "",
-      comment: "Lorem ispum",
-      tags: [
-        { name: "landscape", type: 1 },
-        { name: "watercolor", type: 2 },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await api.allPosts();
+        if (response.success) {
+          setPosts(response.data.posts);
+          console.log(response);
+        } else {
+          console.error(response.error);
+        }
+      } catch (error) {
+        console.error("Failed to fetch posts", error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <ScrollView>
-     <View style={styles.container}>
-       <Text style={styles.title}>Hello, world!</Text>
-       <TouchableOpacity style={styles.button}>
-         <Text style={styles.buttonText}>Press Me</Text>
-       </TouchableOpacity>
-       {/* Button is deprecated; here for future use to navigate */}
-       <Button
-         title="Go to Jane's profile"
-         onPress={() => navigation.navigate("Profile", { name: "Jane" })}
-       />
-     </View>
+      <View style={styles.container}>
+        <Text style={styles.title}>Hello, world!</Text>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Press Me</Text>
+        </TouchableOpacity>
+        {/* Button is deprecated; here for future use to navigate */}
+        <Button
+          title="Go to Jane's profile"
+          onPress={() => navigation.navigate("Profile", { name: "Jane" })}
+        />
+      </View>
 
-    <View style={styles.scrollView}>
-      {mockPosts.map((post, index) => {
-        if (post.type === "shop") {
-          return (
-            <PostShop
-              key={index}
-              user={post.user}
-              media={post.media}
-              title={post.title}
-              price={post.price}
-              comment={post.comment}
-              tags={post.tags}
-            />
-          );
-        } else if (post.type === "video") {
-          return (
-            <PostContent 
-              key={index}
-              user={post.user}
-              media={post.media}
-              comment={post.comment}
-              tags={post.tags} />
-          );
-        }
-        return null;
-      })}
-    </View>
+      <View style={styles.scrollView}>
+        {posts.map((post, index) => {
+          const mediaUrls = post.media.map((m) => ({
+            uri: m.url,
+            type: m.type,
+          }));
+
+          if (post.type === "SHOP") {
+            return (
+              <React.Fragment key={post.id}>
+                <PostShop
+                  user={post.user}
+                  media={mediaUrls}
+                  title={post.title}
+                  price={post.price}
+                  caption={post.caption}
+                  description={post.description}
+                  tags={post.tags}
+                />
+                <Spacer />
+              </React.Fragment>
+            );
+          } else if (post.type === "CONTENT") {
+            return (
+              <React.Fragment key={post.id}>
+                <PostContent
+                  user={post.user}
+                  media={mediaUrls}
+                  caption={post.caption}
+                  tags={post.tags}
+                />
+                <Spacer />
+              </React.Fragment>
+            );
+          }
+          return null;
+        })}
+      </View>
     </ScrollView>
   );
 };
