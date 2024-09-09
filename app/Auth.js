@@ -6,10 +6,14 @@ import ButtonIcon from "@/components/ButtonIcon";
 import Spacer from "@/components/Spacer";
 import AuthContext from "@/utils/authContext";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
+import { useAlertModal } from "@/hooks/useAlertModal";
 
 export default function SignUpLogInModal({ visible, onClose }) {
   const styles = useGlobalStyles();
-  const { login, signUp } = useContext(AuthContext); // Get login and signup methods from context
+  const { login, signUp } = useContext(AuthContext);
+  //  wait to clean up responses in be
+  const showAlert = useAlertModal();
+
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -58,8 +62,12 @@ export default function SignUpLogInModal({ visible, onClose }) {
         const response = await login({ identity, password });
         if (response.success) {
           onLogin(response.data);
+          // working example - wait to clean up responses in be
+          showAlert("success", response.data.message);
         } else {
-          Alert.alert("Error", response.error);
+          console.log(response);
+          // working example - wait to clean up responses in be
+          showAlert("error", response.error);
         }
       } catch (error) {
         Alert.alert("Error", error.message);
@@ -83,6 +91,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
         <Text style={styles.title}>
           {isSignUp ? "Sign Up (Step 1/3)" : "Log In"}
         </Text>
+        <Spacer />
 
         {isSignUp && (
           <TextInput

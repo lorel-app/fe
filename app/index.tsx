@@ -8,6 +8,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import Tabs from "./navigation/MainTab"
 import Header from "./navigation/Header"
 import { AuthProvider } from "@/utils/authContext";
+import { AlertProvider } from "@/hooks/useAlertModal";
 
 export default function Index() {
   const colorScheme = useColorScheme();
@@ -18,14 +19,16 @@ export default function Index() {
   return (
     <AuthProvider>
       <ThemeContext.Provider value={themeData}>
-        <NavigationContainer
-          independent={true}
-          theme={theme === "light" ? AppLightTheme : AppDarkTheme}
-        >
-          <Header />
-          <Tabs />
-          <StatusBar style="auto" />
-        </NavigationContainer>
+        <AlertProvider>
+          <NavigationContainer
+            independent={true}
+            theme={theme === "light" ? AppLightTheme : AppDarkTheme}
+          >
+            <Header />
+            <Tabs />
+            <StatusBar style="auto" />
+          </NavigationContainer>
+        </AlertProvider>
       </ThemeContext.Provider>
     </AuthProvider>
   );

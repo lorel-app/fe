@@ -38,12 +38,22 @@ export const useGlobalStyles = () => {
       color: colors.text,
       fontSize: 20,
       fontWeight: "500",
-      marginBottom: 20,
       textAlign: "center",
+    },
+    textAccent: {
+      color: colors.primary,
+      fontSize: 20,
+      fontWeight: "500",
     },
     text: {
       color: colors.text,
       fontSize: 14,
+      padding: 2,
+    },
+    textLight: {
+      color: colors.secondary,
+      fontSize: 12,
+      padding: 2,
     },
     errorText: {
       color: colors.accent,
@@ -150,6 +160,7 @@ export const useGlobalStyles = () => {
     row: {
       flexDirection: "row",
       alignItems: "center",
+      alignSelf: "flex-start",
     },
 
     rowFlex: {
@@ -158,7 +169,6 @@ export const useGlobalStyles = () => {
       justifyContent: "flex-start",
       alignItems: "center",
       flexShrink: 1,
-      padding: 10,
     },
 
     rowFit: {
@@ -217,6 +227,7 @@ export const useGlobalStyles = () => {
       height: width * 0.75,
       resizeMode: "contain",
       justifyContent: "flex-end",
+      marginBottom: 8,
       ...shadowStyle,
     },
     image: {
@@ -224,6 +235,7 @@ export const useGlobalStyles = () => {
       height: width * 0.8,
       resizeMode: "contain",
       justifyContent: "flex-end",
+      marginBottom: 8,
     },
 
     paginationContainer: {
@@ -236,7 +248,6 @@ export const useGlobalStyles = () => {
       width: 8,
       height: 8,
       marginHorizontal: 4,
-      marginVertical: 4,
     },
   });
 };

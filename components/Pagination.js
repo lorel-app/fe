@@ -11,7 +11,7 @@ export const CustomPagination = (props) => {
       {...props}
       paginationStyle={styles.paginationContainer}
       paginationStyleItem={styles.pagination}
-      paginationDefaultColor={colors.seondary}
+      paginationDefaultColor={colors.primaryTint}
       paginationActiveColor={colors.primary}
     />
   );

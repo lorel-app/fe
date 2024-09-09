@@ -5,9 +5,17 @@ import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { useTheme } from "@react-navigation/native";
 import ButtonIcon from "./ButtonIcon";
 
-const Post = ({ user, caption, tags, children }) => {
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "short" });
+    return `${day} ${month}`;
+  };
+
+const Post = ({ user, caption, tags, dateTime, children }) => {
   const styles = useGlobalStyles();
   const { colors } = useTheme();
+
   return (
     // Needs margin around this view; wait to implement responsiveness
     <View style={styles.post}>
@@ -22,7 +30,7 @@ const Post = ({ user, caption, tags, children }) => {
           ) : (
             <Icon name="circle" size={24} style={styles.profilePic} />
           )}
-        <Text style={styles.text}>{user.username}</Text>
+          <Text style={styles.text}>{user.username}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonSmall}>
           <Text style={styles.text}>Follow</Text>
@@ -31,7 +39,14 @@ const Post = ({ user, caption, tags, children }) => {
 
       {children}
 
-      {caption ? <Text style={styles.text}>{caption}</Text> : null}
+      <View style={[styles.row, {paddingHorizontal: 8}]}>
+        {dateTime ? (
+          <Text style={[styles.textLight, { paddingHorizontal: 8 }]}>
+            {formatDate(dateTime)}
+          </Text>
+        ) : null}
+        {caption ? <Text style={styles.text}>{caption}</Text> : null}
+      </View>
 
       <View style={styles.rowSpan}>
         <View style={styles.rowFlex}>
@@ -39,7 +54,8 @@ const Post = ({ user, caption, tags, children }) => {
             <TouchableOpacity key={index} style={styles.buttonSmall}>
               <Text
                 style={{
-                  color: tag.type === "SUBJECT" ? colors.tertiary : colors.secondary,
+                  color:
+                    tag.type === "SUBJECT" ? colors.tertiary : colors.secondary,
                 }}
               >
                 {tag.name}
@@ -48,12 +64,12 @@ const Post = ({ user, caption, tags, children }) => {
           ))}
         </View>
         <View style={styles.rowFit}>
-          <Text style={styles.text}>999</Text>
+          <Text style={styles.textLight}>999</Text>
           <ButtonIcon
             iconName="chat-bubble-outline"
             onPress={console.log("hi")}
           />
-          <ButtonIcon iconName="bookmark-outline" onPress={console.log("hi")} />
+          <ButtonIcon iconName="bookmark-outline" onPress={console.log("i")} />
           <ButtonIcon iconName="favorite-outline" onPress={console.log("hi")} />
         </View>
       </View>

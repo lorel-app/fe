@@ -1,12 +1,11 @@
-import { Button } from "react-native";
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { PostShop, PostContent } from "@/components/PostTypes"
 import api from "@/utils/api";
 import Spacer from "@/components/Spacer";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const styles = useGlobalStyles();
   const [posts, setPosts] = useState([]);
 
@@ -29,18 +28,6 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>Hello, world!</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Press Me</Text>
-        </TouchableOpacity>
-        {/* Button is deprecated; here for future use to navigate */}
-        <Button
-          title="Go to Jane's profile"
-          onPress={() => navigation.navigate("Profile", { name: "Jane" })}
-        />
-      </View>
-
       <View style={styles.scrollView}>
         {posts.map((post, index) => {
           const mediaUrls = post.media.map((m) => ({
@@ -59,6 +46,7 @@ const HomeScreen = ({ navigation }) => {
                   caption={post.caption}
                   description={post.description}
                   tags={post.tags}
+                  dateTime={post.createdAt}
                 />
                 <Spacer />
               </React.Fragment>
@@ -71,6 +59,7 @@ const HomeScreen = ({ navigation }) => {
                   media={mediaUrls}
                   caption={post.caption}
                   tags={post.tags}
+                  dateTime={post.createdAt}
                 />
                 <Spacer />
               </React.Fragment>

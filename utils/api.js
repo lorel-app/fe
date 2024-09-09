@@ -100,11 +100,12 @@ const handleResponse = async (request) => {
           error: "Session expired. Please log in again.",
         };
       }
+      // 403 > navigate to verify
     } else if (error.response) {
       return {
         success: false,
         statusCode: error.response.status || -1,
-        error: error.response.data?.message || "Unknown error",
+        error: error.response.data?.error.message || "Unknown error",
       };
     } else {
       return {

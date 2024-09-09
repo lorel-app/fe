@@ -5,7 +5,7 @@ import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { SwiperFlatListWithGestureHandler } from "react-native-swiper-flatlist/WithGestureHandler";
 import { CustomPagination } from "./Pagination";
 
-const PostShop = ({ user, media, title, price, caption, description, tags }) => {
+const PostShop = ({ user, media, title, price, caption, description, tags, dateTime }) => {
   const styles = useGlobalStyles();
   const showPagination = media.length > 1;
   const openPost = () => {
@@ -21,6 +21,7 @@ const PostShop = ({ user, media, title, price, caption, description, tags }) => 
         caption={caption}
         description={description}
         tags={tags}
+        dateTime={dateTime}
       >
         <View style={styles.carouselContainer}>
           <SwiperFlatListWithGestureHandler
@@ -39,9 +40,9 @@ const PostShop = ({ user, media, title, price, caption, description, tags }) => 
             PaginationComponent={CustomPagination}
           />
         </View>
-        <View style={styles.rowSpan}>
-          {title ? <Text style={styles.text}>{title}</Text> : "Untitled"}
-          {price ? <Text style={styles.text}>EUR {price}</Text> : "0"}
+        <View style={[styles.rowSpan, {paddingHorizontal: 16}]}>
+          {title ? <Text style={styles.title}>{title}</Text> : "Untitled"}
+          {price ? <Text style={styles.textAccent}>EUR {price}</Text> : "0"}
         </View>
       </Post>
     </View>
@@ -49,12 +50,12 @@ const PostShop = ({ user, media, title, price, caption, description, tags }) => 
 };
 
 
-const PostContent = ({ user, media, caption, tags }) => {
+const PostContent = ({ user, media, caption, tags, dateTime }) => {
   const styles = useGlobalStyles();
   const showPagination = media.length > 1;
 
   return (
-    <Post user={user} caption={caption} tags={tags}>
+    <Post user={user} caption={caption} tags={tags} dateTime={dateTime}>
       <View style={styles.carouselContainer}>
         <SwiperFlatListWithGestureHandler
           data={media}
@@ -63,7 +64,7 @@ const PostContent = ({ user, media, caption, tags }) => {
               <Image
                 style={styles.image}
                 source={{ uri: item.uri }}
-               // testID={`container_swiper_renderItem_screen_${index}`}
+                // testID={`container_swiper_renderItem_screen_${index}`}
               ></Image>
             </View>
           )}
