@@ -1,3 +1,10 @@
+# [1.1.0-dev.3](https://github.com/lorel-app/fe/compare/v1.1.0-dev.2...v1.1.0-dev.3) (2024-09-16)
+
+
+### Features
+
+* 🫡 add expo web build script ([9a48ccf](https://github.com/lorel-app/fe/commit/9a48ccf404aac8f565931b0d588989b6d48ada32))
+
 # [1.1.0-dev.2](https://github.com/lorel-app/fe/compare/v1.1.0-dev.1...v1.1.0-dev.2) (2024-09-06)
 
 
