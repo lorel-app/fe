@@ -1,3 +1,10 @@
+# [1.1.0-dev.5](https://github.com/lorel-app/fe/compare/v1.1.0-dev.4...v1.1.0-dev.5) (2024-09-16)
+
+
+### Bug Fixes
+
+* 🐛 case sensitivity issue ([e02c6f5](https://github.com/lorel-app/fe/commit/e02c6f57ae2deb688a862480d08b57351997f0aa))
+
 # [1.1.0-dev.4](https://github.com/lorel-app/fe/compare/v1.1.0-dev.3...v1.1.0-dev.4) (2024-09-16)
 
 
