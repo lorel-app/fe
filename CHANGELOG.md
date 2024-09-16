@@ -1,3 +1,12 @@
+# [1.1.0-dev.4](https://github.com/lorel-app/fe/compare/v1.1.0-dev.3...v1.1.0-dev.4) (2024-09-16)
+
+
+### Features
+
+* 🫡 Alertmodal setup and some cleaning ([ff1ad92](https://github.com/lorel-app/fe/commit/ff1ad922f14d9669c20b5ae1c1ec51b44d6b6cf0))
+* 🫡 Feed with Carousels ([cf27bd1](https://github.com/lorel-app/fe/commit/cf27bd13b2dbd5dc4aa32780b119ab5c394955ad))
+* 🫡 Verification ([ed431a0](https://github.com/lorel-app/fe/commit/ed431a0dcb829169d672e1ba63a9e879b40d4113))
+
 # [1.1.0-dev.3](https://github.com/lorel-app/fe/compare/v1.1.0-dev.2...v1.1.0-dev.3) (2024-09-16)
 
 
