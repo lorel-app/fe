@@ -1,3 +1,10 @@
+# [1.1.0-dev.7](https://github.com/lorel-app/fe/compare/v1.1.0-dev.6...v1.1.0-dev.7) (2024-09-16)
+
+
+### Bug Fixes
+
+* 🐛 verification fixed ([8247ac1](https://github.com/lorel-app/fe/commit/8247ac16a7f14efb2101aa601f144f655b18fdb2))
+
 # [1.1.0-dev.6](https://github.com/lorel-app/fe/compare/v1.1.0-dev.5...v1.1.0-dev.6) (2024-09-16)
 
 
