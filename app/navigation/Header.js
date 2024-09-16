@@ -7,19 +7,21 @@ import ButtonIcon from "@/components/ButtonIcon";
 import SignUpLogInModal from "@/app/Auth";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import AuthContext from "@/utils/authContext";
+import { useAlertModal } from "@/hooks/useAlertModal";
 
 export default function Header() {
   const { colors } = useTheme();
   const styles = useGlobalStyles();
+  const showAlert = useAlertModal();
   const { isAuthenticated, logout } = useContext(AuthContext);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogout = async () => {
-    try {
-      await logout();
-      Alert.alert("Logged out", "You have been successfully logged out.");
-    } catch (error) {
-      Alert.alert("Error", "An error occurred during logout.");
+    const response = await logout();
+    if (response.success) {
+      showAlert("success", "Successfully logged out.");
+    } else {
+      showAlert("error", "Something went wrong");
     }
   };
 

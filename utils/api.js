@@ -6,6 +6,7 @@ const BASE_URL = "http://localhost:3000";
 let onTokenChange = null;
 let accessToken = null;
 let refreshToken = null;
+//let userId = null;
 
 const setOnTokenChangeCallback = (callback) => {
   onTokenChange = callback;
@@ -16,6 +17,71 @@ const apiInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+apiInstance.interceptors.response.use(function (response) {
+  return {
+    success: true,
+    status: response.status || 200,
+    data: response.data || null,
+  };
+}, async function (originalRequest) {
+  if (originalRequest.response.status === 401) {
+    const client = axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        "Content-Type": "application/json",
+      }, 
+      validateStatus: status => true
+    })
+    // if (!refreshToken) {
+    //   return {
+    //     success: true,
+    //     status: response.status,
+    //     data: "Session expired or no logged in user",
+    //   }
+    // }
+    const userId = getUserIdFromAccessToken();
+    const response = await client.post("/auth/refresh", {
+      userId,
+      refreshToken,
+    });
+    if (!response.status === 200) {
+      return {
+        success: false,
+        status: response.status,
+        data: response.data || null,
+      }
+    }
+    const newAccessToken = response.data.accessToken;
+    await setTokens(newAccessToken, refreshToken);
+    client.defaults.headers["Authorization"] = `Bearer ${newAccessToken}`;
+    try {
+      const retryResponse = await client({
+        method: originalRequest.config.method,
+        url: originalRequest.config.url,
+        body: originalRequest.config.body,
+        validateStatus: status => status <= 299,
+      });
+      return {
+        success: true,
+        status: retryResponse.status,
+        data: retryResponse.data || null,
+      }
+    } catch(error) {
+        return {
+          success: false,
+          status: error.response.status,
+          data: error.response.data || null,
+        };
+    }
+  } else {
+    return {
+      success: false,
+      status: originalRequest.response.status,
+      data: originalRequest.response.data || null,
+    };
+  }
 });
 
 const setTokens = async (access, refresh) => {
@@ -47,116 +113,74 @@ const loadTokens = async () => {
 
     if (storedAccessToken && storedRefreshToken) {
       setTokens(storedAccessToken, storedRefreshToken);
+    } else {
+      return null;
     }
   } catch (e) {
     console.error("Failed to load tokens from storage", e);
   }
 };
 
-const refreshAccessToken = async () => {
-  if (!refreshToken) throw new Error("No refresh token available");
-
-  try {
-    const response = await apiInstance.post("/auth/refresh", {
-      userId: getUserIdFromAccessToken(),
-      refreshToken,
-    });
-    const newAccessToken = response.data.accessToken;
-    await setTokens(newAccessToken, refreshToken);
-    return newAccessToken;
-  } catch (error) {
-    throw new Error("Failed to refresh access token");
-  }
-};
-
 const getUserIdFromAccessToken = () => {
   if (!accessToken) return null;
   const payload = JSON.parse(atob(accessToken.split(".")[1]));
-  return payload.userId;
-};
-
-const handleResponse = async (request) => {
-  try {
-    const response = await request;
-    return {
-      success: true,
-      statusCode: response.status || 200,
-      data: response.data,
-    };
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      try {
-        await refreshAccessToken();
-        const response = await request;
-        return {
-          success: true,
-          statusCode: response.status || 200,
-          data: response.data,
-        };
-      } catch (refreshError) {
-        return {
-          success: false,
-          statusCode: 401,
-          error: "Session expired. Please log in again.",
-        };
-      }
-      // 403 > navigate to verify
-    } else if (error.response) {
-      return {
-        success: false,
-        statusCode: error.response.status || -1,
-        error: error.response.data?.error.message || "Unknown error",
-      };
-    } else {
-      return {
-        success: false,
-        statusCode: -1,
-        error: "Unknown error",
-      };
-    }
-  }
+  return payload.id;
 };
 
 const signUp = async (body) => {
-  const request = apiInstance.post("/auth/signup", body);
-  const response = await handleResponse(request);
-
-  if (response.success) {
-    const identity = body.username;
-    const password = body.password;
-    const loginResponse = await login({ identity, password });
-    return loginResponse;
-  }
+  const response = await apiInstance.post("/auth/signup", body);
   return response;
 };
 
+// put all calls in try-catch?
 const login = async (body) => {
-  const request = apiInstance.post("/auth/login", body);
-  const response = await handleResponse(request);
-  if (response.success) {
-    const { accessToken, refreshToken, user } = response.data;
-    await setTokens(accessToken, refreshToken);
-  }
-  return response;
+  try {
+    const response = await apiInstance.post("/auth/login", body);
+    if (response.success) {
+      const { accessToken, refreshToken } = response.data;
+      await setTokens(accessToken, refreshToken);
+    }
+    return response;
+  } catch (error) {
+    return error;
+    };
 };
 
 const logout = async () => {
-  const request = apiInstance.post("/auth/logout");
-  const response = await handleResponse(request);
+  const response = await apiInstance.post("/auth/logout");
   if (response.success) {
     await setTokens(null, null);
-    if (onTokenChange) onTokenChange(); // Notify context of the change
+    onTokenChange();
     return { success: true };
   } else {
     return { success: false, error: response.error };
   }
 };
 
+const sendVerificationEmail = async (body) => {
+  const response = await apiInstance.post("/verify/email", body);
+  return response;
+};
+
+const sendVerificationPhone = async (body) => {
+  const response = await apiInstance.post("/verify/phone", body);
+  return response;
+};
+
+const verifyEmail = async (body) => {
+  const response = await apiInstance.post("/verify/email/check", body);
+  return response;
+};
+
+const verifyPhone = async (body) => {
+  const response  = await apiInstance.post("/verify/phone/check", body);
+  return response;
+};
+
 const getMe = async (body) => {
-  const request = apiInstance.get("/me", body);
-  const response = await handleResponse(request);
+  const response = await apiInstance.get("/me", body);
   if (response.success) {
-    return response.data;
+    return response;
   }
   return null;
 };
@@ -164,21 +188,18 @@ const getMe = async (body) => {
 const updateProfilePic = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
-  const request = apiInstance.put("me/display-picture", formData, {
+  const response = await apiInstance.put("me/display-picture", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-
-  const response = await handleResponse(request);
   return response;
 };
 
 const allPosts = async (limit = 10, offset = 0) => {
-  const request = apiInstance.get("/", {
+  const response = await apiInstance.get("/", {
     params: { limit, offset },
   });
-  const response = await handleResponse(request);
   return response;
 };
 
@@ -188,6 +209,10 @@ export default {
   signUp,
   login,
   logout,
+  sendVerificationEmail,
+  sendVerificationPhone,
+  verifyEmail,
+  verifyPhone,
   getMe,
   updateProfilePic,
   allPosts,

@@ -5,14 +5,19 @@ import InputPhoneNumber from "@/components/InputPhoneNumber";
 import ButtonIcon from "@/components/ButtonIcon";
 import Spacer from "@/components/Spacer";
 import AuthContext from "@/utils/authContext";
+import api from "@/utils/api";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { useAlertModal } from "@/hooks/useAlertModal";
 
 export default function SignUpLogInModal({ visible, onClose }) {
   const styles = useGlobalStyles();
-  const { login, signUp } = useContext(AuthContext);
-  //  wait to clean up responses in be
+  const { login } = useContext(AuthContext);
   const showAlert = useAlertModal();
+
+  const [isVerifyModalVisible, setIsVerifyModalVisible] = useState(false);
+  const [isVerifyEmail, setIsVerifyEmail] = useState(true);
+  const [verificationToken, setVerificationToken] = useState("");
+  const [user, setUser] = useState("");
 
   const [form, setForm] = useState({
     username: "",
@@ -23,6 +28,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
     password: "",
     confirmPassword: "",
   });
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -31,118 +37,166 @@ export default function SignUpLogInModal({ visible, onClose }) {
   };
 
   const handleFormSubmit = async () => {
-    const { username, email, identity, phone, password, confirmPassword } =
-      form;
-
     if (isSignUp) {
-      if (!username || !email || !phone || !password || !confirmPassword) {
-        Alert.alert("Error", "Please fill in all fields.");
-        return;
-      }
-      if (password !== confirmPassword) {
-        Alert.alert("Error", "Passwords do not match.");
-        return;
-      }
-      try {
-        const response = await signUp({ username, email, phone, password });
-        if (response.success) {
-          onSignUp(response.data);
-        } else {
-          Alert.alert("Error", response.error);
-        }
-      } catch (error) {
-        Alert.alert("Error", error.message);
-      }
+      await handleSignUp();
     } else {
-      if (!identity || !password) {
-        Alert.alert("Error", "Please fill in all fields.");
-        return;
-      }
-      try {
-        const response = await login({ identity, password });
-        if (response.success) {
-          onLogin(response.data);
-          // working example - wait to clean up responses in be
-          showAlert("success", response.data.message);
-        } else {
-          console.log(response);
-          // working example - wait to clean up responses in be
-          showAlert("error", response.error);
-        }
-      } catch (error) {
-        Alert.alert("Error", error.message);
-      }
+      await handleLogin();
     }
   };
 
-  const onSignUp = (data) => {
-    console.log("Sign up successful:", data);
-    onClose();
+  const handleSignUp = async () => {
+    const { username, email, phone, password, confirmPassword } = form;
+
+    if (!username || !email || !phone || !password || !confirmPassword) {
+      showAlert("error", "Please fill in all fields.");
+      // username = 3-30 chars a-z, 0-9, . and _ 
+      return;
+    }
+    if (password !== confirmPassword) {
+      showAlert("error", "Passwords do not match.");
+      return;
+    }
+    try {
+      const response = await api.signUp({ username, email, phone, password });
+      if (response.success) { // handle 400 / 409 / 500
+        handleVerification(response.data, password);
+        onClose();
+        return;
+      } else {
+        showAlert("error", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
   };
 
-  const onLogin = (data) => {
-    console.log("Login successful:", data);
-    onClose();
+  const handleLogin = async () => {
+    const { identity, password } = form;
+
+    if (!identity || !password) {
+      Alert.alert("Error", "Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const response = await login({ identity, password });
+      if (response.success) {
+        showAlert("success", response.data.message);
+        onClose();
+        return;
+      }
+      if (response.status === 403) {
+        handleVerification(response.data, password);
+        onClose();
+        return;
+      }
+      else {
+        showAlert("error", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  };
+
+  handleVerification = async (data, password) => {
+    console.log("userData expectation:", data);
+    const verificationToken = data.verificationToken;
+    setVerificationToken(verificationToken);
+    const user = data.user;
+    setUser(user);
+ 
+    if (!user.isEmailVerified) {
+      sendEmail(verificationToken);
+      setIsVerifyEmail(true);
+      setIsVerifyModalVisible(true);
+      return;
+    }
+
+    if (user.isEmailVerified && !user.isPhoneVerfied) {
+      console.log("!number entered")
+      sendPhone(verificationToken);
+      setIsVerifyEmail(false);
+      setIsVerifyModalVisible(true);
+      return;
+    }
+
+    // not entering
+    if (user.isEmailVerified && user.isPhoneVerfied) {
+      const response = await login({ identity: user.email, password });
+      if (response.success) {
+        setIsVerifyModalVisible(false);
+        showAlert("success", response.data.message);
+        return;
+      } else {
+        showAlert("error", response.data.message);
+      }
+    }
+  }
+
+  const sendEmail = async (verificationToken) => {
+    const response = await api.sendVerificationEmail({verificationToken});
+    if (response.success) {
+      console.log("email sent")
+    } else {
+      console.log("error", response);
+    }
+    return;
+  };
+
+  const sendPhone = async (verificationToken) => {
+    const response = await api.sendVerificationPhone({
+      verificationToken: verificationToken,
+    });
+    if (response.success) {
+      console.log("text sent");
+    } else {
+      console.log("error", response);
+    }
+    return;
   };
 
   return (
-    <ModalScreen visible={visible} onClose={onClose}>
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          {isSignUp ? "Sign Up (Step 1/3)" : "Log In"}
-        </Text>
-        <Spacer />
+    <>
+      <ModalScreen visible={visible} onClose={onClose}>
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            {isSignUp ? "Sign Up (Step 1/3)" : "Log In"}
+          </Text>
+          <Spacer />
 
-        {isSignUp && (
+          {isSignUp && (
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              value={form.username}
+              onChangeText={(text) => handleChange("username", text)}
+            />
+          )}
+
           <TextInput
             style={styles.input}
-            placeholder="Username"
-            value={form.username}
-            onChangeText={(text) => handleChange("username", text)}
+            placeholder={isSignUp ? "Email" : "Username or Email"}
+            value={isSignUp ? form.email : form.identity}
+            onChangeText={(text) =>
+              handleChange(isSignUp ? "email" : "identity", text)
+            }
           />
-        )}
 
-        <TextInput
-          style={styles.input}
-          placeholder={isSignUp ? "Email" : "Username or Email"}
-          value={isSignUp ? form.email : form.identity}
-          onChangeText={
-            isSignUp
-              ? (text) => handleChange("email", text)
-              : (text) => handleChange("identity", text)
-          }
-        />
+          {isSignUp && (
+            // dont handle change
+            <InputPhoneNumber
+              phoneNumber={form.phone}
+              setPhoneNumber={(text) => handleChange("phone", text)}
+              setCountryCode={(code) => handleChange("phoneCountryCode", code)}
+            />
+          )}
 
-        {isSignUp && (
-          <InputPhoneNumber
-            phoneNumber={form.phone}
-            setPhoneNumber={(text) => handleChange("phone", text)}
-            setCountryCode={(code) => handleChange("phoneCountryCode", code)}
-          />
-        )}
-
-        <View style={styles.inputWithIcon}>
-          <TextInput
-            style={styles.text}
-            placeholder="Password"
-            value={form.password}
-            onChangeText={(text) => handleChange("password", text)}
-            secureTextEntry={!passwordVisible}
-          />
-          <ButtonIcon
-            onPress={() => setPasswordVisible(!passwordVisible)}
-            iconName={passwordVisible ? "visibility-off" : "visibility"}
-            iconSize={24}
-          />
-        </View>
-
-        {isSignUp && (
           <View style={styles.inputWithIcon}>
             <TextInput
               style={styles.text}
-              placeholder="Confirm Password"
-              value={form.confirmPassword}
-              onChangeText={(text) => handleChange("confirmPassword", text)}
+              placeholder="Password"
+              value={form.password}
+              onChangeText={(text) => handleChange("password", text)}
               secureTextEntry={!passwordVisible}
             />
             <ButtonIcon
@@ -151,18 +205,111 @@ export default function SignUpLogInModal({ visible, onClose }) {
               iconSize={24}
             />
           </View>
-        )}
 
-        <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
+          {isSignUp && (
+            <View style={styles.inputWithIcon}>
+              <TextInput
+                style={styles.text}
+                placeholder="Confirm Password"
+                value={form.confirmPassword}
+                onChangeText={(text) => handleChange("confirmPassword", text)}
+                secureTextEntry={!passwordVisible}
+              />
+              <ButtonIcon
+                onPress={() => setPasswordVisible(!passwordVisible)}
+                iconName={passwordVisible ? "visibility-off" : "visibility"}
+                iconSize={24}
+              />
+            </View>
+          )}
+
+          <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
+            <Text style={styles.buttonText}>
+              {isSignUp ? "Sign Up" : "Log In"}
+            </Text>
+          </TouchableOpacity>
+          <Spacer />
+          <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
+            <Text style={styles.link}>
+              {isSignUp ? "I already have an account" : "Create an account"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ModalScreen>
+
+      <VerifyModal
+        visible={isVerifyModalVisible}
+        onClose={() => setIsVerifyModalVisible(false)}
+        isVerifyEmail={isVerifyEmail}
+        verificationToken={verificationToken}
+        user={user}
+      />
+    </>
+  );
+}
+
+export function VerifyModal({ visible, onClose, verificationToken, user, isVerifyEmail }) {
+  const styles = useGlobalStyles();
+  const [code, setCode] = useState("");
+  const showAlert = useAlertModal();
+
+  const verifyCode = async () => {
+    if (!code) {
+      showAlert("error", "Please fill in all fields.");
+      return;
+    }
+    try {
+      const response = isVerifyEmail
+        ? await api.verifyEmail({ verificationToken, code })
+        : await api.verifyPhone({ verificationToken, code });
+
+        if (response.success) {
+          const userData = {
+            user: {
+              ...user,
+              isEmailVerified: isVerifyEmail ? true : user.isEmailVerified,
+              isPhoneVerified: !isVerifyEmail ? true : user.isPhoneVerified,
+            },
+            verificationToken: verificationToken,
+          };
+          console.log("success entered:", userData);
+          handleVerification(userData);
+          return;
+        } else {
+          showAlert("error", response.error);
+        }
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
+
+  return (
+    <ModalScreen visible={visible} onClose={onClose}>
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {isVerifyEmail ? "Sign Up (Step 2/3)" : "Sign Up (Step 3/3)"}
+        </Text>
+        <Spacer />
+        <Text style={styles.textCenter}>
+          {isVerifyEmail
+            ? `Please enter the code sent to ${user.email}`
+            : `Please enter the code sent to ${user.phone}`}
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="000000"
+          value={code}
+          onChangeText={setCode}
+        />
+
+        <TouchableOpacity style={styles.button} onPress={verifyCode}>
           <Text style={styles.buttonText}>
-            {isSignUp ? "Sign Up" : "Log In"}
+            {isVerifyEmail ? "Verify Email" : "Verify Phone Number"}
           </Text>
         </TouchableOpacity>
-        <Spacer />
-        <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
-          <Text style={styles.link}>
-            {isSignUp ? "I already have an account" : "Create an account"}
-          </Text>
+        {/* temp */}
+        <TouchableOpacity onPress={{}}>
+          <Text style={styles.link}>This is the wrong email</Text>
         </TouchableOpacity>
       </View>
     </ModalScreen>

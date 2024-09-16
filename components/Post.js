@@ -67,10 +67,10 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
           <Text style={styles.textLight}>999</Text>
           <ButtonIcon
             iconName="chat-bubble-outline"
-            onPress={console.log("hi")}
+            onPress={{}}
           />
-          <ButtonIcon iconName="bookmark-outline" onPress={console.log("i")} />
-          <ButtonIcon iconName="favorite-outline" onPress={console.log("hi")} />
+          <ButtonIcon iconName="bookmark-outline" onPress={{}} />
+          <ButtonIcon iconName="favorite-outline" onPress={{}} />
         </View>
       </View>
     </View>

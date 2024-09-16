@@ -50,6 +50,12 @@ export const useGlobalStyles = () => {
       fontSize: 14,
       padding: 2,
     },
+    textCenter: {
+      color: colors.text,
+      fontSize: 14,
+      padding: 2,
+      textAlign: "center",
+    },
     textLight: {
       color: colors.secondary,
       fontSize: 12,

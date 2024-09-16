@@ -15,7 +15,6 @@ const HomeScreen = () => {
         const response = await api.allPosts();
         if (response.success) {
           setPosts(response.data.posts);
-          console.log(response);
         } else {
           console.error(response.error);
         }

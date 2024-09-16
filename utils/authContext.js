@@ -45,8 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   const loadUser = useCallback(async () => {
     dispatch({ type: "SET_LOADING", payload: true });
-    await api.loadTokens();
-    const user = await api.getMe();
+    const user = await api.loadTokens();
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
     } else {
@@ -73,14 +72,17 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     const response = await api.login(credentials);
     if (response.success) {
-      dispatch({ type: "LOGIN", payload: response.data.user });
+        dispatch({ type: "LOGIN", payload: response.data.user });
     }
     return response;
   };
 
   const logout = async () => {
-    await api.logout();
-    dispatch({ type: "LOGOUT" });
+    const response = await api.logout();
+    if (response.success) {
+        dispatch({ type: "LOGOUT" });
+    }
+    return response;
   };
 
   return (

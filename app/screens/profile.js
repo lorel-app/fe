@@ -6,9 +6,11 @@ import { useMediaPicker } from "@/hooks/useMediaPicker";
 import api from "@/utils/api";
 import SignUpLogInModal from "@/app/Auth";
 import AuthContext from "@/utils/authContext";
+import { useAlertModal } from "@/hooks/useAlertModal";
 
 const ProfileScreen = () => {
   const styles = useGlobalStyles();
+  const showAlert = useAlertModal();
   const [displayPicture, setDisplayPicture] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const { isAuthenticated, user, loadUser } = useContext(AuthContext);
@@ -16,7 +18,7 @@ const ProfileScreen = () => {
 
   const fetchUser = useCallback(async () => {
     if (isAuthenticated && user) {
-      setDisplayPicture(user.displayPicture);
+      setDisplayPicture(user.displayPictureThumb);
     }
   }, [isAuthenticated, user]);
 
@@ -32,17 +34,13 @@ const ProfileScreen = () => {
         try {
           const response = await api.updateProfilePic(image);
           if (response.success) {
-            Alert.alert("Success", "Profile picture updated successfully");
             const newDisplayPicture = response.data.displayPicture.medium;
             setDisplayPicture(newDisplayPicture);
           } else {
-            Alert.alert(
-              "Error",
-              response.error || "Failed to update profile picture"
-            );
+            showAlert("error", response.data.message);
           }
         } catch (error) {
-          Alert.alert("Error", "An error occurred during the upload");
+          console.error("Error uploading profile image:", error);
         }
       }
     };
