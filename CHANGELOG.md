@@ -1,3 +1,10 @@
+# [1.1.0-dev.6](https://github.com/lorel-app/fe/compare/v1.1.0-dev.5...v1.1.0-dev.6) (2024-09-16)
+
+
+### Bug Fixes
+
+* 🐛 windows is driving me insane ([d7e6a85](https://github.com/lorel-app/fe/commit/d7e6a85598ea63772c239de3684c5e0f6f6fb7fd))
+
 # [1.1.0-dev.5](https://github.com/lorel-app/fe/compare/v1.1.0-dev.4...v1.1.0-dev.5) (2024-09-16)
 
 
