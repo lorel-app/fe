@@ -1,7 +1,7 @@
 {
   "name": "fe",
   "main": "expo-router/entry",
-  "version": "1.1.0-dev.1",
+  "version": "1.1.0-dev.3",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "build:web": "expo export -p web"
   },
   "jest": {
     "preset": "jest-expo"
