@@ -5,7 +5,7 @@ import AppDarkTheme from "@/constants/AppDarkTheme";
 import AppLightTheme from "@/constants/AppLightTheme";
 import ThemeContext from "@/components/ThemeContext";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import Tabs from "./navigation/MainTab"
+import Tabs from "./navigation/MainTab" 
 import Header from "./navigation/Header"
 import { AuthProvider } from "@/utils/authContext";
 import { AlertProvider } from "@/hooks/useAlertModal";
@@ -26,7 +26,7 @@ export default function Index() {
           >
             <Header />
             <Tabs />
-            <StatusBar style="auto" />
+            <StatusBar style={theme === "light" ? "dark" : "light"} />
           </NavigationContainer>
         </AlertProvider>
       </ThemeContext.Provider>

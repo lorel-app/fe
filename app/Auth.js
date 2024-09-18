@@ -191,7 +191,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
           <View style={styles.inputWithIcon}>
             <TextInput
-              style={styles.text}
+              style={styles.input}
               placeholder="Password"
               value={form.password}
               onChangeText={(text) => handleChange("password", text)}

@@ -29,10 +29,27 @@ export const useGlobalStyles = () => {
     // temp - add containerLeft/containerCenter?
     container: {
       flex: 1,
-      // backgroundColor: colors.elevate,
       padding: 16,
       alignItems: "center",
       width: "100%",
+    },
+    containerLeft: {
+      flex: 1,
+      paddingLeft: 10,
+      paddingBottom: 10,
+      width: "100%",
+    },
+    containerFull: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    containerSticky: {
+      position: "absolute",
+      zIndex: 1000,
+      paddingVertical: 0,
+      ...shadowStyle,
     },
     title: {
       color: colors.text,
@@ -83,7 +100,15 @@ export const useGlobalStyles = () => {
       backgroundColor: colors.background,
       color: colors.text,
       padding: 10,
-      marginBottom: 15,
+      //borderColor: colors.primaryTint,
+      borderRadius: 10,
+      width: "100%",
+    },
+    inputLight: {
+      fontSize: 16,
+      backgroundColor: colors.card,
+      color: colors.text,
+      padding: 10,
       // borderColor: colors.primaryTint,
       borderRadius: 10,
       width: "100%",
@@ -94,7 +119,6 @@ export const useGlobalStyles = () => {
       alignItems: "center",
       backgroundColor: colors.background,
       borderRadius: 10,
-      marginBottom: 15,
       paddingVertical: 8,
       paddingHorizontal: 10,
       width: "100%",
@@ -103,6 +127,33 @@ export const useGlobalStyles = () => {
       backgroundColor: colors.primary,
       padding: 10,
       margin: 5,
+      borderRadius: 25,
+      width: 150,
+      height: "auto",
+      alignSelf: "center",
+      ...shadowStyle,
+    },
+    buttonSmall: {
+      backgroundColor: colors.tint,
+      borderRadius: 5,
+      paddingHorizontal: 5,
+      paddingVertical: 3,
+      margin: 3,
+      height: "auto",
+    },
+    buttonSmallSelected: {
+      backgroundColor: colors.card,
+      borderRadius: 5,
+      paddingHorizontal: 5,
+      paddingVertical: 3,
+      margin: 3,
+      height: "auto",
+    },
+    buttonAbsolute: {
+      position: "absolute",
+      bottom: 15,
+      backgroundColor: colors.primary,
+      padding: 10,
       borderRadius: 25,
       width: 150,
       alignSelf: "center",
@@ -146,6 +197,13 @@ export const useGlobalStyles = () => {
     },
     // make responsive
     scrollView: {
+      alignItems: "center",
+    },
+
+    rowScroll: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      marginVertical: 8,
       alignItems: "center",
     },
     // make responsive
@@ -197,14 +255,6 @@ export const useGlobalStyles = () => {
       height: 100,
       borderRadius: 50,
     },
-    buttonSmall: {
-      backgroundColor: colors.tint,
-      borderRadius: 5,
-      paddingHorizontal: 5,
-      paddingVertical: 3,
-      margin: 3,
-    },
-
     postShop: {
       backgroundColor: colors.card,
       alignItems: "center",

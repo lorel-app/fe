@@ -15,7 +15,7 @@ const AppLightTheme = {
     // notification: "rgb(255, 59, 48)",
     background: "#EEEBE6",
     card: Colors.white,
-    tint: "#DADEDF",
+    tint: "#D3D5DC",
     accent: Colors.red,
     primary: Colors.blue,
     primaryTint: "#B5BBD1",
