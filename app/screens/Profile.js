@@ -1,55 +1,55 @@
-import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import React, { useEffect, useState, useCallback, useContext } from "react";
-import { useGlobalStyles } from "@/hooks/useGlobalStyles";
-import { useMediaPicker } from "@/hooks/useMediaPicker";
-import api from "@/utils/api";
-import AuthContext from "@/utils/authContext";
-import { useAlertModal } from "@/hooks/useAlertModal";
-import UnauthenticatedView from "@/components/UnauthenticatedView";
+import { View, TouchableOpacity, Text, Image, ScrollView } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useMediaPicker } from '@/hooks/useMediaPicker'
+import api from '@/utils/api'
+import AuthContext from '@/utils/authContext'
+import { useAlertModal } from '@/hooks/useAlertModal'
+import UnauthenticatedView from '@/components/UnauthenticatedView'
 
 const ProfileScreen = () => {
-  const styles = useGlobalStyles();
-  const showAlert = useAlertModal();
-  const [displayPicture, setDisplayPicture] = useState(null);
-  const { isAuthenticated, user, loadUser } = useContext(AuthContext);
-  const { image, pickImage } = useMediaPicker();
+  const styles = useGlobalStyles()
+  const showAlert = useAlertModal()
+  const [displayPicture, setDisplayPicture] = useState(null)
+  const { isAuthenticated, user, loadUser } = useContext(AuthContext)
+  const { image, pickImage } = useMediaPicker()
 
   const fetchUser = useCallback(async () => {
     if (isAuthenticated && user) {
-      setDisplayPicture(user.displayPictureThumb);
+      setDisplayPicture(user.displayPictureThumb)
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user])
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchUser();
+      fetchUser()
     }
-  }, [isAuthenticated, fetchUser]);
+  }, [isAuthenticated, fetchUser])
 
   useEffect(() => {
     const uploadImage = async () => {
       if (image) {
         try {
-          const response = await api.updateProfilePic(image);
+          const response = await api.updateProfilePic(image)
           if (response.success) {
-            const newDisplayPicture = response.data.displayPicture.medium;
-            setDisplayPicture(newDisplayPicture);
+            const newDisplayPicture = response.data.displayPicture.medium
+            setDisplayPicture(newDisplayPicture)
           } else {
-            showAlert("error", response.data.message);
+            showAlert('error', response.data.message)
           }
         } catch (error) {
-          console.error("Error uploading profile image:", error);
+          console.error('Error uploading profile image:', error)
         }
       }
-    };
+    }
 
-    uploadImage();
-  }, [image, fetchUser, showAlert]);
+    uploadImage()
+  }, [image, fetchUser, showAlert])
 
   return isAuthenticated ? (
     <ScrollView>
-    <View style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.rowSpan}>
           <TouchableOpacity style={styles.row}>
             {displayPicture ? (
@@ -67,11 +67,11 @@ const ProfileScreen = () => {
             <Text>Edit Profile Picture</Text>
           </TouchableOpacity>
         </View>
-        </View>
-      </ScrollView>
-      ) : (
-        <UnauthenticatedView />
-  );
-  };
+      </View>
+    </ScrollView>
+  ) : (
+    <UnauthenticatedView />
+  )
+}
 
-export default ProfileScreen;
+export default ProfileScreen

@@ -1,165 +1,165 @@
-import React, { useState, useContext, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import ModalScreen from "@/components/ModalScreen";
-import InputPhoneNumber from "@/components/InputPhoneNumber";
-import ButtonIcon from "@/components/ButtonIcon";
-import Spacer from "@/components/Spacer";
-import AuthContext from "@/utils/authContext";
-import api from "@/utils/api";
-import { useGlobalStyles } from "@/hooks/useGlobalStyles";
-import { useAlertModal } from "@/hooks/useAlertModal";
+import React, { useState, useContext, useEffect } from 'react'
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import ModalScreen from '@/components/ModalScreen'
+import InputPhoneNumber from '@/components/InputPhoneNumber'
+import ButtonIcon from '@/components/ButtonIcon'
+import Spacer from '@/components/Spacer'
+import AuthContext from '@/utils/authContext'
+import api from '@/utils/api'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useAlertModal } from '@/hooks/useAlertModal'
 
 export default function SignUpLogInModal({ visible, onClose }) {
-  const styles = useGlobalStyles();
-  const { login } = useContext(AuthContext);
-  const showAlert = useAlertModal();
+  const styles = useGlobalStyles()
+  const { login } = useContext(AuthContext)
+  const showAlert = useAlertModal()
 
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isVerifyModalVisible, setIsVerifyModalVisible] = useState(false);
-  const [isVerifyEmail, setIsVerifyEmail] = useState(true);
-  const [verificationToken, setVerificationToken] = useState("");
-  const [user, setUser] = useState("");
-  const [savedPassword, setSavedPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false)
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const [isVerifyModalVisible, setIsVerifyModalVisible] = useState(false)
+  const [isVerifyEmail, setIsVerifyEmail] = useState(true)
+  const [verificationToken, setVerificationToken] = useState('')
+  const [user, setUser] = useState('')
+  const [savedPassword, setSavedPassword] = useState('')
 
   const [form, setForm] = useState({
-    username: "",
-    email: "",
-    identity: "",
-    phoneCountryCode: "DE",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-  });
+    username: '',
+    email: '',
+    identity: '',
+    phoneCountryCode: 'DE',
+    phone: '',
+    password: '',
+    confirmPassword: ''
+  })
 
   const handleChange = (key, value) => {
-    setForm((prevForm) => ({ ...prevForm, [key]: value }));
-  };
+    setForm(prevForm => ({ ...prevForm, [key]: value }))
+  }
 
   const handleFormSubmit = async () => {
     if (isSignUp) {
-      await handleSignUp();
+      await handleSignUp()
     } else {
-      await handleLogin();
+      await handleLogin()
     }
-  };
+  }
 
   const handleSignUp = async () => {
-    const { username, email, phone, password, confirmPassword } = form;
+    const { username, email, phone, password, confirmPassword } = form
 
     if (!username || !email || !phone || !password || !confirmPassword) {
-      showAlert("error", "Please fill in all fields.");
-      // username = 3-30 chars a-z, 0-9, . and _ 
-      return;
+      showAlert('error', 'Please fill in all fields.')
+      // username = 3-30 chars a-z, 0-9, . and _
+      return
     }
     if (password !== confirmPassword) {
-      showAlert("error", "Passwords do not match.");
-      return;
+      showAlert('error', 'Passwords do not match.')
+      return
     }
     try {
-      const response = await api.signUp({ username, email, phone, password });
-      if (response.success) { // handle 400 / 409 / 500
-        handleVerification(response.data, password);
-        onClose();
-        return;
+      const response = await api.signUp({ username, email, phone, password })
+      if (response.success) {
+        // handle 400 / 409 / 500
+        handleVerification(response.data, password)
+        onClose()
+        return
       } else {
-        showAlert("error", response.data.message);
+        showAlert('error', response.data.message)
       }
     } catch (error) {
-      console.error("Error signing up:", error);
+      console.error('Error signing up:', error)
     }
-  };
+  }
 
   const handleLogin = async () => {
-    const { identity, password } = form;
+    const { identity, password } = form
 
     if (!identity || !password) {
-      Alert.alert("Error", "Please fill in all fields.");
-      return;
+      showAlert('error', 'Please fill in all fields.')
+      return
     }
 
     try {
-      const response = await login({ identity, password });
+      const response = await login({ identity, password })
       if (response.success) {
-        showAlert("success", response.data.message);
-        onClose();
-        return;
+        onClose()
+        showAlert('success', response.data.message)
+        return
       }
       if (response.status === 403) {
-        handleVerification(response.data, password);
-        onClose();
-        return;
-      }
-      else {
-        showAlert("error", response.data.message);
+        handleVerification(response.data, password)
+        onClose()
+        return
+      } else {
+        showAlert('error', response.data.message)
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error('Error logging in:', error)
     }
-  };
+  }
 
   handleVerification = async (data, password = savedPassword) => {
     if (password) {
-      setSavedPassword(password);
+      setSavedPassword(password)
     }
-    const verificationToken = data.verificationToken;
-    setVerificationToken(verificationToken);
-    const user = data.user;
-    setUser(user);
+    const verificationToken = data.verificationToken
+    setVerificationToken(verificationToken)
+    const user = data.user
+    setUser(user)
 
     if (!user.isEmailVerified) {
-      sendEmail(verificationToken);
-      setIsVerifyEmail(true);
-      setIsVerifyModalVisible(true);
-      return;
+      sendEmail(verificationToken)
+      setIsVerifyEmail(true)
+      setIsVerifyModalVisible(true)
+      return
     }
 
     if (user.isEmailVerified && !user.isPhoneVerified) {
-      sendPhone(verificationToken);
-      setIsVerifyEmail(false);
-      setIsVerifyModalVisible(true);
-      return;
+      sendPhone(verificationToken)
+      setIsVerifyEmail(false)
+      setIsVerifyModalVisible(true)
+      return
     }
 
     if (user.isEmailVerified && user.isPhoneVerified) {
       const response = await login({
         identity: user.email,
-        password: savedPassword,
-      });
+        password: savedPassword
+      })
       if (response.success) {
-        setIsVerifyModalVisible(false);
-        showAlert("success", response.data.message);
-        return;
+        setIsVerifyModalVisible(false)
+        showAlert('success', response.data.message)
+        return
       } else {
-        showAlert("error", response.data.message);
+        showAlert('error', response.data.message)
       }
     }
   }
 
-  const sendEmail = async (verificationToken) => {
-    const response = await api.sendVerificationEmail({verificationToken});
+  const sendEmail = async verificationToken => {
+    const response = await api.sendVerificationEmail({ verificationToken })
     if (!response.success) {
-      showAlert("error", "Something went wrong. Please try again later.")
+      showAlert('error', 'Something went wrong. Please try again later.')
     }
-    return;
-  };
+    return
+  }
 
-  const sendPhone = async (verificationToken) => {
+  const sendPhone = async verificationToken => {
     const response = await api.sendVerificationPhone({
-      verificationToken: verificationToken,
-    });
+      verificationToken: verificationToken
+    })
     if (!response.success) {
-      showAlert("error", "Something went wrong. Please try again later.")
+      showAlert('error', 'Something went wrong. Please try again later.')
     }
-    return;
-  };
+    return
+  }
 
   return (
     <>
       <ModalScreen visible={visible} onClose={onClose}>
         <View style={styles.container}>
           <Text style={styles.title}>
-            {isSignUp ? "Sign Up (Step 1/3)" : "Log In"}
+            {isSignUp ? 'Sign Up (Step 1/3)' : 'Log In'}
           </Text>
           <Spacer />
 
@@ -168,24 +168,24 @@ export default function SignUpLogInModal({ visible, onClose }) {
               style={styles.input}
               placeholder="Username"
               value={form.username}
-              onChangeText={(text) => handleChange("username", text)}
+              onChangeText={text => handleChange('username', text)}
             />
           )}
 
           <TextInput
             style={styles.input}
-            placeholder={isSignUp ? "Email" : "Username or Email"}
+            placeholder={isSignUp ? 'Email' : 'Username or Email'}
             value={isSignUp ? form.email : form.identity}
-            onChangeText={(text) =>
-              handleChange(isSignUp ? "email" : "identity", text)
+            onChangeText={text =>
+              handleChange(isSignUp ? 'email' : 'identity', text)
             }
           />
 
           {isSignUp && (
             <InputPhoneNumber
               phoneNumber={form.phone}
-              setPhoneNumber={(text) => handleChange("phone", text)}
-              setCountryCode={(code) => handleChange("phoneCountryCode", code)}
+              setPhoneNumber={text => handleChange('phone', text)}
+              setCountryCode={code => handleChange('phoneCountryCode', code)}
             />
           )}
 
@@ -194,12 +194,12 @@ export default function SignUpLogInModal({ visible, onClose }) {
               style={styles.input}
               placeholder="Password"
               value={form.password}
-              onChangeText={(text) => handleChange("password", text)}
+              onChangeText={text => handleChange('password', text)}
               secureTextEntry={!passwordVisible}
             />
             <ButtonIcon
               onPress={() => setPasswordVisible(!passwordVisible)}
-              iconName={passwordVisible ? "visibility-off" : "visibility"}
+              iconName={passwordVisible ? 'visibility-off' : 'visibility'}
               iconSize={24}
             />
           </View>
@@ -210,12 +210,12 @@ export default function SignUpLogInModal({ visible, onClose }) {
                 style={styles.text}
                 placeholder="Confirm Password"
                 value={form.confirmPassword}
-                onChangeText={(text) => handleChange("confirmPassword", text)}
+                onChangeText={text => handleChange('confirmPassword', text)}
                 secureTextEntry={!passwordVisible}
               />
               <ButtonIcon
                 onPress={() => setPasswordVisible(!passwordVisible)}
-                iconName={passwordVisible ? "visibility-off" : "visibility"}
+                iconName={passwordVisible ? 'visibility-off' : 'visibility'}
                 iconSize={24}
               />
             </View>
@@ -223,13 +223,13 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
           <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
             <Text style={styles.buttonText}>
-              {isSignUp ? "Sign Up" : "Log In"}
+              {isSignUp ? 'Sign Up' : 'Log In'}
             </Text>
           </TouchableOpacity>
           <Spacer />
           <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
             <Text style={styles.link}>
-              {isSignUp ? "I already have an account" : "Create an account"}
+              {isSignUp ? 'I already have an account' : 'Create an account'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -243,53 +243,59 @@ export default function SignUpLogInModal({ visible, onClose }) {
         user={user}
       />
     </>
-  );
+  )
 }
 
-export function VerifyModal({ visible, onClose, verificationToken, user, isVerifyEmail }) {
-  const styles = useGlobalStyles();
-  const [code, setCode] = useState("");
-  const showAlert = useAlertModal();
+export function VerifyModal({
+  visible,
+  onClose,
+  verificationToken,
+  user,
+  isVerifyEmail
+}) {
+  const styles = useGlobalStyles()
+  const [code, setCode] = useState('')
+  const showAlert = useAlertModal()
 
   useEffect(() => {
-    setCode("");
-  }, [isVerifyEmail]);
+    setCode('')
+  }, [isVerifyEmail])
 
   const verifyCode = async () => {
     if (!code) {
-      showAlert("error", "Please fill in all fields.");
-      return;
+      showAlert('error', 'Please fill in all fields.')
+      return
     }
     try {
       const response = isVerifyEmail
         ? await api.verifyEmail({ verificationToken, code })
-        : await api.verifyPhone({ verificationToken, code });
+        : await api.verifyPhone({ verificationToken, code })
 
-        if (response.success) {
-          const userData = {
-            user: {
-              ...user,
-              isEmailVerified: isVerifyEmail ? true : user.isEmailVerified,
-              isPhoneVerified: !isVerifyEmail ? true : user.isPhoneVerified,
-            },
-            verificationToken: verificationToken,
-          };
-          console.log("success entered:", userData);
-          handleVerification(userData);
-          return;
-        } else {
-          showAlert("error", response.error);
+      if (response.success) {
+        const userData = {
+          user: {
+            ...user,
+            isEmailVerified: isVerifyEmail ? true : user.isEmailVerified,
+            isPhoneVerified: !isVerifyEmail ? true : user.isPhoneVerified
+          },
+          verificationToken: verificationToken
         }
+        console.log('success entered:', userData)
+        handleVerification(userData)
+        return
+      } else {
+        showAlert('error', response.error)
+      }
     } catch (error) {
-      Alert.alert("Error", error.message);
+      Alert.alert('Error', error.message)
     }
-  };
+  }
 
   return (
     <ModalScreen visible={visible} onClose={onClose}>
       <View style={styles.container}>
         <Text style={styles.title}>
-          {isVerifyEmail ? "Sign Up (Step 2/3)" : "Sign Up (Step 3/3)"}
+          {isVerifyEmail ? 'Sign Up (Step 2/3)' : 'Sign Up (Step 3/3)'}
         </Text>
         <Spacer />
         <Text style={styles.textCenter}>
@@ -310,10 +316,12 @@ export function VerifyModal({ visible, onClose, verificationToken, user, isVerif
         {/* temp */}
         <TouchableOpacity onPress={{}}>
           <Text style={styles.link}>
-            {isVerifyEmail ? "This is the wrong email address" : "This is the wrong phone number"}
+            {isVerifyEmail
+              ? 'This is the wrong email address'
+              : 'This is the wrong phone number'}
           </Text>
         </TouchableOpacity>
       </View>
     </ModalScreen>
-  );
+  )
 }

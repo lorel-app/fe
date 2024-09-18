@@ -1,22 +1,22 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import HomeScreen from "@/app/screens/Home";
-import SearchScreen from "@/app/screens/Search";
-import AddScreen from "@/app/screens/Add"
-import ProfileScreen from "@/app/screens/Profile";
-import { useTheme } from "@react-navigation/native";
+import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import HomeScreen from '@/app/screens/Home'
+import SearchScreen from '@/app/screens/Search'
+import AddScreen from '@/app/screens/Add'
+import ProfileScreen from '@/app/screens/Profile'
+import { useTheme } from '@react-navigation/native'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 const tabIcons = {
-  Home: "home",
-  Search: "search",
-  Add: "add",
-  Profile: "person",
-};
+  Home: 'home',
+  Search: 'search',
+  Add: 'add',
+  Profile: 'person'
+}
 
 function Tabs() {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -27,16 +27,16 @@ function Tabs() {
               size={size}
               color={color}
             />
-          );
+          )
         },
 
         tabBarActiveTintColor: colors.secondary,
         tabBarInactiveTintColor: colors.tint,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: colors.card,
+          backgroundColor: colors.card
         },
-        headerShown: false,
+        headerShown: false
         // tabBarBadge + tabBarBadgeStyle for notifications
       })}
     >
@@ -45,7 +45,7 @@ function Tabs() {
       <Tab.Screen name="Add" component={AddScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
-  );
+  )
 }
 
 export default Tabs

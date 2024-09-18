@@ -1,12 +1,12 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { useGlobalStyles } from "@/hooks/useGlobalStyles";
-import SignUpLogInModal from "@/app/Auth";
-import Spacer from "@/components/Spacer";
+import React from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import SignUpLogInModal from '@/app/Auth'
+import Spacer from '@/components/Spacer'
 
 const UnauthenticatedView = () => {
-  const styles = useGlobalStyles();
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const styles = useGlobalStyles()
+  const [modalVisible, setModalVisible] = React.useState(false)
 
   return (
     <View style={styles.containerFull}>
@@ -23,11 +23,11 @@ const UnauthenticatedView = () => {
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onLoginSuccess={() => {
-          setModalVisible(false);
+          setModalVisible(false)
         }}
       />
     </View>
-  );
-};
+  )
+}
 
-export default UnauthenticatedView;
+export default UnauthenticatedView

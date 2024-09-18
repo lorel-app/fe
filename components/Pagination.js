@@ -1,11 +1,11 @@
-import React from "react";
-import { useGlobalStyles } from "@/hooks/useGlobalStyles";
-import { useTheme } from "@react-navigation/native";
-import { Pagination } from "react-native-swiper-flatlist";
+import React from 'react'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useTheme } from '@react-navigation/native'
+import { Pagination } from 'react-native-swiper-flatlist'
 
-export const CustomPagination = (props) => {
-  const styles = useGlobalStyles();
-  const { colors } = useTheme();
+export const CustomPagination = props => {
+  const styles = useGlobalStyles()
+  const { colors } = useTheme()
   return (
     <Pagination
       {...props}
@@ -14,5 +14,5 @@ export const CustomPagination = (props) => {
       paginationDefaultColor={colors.primaryTint}
       paginationActiveColor={colors.primary}
     />
-  );
-};
+  )
+}

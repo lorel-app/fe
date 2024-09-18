@@ -1,20 +1,20 @@
-import Icon from "react-native-vector-icons/MaterialIcons";
-import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { useGlobalStyles } from "@/hooks/useGlobalStyles";
-import { useTheme } from "@react-navigation/native";
-import ButtonIcon from "./ButtonIcon";
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import React from 'react'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useTheme } from '@react-navigation/native'
+import ButtonIcon from './ButtonIcon'
 
-  const formatDate = (isoString) => {
-    const date = new Date(isoString);
-    const day = date.getDate();
-    const month = date.toLocaleString("default", { month: "short" });
-    return `${day} ${month}`;
-  };
+const formatDate = isoString => {
+  const date = new Date(isoString)
+  const day = date.getDate()
+  const month = date.toLocaleString('default', { month: 'short' })
+  return `${day} ${month}`
+}
 
 const Post = ({ user, caption, tags, dateTime, children }) => {
-  const styles = useGlobalStyles();
-  const { colors } = useTheme();
+  const styles = useGlobalStyles()
+  const { colors } = useTheme()
 
   return (
     // Needs margin around this view; wait to implement responsiveness
@@ -56,16 +56,16 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
                 style={{
                   color: (() => {
                     switch (tag.type) {
-                      case "SUBJECT":
-                        return colors.tertiary;
-                      case "MEDIUM":
-                        return colors.primary;
-                      case "STYLE":
-                        return colors.secondary;
+                      case 'SUBJECT':
+                        return colors.tertiary
+                      case 'MEDIUM':
+                        return colors.primary
+                      case 'STYLE':
+                        return colors.secondary
                       default:
-                        return colors.text;
+                        return colors.text
                     }
-                  })(),
+                  })()
                 }}
               >
                 {tag.name}
@@ -81,8 +81,7 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
 export default Post
-

@@ -1,29 +1,29 @@
-import React, { useState, useContext } from "react";
-import { View, Alert } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import LogoSvg from "@/assets/images/LogoMain.svg";
-import ButtonSwitch from "@/components/ButtonSwitch";
-import ButtonIcon from "@/components/ButtonIcon";
-import SignUpLogInModal from "@/app/Auth";
-import { useGlobalStyles } from "@/hooks/useGlobalStyles";
-import AuthContext from "@/utils/authContext";
-import { useAlertModal } from "@/hooks/useAlertModal";
+import React, { useState, useContext } from 'react'
+import { View, Alert } from 'react-native'
+import { useTheme } from '@react-navigation/native'
+import LogoSvg from '@/assets/images/LogoMain.svg'
+import ButtonSwitch from '@/components/ButtonSwitch'
+import ButtonIcon from '@/components/ButtonIcon'
+import SignUpLogInModal from '@/app/Auth'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import AuthContext from '@/utils/authContext'
+import { useAlertModal } from '@/hooks/useAlertModal'
 
 export default function Header() {
-  const { colors } = useTheme();
-  const styles = useGlobalStyles();
-  const showAlert = useAlertModal();
-  const { isAuthenticated, logout } = useContext(AuthContext);
-  const [modalVisible, setModalVisible] = useState(false);
+  const { colors } = useTheme()
+  const styles = useGlobalStyles()
+  const showAlert = useAlertModal()
+  const { isAuthenticated, logout } = useContext(AuthContext)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const handleLogout = async () => {
-    const response = await logout();
+    const response = await logout()
     if (response.success) {
-      showAlert("success", "Successfully logged out.");
+      showAlert('success', 'Successfully logged out.')
     } else {
-      showAlert("error", "Something went wrong");
+      showAlert('error', 'Something went wrong')
     }
-  };
+  }
 
   return (
     <View style={styles.header}>
@@ -44,5 +44,5 @@ export default function Header() {
         onClose={() => setModalVisible(false)}
       />
     </View>
-  );
+  )
 }
