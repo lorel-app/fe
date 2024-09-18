@@ -1,12 +1,11 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
 let onTokenChange = null;
 let accessToken = null;
 let refreshToken = null;
-//let userId = null;
 
 const setOnTokenChangeCallback = (callback) => {
   onTokenChange = callback;
@@ -34,13 +33,6 @@ apiInstance.interceptors.response.use(function (response) {
       }, 
       validateStatus: status => true
     })
-    // if (!refreshToken) {
-    //   return {
-    //     success: true,
-    //     status: response.status,
-    //     data: "Session expired or no logged in user",
-    //   }
-    // }
     const userId = getUserIdFromAccessToken();
     const response = await client.post("/auth/refresh", {
       userId,
@@ -132,7 +124,6 @@ const signUp = async (body) => {
   return response;
 };
 
-// put all calls in try-catch?
 const login = async (body) => {
   try {
     const response = await apiInstance.post("/auth/login", body);
