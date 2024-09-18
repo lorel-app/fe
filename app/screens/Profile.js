@@ -1,18 +1,17 @@
-import { View, TouchableOpacity, Text, Alert, Image } from "react-native";
+import { View, TouchableOpacity, Text, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import React, { useEffect, useState, useCallback, useContext } from "react";
 import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { useMediaPicker } from "@/hooks/useMediaPicker";
 import api from "@/utils/api";
-import SignUpLogInModal from "@/app/Auth";
 import AuthContext from "@/utils/authContext";
 import { useAlertModal } from "@/hooks/useAlertModal";
+import UnauthenticatedView from "@/components/UnauthenticatedView";
 
 const ProfileScreen = () => {
   const styles = useGlobalStyles();
   const showAlert = useAlertModal();
   const [displayPicture, setDisplayPicture] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
   const { isAuthenticated, user, loadUser } = useContext(AuthContext);
   const { image, pickImage } = useMediaPicker();
 
@@ -46,11 +45,11 @@ const ProfileScreen = () => {
     };
 
     uploadImage();
-  }, [image, fetchUser]);
+  }, [image, fetchUser, showAlert]);
 
-  return (
+  return isAuthenticated ? (
+    <ScrollView>
     <View style={styles.container}>
-      {isAuthenticated ? (
         <View style={styles.rowSpan}>
           <TouchableOpacity style={styles.row}>
             {displayPicture ? (
@@ -68,24 +67,11 @@ const ProfileScreen = () => {
             <Text>Edit Profile Picture</Text>
           </TouchableOpacity>
         </View>
-      ) : (
-        <View>
-          <Text style={styles.title}>Please log in or create an account</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setModalVisible(true)}
-          >
-            <Text style={styles.buttonText}>Sign Up / Log In</Text>
-          </TouchableOpacity>
         </View>
-      )}
-      <SignUpLogInModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onLoginSuccess={loadUser}
-      />
-    </View>
+      </ScrollView>
+      ) : (
+        <UnauthenticatedView />
   );
-};
+  };
 
 export default ProfileScreen;

@@ -39,7 +39,7 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
 
       {children}
 
-      <View style={[styles.row, {paddingHorizontal: 8}]}>
+      <View style={[styles.row, { paddingHorizontal: 8 }]}>
         {dateTime ? (
           <Text style={[styles.textLight, { paddingHorizontal: 8 }]}>
             {formatDate(dateTime)}
@@ -54,8 +54,18 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
             <TouchableOpacity key={index} style={styles.buttonSmall}>
               <Text
                 style={{
-                  color:
-                    tag.type === "SUBJECT" ? colors.tertiary : colors.secondary,
+                  color: (() => {
+                    switch (tag.type) {
+                      case "SUBJECT":
+                        return colors.tertiary;
+                      case "MEDIUM":
+                        return colors.primary;
+                      case "STYLE":
+                        return colors.secondary;
+                      default:
+                        return colors.text;
+                    }
+                  })(),
                 }}
               >
                 {tag.name}
@@ -65,10 +75,7 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
         </View>
         <View style={styles.rowFit}>
           <Text style={styles.textLight}>999</Text>
-          <ButtonIcon
-            iconName="chat-bubble-outline"
-            onPress={{}}
-          />
+          <ButtonIcon iconName="chat-bubble-outline" onPress={{}} />
           <ButtonIcon iconName="bookmark-outline" onPress={{}} />
           <ButtonIcon iconName="favorite-outline" onPress={{}} />
         </View>

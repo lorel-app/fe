@@ -203,6 +203,11 @@ const allPosts = async (limit = 10, offset = 0) => {
   return response;
 };
 
+const allTags = async () => {
+  const response = await apiInstance.get("/tag");
+  return response;
+}
+
 loadTokens();
 
 export default {
@@ -216,6 +221,7 @@ export default {
   getMe,
   updateProfilePic,
   allPosts,
+  allTags,
   loadTokens,
   setOnTokenChangeCallback,
 };
