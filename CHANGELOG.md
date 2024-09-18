@@ -1,3 +1,10 @@
+# [1.1.0-dev.8](https://github.com/lorel-app/fe/compare/v1.1.0-dev.7...v1.1.0-dev.8) (2024-09-18)
+
+
+### Features
+
+* 🫡 Basic add and search screens ([1bae0ed](https://github.com/lorel-app/fe/commit/1bae0ed9f5c7eb6fcddb9926b965f047b6a070ae))
+
 # [1.1.0-dev.7](https://github.com/lorel-app/fe/compare/v1.1.0-dev.6...v1.1.0-dev.7) (2024-09-16)
 
 
