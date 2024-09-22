@@ -15,6 +15,9 @@ export const useGlobalStyles = () => {
   const { colors } = useTheme()
 
   return StyleSheet.create({
+    shadow: {
+      ...shadowStyle
+    },
     header: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -26,7 +29,11 @@ export const useGlobalStyles = () => {
       flexDirection: 'row',
       alignItems: 'center'
     },
-    // temp - add containerLeft/containerCenter?
+
+    scrollView: {
+      alignItems: 'center'
+    },
+
     container: {
       flex: 1,
       padding: 16,
@@ -52,6 +59,63 @@ export const useGlobalStyles = () => {
       width: width,
       ...shadowStyle
     },
+    containerGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    },
+
+    gridPost: {
+      //flexBasis: '30%',
+      marginBottom: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 25,
+      margin: 15
+    },
+
+    post: {
+      width: width * 0.94,
+      alignItems: 'center',
+      borderRadius: 25,
+      margin: 15
+    },
+
+    carouselContainer: {
+      width: 500,
+      //height: width * 0.75,
+      flex: 1
+    },
+
+    slide: {
+      width: 500,
+      alignItems: 'center'
+    },
+
+    // STILL NEEDS WORK :( image component?
+    image: {
+      minWidth: 400,
+      maxWidth: width * 0.85,
+      minHeight: 400,
+      maxHeight: width * 4,
+      resizeMode: 'contain',
+      marginBottom: 8,
+      zIndex: 9999
+    },
+
+    paginationContainer: {
+      bottom: 0,
+      position: 'relative',
+      alignSelf: 'center'
+    },
+    pagination: {
+      borderRadius: 20,
+      width: 8,
+      height: 8,
+      marginHorizontal: 4
+    },
+
     title: {
       color: colors.text,
       fontSize: 20,
@@ -103,7 +167,7 @@ export const useGlobalStyles = () => {
       padding: 10,
       //borderColor: colors.primaryTint,
       borderRadius: 10,
-      width: '100%'
+      width: width
     },
     inputLight: {
       fontSize: 16,
@@ -112,7 +176,7 @@ export const useGlobalStyles = () => {
       padding: 10,
       // borderColor: colors.primaryTint,
       borderRadius: 10,
-      width: '100%'
+      width: width
     },
     inputWithIcon: {
       flexDirection: 'row',
@@ -122,7 +186,7 @@ export const useGlobalStyles = () => {
       borderRadius: 10,
       paddingVertical: 8,
       paddingHorizontal: 10,
-      width: '100%'
+      width: width
     },
     button: {
       backgroundColor: colors.primary,
@@ -196,10 +260,6 @@ export const useGlobalStyles = () => {
       // activeOpacity: 0.1,
       itemHeight: 50
     },
-    // make responsive
-    scrollView: {
-      alignItems: 'center'
-    },
 
     rowScroll: {
       flexDirection: 'row',
@@ -209,12 +269,6 @@ export const useGlobalStyles = () => {
       borderBottomWidth: 2,
       borderBottomColor: colors.card,
       paddingBottom: 5
-    },
-    // make responsive
-    post: {
-      width: '100%',
-      maxWidth: 500,
-      alignItems: 'center'
     },
 
     rowSpan: {
@@ -258,56 +312,6 @@ export const useGlobalStyles = () => {
       width: 100,
       height: 100,
       borderRadius: 50
-    },
-    postShop: {
-      backgroundColor: colors.card,
-      alignItems: 'center',
-      width: width * 0.94,
-      maxWidth: 500,
-      borderRadius: 25
-    },
-
-    carouselContainerShop: {
-      width: width,
-      height: width * 0.75,
-      flex: 1
-    },
-    carouselContainer: {
-      width: width,
-      height: width * 0.75,
-      flex: 1
-    },
-
-    slide: {
-      width: width,
-      alignItems: 'center'
-    },
-    imageShop: {
-      width: width * 0.8,
-      height: width * 0.75,
-      resizeMode: 'contain',
-      justifyContent: 'flex-end',
-      marginBottom: 8,
-      ...shadowStyle
-    },
-    image: {
-      width: width,
-      height: width * 0.8,
-      resizeMode: 'contain',
-      justifyContent: 'flex-end',
-      marginBottom: 8
-    },
-
-    paginationContainer: {
-      bottom: 0,
-      position: 'relative',
-      alignSelf: 'center'
-    },
-    pagination: {
-      borderRadius: 20,
-      width: 8,
-      height: 8,
-      marginHorizontal: 4
     }
   })
 }

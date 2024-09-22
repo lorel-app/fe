@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Dimensions } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useTheme } from '@react-navigation/native'
 import { PostShop, PostContent } from '@/components/PostTypes'
 import api from '@/utils/api'
-import Spacer from '@/components/Spacer'
 
 const HomeScreen = () => {
   const styles = useGlobalStyles()
+  const { colors } = useTheme()
   const [posts, setPosts] = useState([])
+  const [isWideScreen, setIsWideScreen] = useState(
+    Dimensions.get('window').width > 700
+  )
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -23,11 +27,20 @@ const HomeScreen = () => {
       }
     }
     fetchPosts()
+
+    const handleResize = () => {
+      setIsWideScreen(Dimensions.get('window').width > 700)
+    }
+
+    Dimensions.addEventListener('change', handleResize)
+    return () => {
+      Dimensions.removeEventListener('change', handleResize)
+    }
   }, [])
 
   return (
-    <ScrollView>
-      <View style={styles.scrollView}>
+    <ScrollView vertical showsVerticalScrollIndicator={false}>
+      <View style={isWideScreen ? styles.containerGrid : styles.scrollView}>
         {posts.map((post, index) => {
           const mediaUrls = post.media.map(m => ({
             uri: m.url,
@@ -36,7 +49,13 @@ const HomeScreen = () => {
 
           if (post.type === 'SHOP') {
             return (
-              <React.Fragment key={post.id}>
+              <View
+                style={[
+                  isWideScreen ? styles.gridPost : styles.post,
+                  { backgroundColor: colors.card }
+                ]}
+                key={post.id}
+              >
                 <PostShop
                   user={post.user}
                   media={mediaUrls}
@@ -47,12 +66,14 @@ const HomeScreen = () => {
                   tags={post.tags}
                   dateTime={post.createdAt}
                 />
-                <Spacer />
-              </React.Fragment>
+              </View>
             )
           } else if (post.type === 'CONTENT') {
             return (
-              <React.Fragment key={post.id}>
+              <View
+                style={isWideScreen ? styles.gridPost : styles.post}
+                key={post.id}
+              >
                 <PostContent
                   user={post.user}
                   media={mediaUrls}
@@ -60,8 +81,7 @@ const HomeScreen = () => {
                   tags={post.tags}
                   dateTime={post.createdAt}
                 />
-                <Spacer />
-              </React.Fragment>
+              </View>
             )
           }
           return null

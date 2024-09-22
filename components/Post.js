@@ -17,8 +17,7 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
   const { colors } = useTheme()
 
   return (
-    // Needs margin around this view; wait to implement responsiveness
-    <View style={styles.post}>
+    <>
       <View style={styles.rowSpan}>
         <TouchableOpacity style={styles.row}>
           {user.displayPictureThumb ? (
@@ -39,13 +38,15 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
 
       {children}
 
-      <View style={[styles.row, { paddingHorizontal: 8 }]}>
-        {dateTime ? (
-          <Text style={[styles.textLight, { paddingHorizontal: 8 }]}>
-            {formatDate(dateTime)}
+      <View style={styles.rowSpan}>
+        {caption ? (
+          <Text style={styles.text}>
+            {caption}
+            {dateTime ? (
+              <Text style={styles.textLight}> ({formatDate(dateTime)})</Text>
+            ) : null}
           </Text>
         ) : null}
-        {caption ? <Text style={styles.text}>{caption}</Text> : null}
       </View>
 
       <View style={styles.rowSpan}>
@@ -80,7 +81,7 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
           <ButtonIcon iconName="favorite-outline" onPress={{}} />
         </View>
       </View>
-    </View>
+    </>
   )
 }
 

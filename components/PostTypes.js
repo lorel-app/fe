@@ -22,39 +22,37 @@ const PostShop = ({
   }
 
   return (
-    <View style={styles.postShop}>
-      <Post
-        user={user}
-        title={title}
-        price={price}
-        caption={caption}
-        description={description}
-        tags={tags}
-        dateTime={dateTime}
-      >
-        <View style={styles.carouselContainer}>
-          <SwiperFlatListWithGestureHandler
-            data={media}
-            renderItem={({ item, index }) => (
-              <View style={styles.slide}>
-                <Image
-                  style={styles.imageShop}
-                  source={{ uri: item.uri }}
-                  //testID={`container_swiper_renderItem_screen_${index}`}
-                  onPress={openPost}
-                ></Image>
-              </View>
-            )}
-            showPagination={showPagination}
-            PaginationComponent={CustomPagination}
-          />
-        </View>
-        <View style={[styles.rowSpan, { paddingHorizontal: 16 }]}>
-          {title ? <Text style={styles.title}>{title}</Text> : 'Untitled'}
-          {price ? <Text style={styles.textAccent}>EUR {price}</Text> : '0'}
-        </View>
-      </Post>
-    </View>
+    <Post
+      user={user}
+      title={title}
+      price={price}
+      caption={caption}
+      description={description}
+      tags={tags}
+      dateTime={dateTime}
+    >
+      <View style={styles.carouselContainer}>
+        <SwiperFlatListWithGestureHandler
+          data={media}
+          renderItem={({ item, index }) => (
+            <View style={styles.slide}>
+              <Image
+                style={[styles.image, styles.shadow]}
+                source={{ uri: item.uri }}
+                //testID={`container_swiper_renderItem_screen_${index}`}
+                onPress={openPost}
+              ></Image>
+            </View>
+          )}
+          showPagination={showPagination}
+          PaginationComponent={CustomPagination}
+        />
+      </View>
+      <View style={[styles.rowSpan, { paddingHorizontal: 16 }]}>
+        {title ? <Text style={styles.title}>{title}</Text> : 'Untitled'}
+        {price ? <Text style={styles.textAccent}>EUR {price}</Text> : '0'}
+      </View>
+    </Post>
   )
 }
 
