@@ -76,7 +76,10 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
         </View>
         <View style={styles.rowFit}>
           <Text style={styles.textLight}>999</Text>
-          <ButtonIcon iconName="chat-bubble-outline" onPress={{}} />
+          <ButtonIcon
+            iconName="chat-bubble-outline"
+            onPress={() => console.log('Icon pressed')}
+          />
           <ButtonIcon iconName="bookmark-outline" onPress={{}} />
           <ButtonIcon iconName="favorite-outline" onPress={{}} />
         </View>

@@ -67,7 +67,7 @@ export const useGlobalStyles = () => {
     },
 
     gridPost: {
-      //flexBasis: '30%',
+      flexBasis: '40%',
       marginBottom: 20,
       alignItems: 'center',
       justifyContent: 'center',
@@ -95,13 +95,12 @@ export const useGlobalStyles = () => {
 
     // STILL NEEDS WORK :( image component?
     image: {
-      minWidth: 400,
+      width: '85%',
       maxWidth: width * 0.85,
-      minHeight: 400,
+      minHeight: 300,
       maxHeight: width * 4,
       resizeMode: 'contain',
-      marginBottom: 8,
-      zIndex: 9999
+      marginBottom: 8
     },
 
     paginationContainer: {

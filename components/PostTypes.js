@@ -1,9 +1,11 @@
 import React from 'react'
 import Post from './Post'
-import { View, Image, Text } from 'react-native'
+import { View, Image, Text, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { SwiperFlatListWithGestureHandler } from 'react-native-swiper-flatlist/WithGestureHandler'
 import { CustomPagination } from './Pagination'
+import { useNavigation } from '@react-navigation/native'
 
 const PostShop = ({
   user,
@@ -17,8 +19,19 @@ const PostShop = ({
 }) => {
   const styles = useGlobalStyles()
   const showPagination = media.length > 1
-  const openPost = () => {
-    console.log('PostShop clicked')
+  const navigation = useNavigation()
+
+  const navigateToBuyScreen = post => {
+    navigation.navigate('Buy', {
+      user: post.user,
+      media: post.media,
+      title: post.title,
+      price: post.price,
+      caption: post.caption,
+      description: post.description,
+      tags: post.tags,
+      dateTime: post.createdAt
+    })
   }
 
   return (
@@ -40,7 +53,7 @@ const PostShop = ({
                 style={[styles.image, styles.shadow]}
                 source={{ uri: item.uri }}
                 //testID={`container_swiper_renderItem_screen_${index}`}
-                onPress={openPost}
+                // onPress={{}}
               ></Image>
             </View>
           )}
@@ -48,10 +61,38 @@ const PostShop = ({
           PaginationComponent={CustomPagination}
         />
       </View>
-      <View style={[styles.rowSpan, { paddingHorizontal: 16 }]}>
-        {title ? <Text style={styles.title}>{title}</Text> : 'Untitled'}
-        {price ? <Text style={styles.textAccent}>EUR {price}</Text> : '0'}
-      </View>
+      <TouchableOpacity
+        style={styles.rowSpan}
+        onPress={() =>
+          navigateToBuyScreen({
+            user,
+            media,
+            title,
+            price,
+            caption,
+            description,
+            tags,
+            dateTime
+          })
+        }
+      >
+        {title ? (
+          <Text style={styles.title}>{title}</Text>
+        ) : (
+          <Text>Untitled</Text>
+        )}
+        <View style={styles.row}>
+          {price ? (
+            <Text style={styles.textAccent}>EUR {price}</Text>
+          ) : (
+            <Text>0</Text>
+          )}
+          <Icon
+            name="keyboard-arrow-right"
+            style={[styles.textAccent, { paddingTop: 3 }]}
+          />
+        </View>
+      </TouchableOpacity>
     </Post>
   )
 }
