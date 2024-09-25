@@ -1,3 +1,10 @@
+# [1.1.0-dev.10](https://github.com/lorel-app/fe/compare/v1.1.0-dev.9...v1.1.0-dev.10) (2024-09-25)
+
+
+### Features
+
+* 🫡 buy screen added (post details) ([d968c41](https://github.com/lorel-app/fe/commit/d968c41edaca8887eea7b05cc6253580454d9931))
+
 # [1.1.0-dev.9](https://github.com/lorel-app/fe/compare/v1.1.0-dev.8...v1.1.0-dev.9) (2024-09-23)
 
 
