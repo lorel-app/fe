@@ -6,7 +6,6 @@ import AppDarkTheme from '@/constants/AppDarkTheme'
 import AppLightTheme from '@/constants/AppLightTheme'
 import ThemeContext from '@/components/ThemeContext'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import { useTheme } from '@react-navigation/native'
 import { AuthProvider } from '@/utils/authContext'
 import { AlertProvider } from '@/hooks/useAlertModal'
 import Tabs from './navigation/MainTab'
@@ -19,7 +18,6 @@ export default function Index() {
   const colorScheme = useColorScheme()
   const [theme, setTheme] = React.useState(colorScheme)
   const themeData = { theme, setTheme }
-  const { colors } = useTheme()
 
   return (
     <AuthProvider>
@@ -29,7 +27,7 @@ export default function Index() {
             independent={true}
             theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
           >
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
               <Stack.Screen
                 name="MainTabs"
                 component={MainScreens}
@@ -38,20 +36,7 @@ export default function Index() {
               <Stack.Screen
                 name="Buy"
                 component={BuyScreen}
-                options={{
-                  headerShown: true,
-                  title: '',
-                  headerStyle: {
-                    // theming issue
-                    backgroundColor: colors.card
-                  },
-                  headerTintColor: colors.primary,
-                  headerTitleStyle: {
-                    fontWeight: 'bold',
-                    fontSize: 18
-                  },
-                  headerBackTitleVisible: false
-                }}
+                options={{ headerShown: false }}
               />
             </Stack.Navigator>
             <StatusBar style={theme === 'light' ? 'dark' : 'light'} />

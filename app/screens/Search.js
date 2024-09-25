@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Div
-} from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import ButtonIcon from '@/components/ButtonIcon'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
@@ -17,7 +11,7 @@ const SearchScreen = () => {
   const { colors } = useTheme()
   const [tags, setTags] = useState([])
   const [selectedTags, setSelectedTags] = useState([])
-  const [isExpanded, setIsExpanded] = useState(false) // State to manage collapsible section
+  const [isExpanded, setIsExpanded] = useState(false)
 
   useEffect(() => {
     const fetchTags = async () => {

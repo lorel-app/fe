@@ -1,4 +1,5 @@
-import { View, TouchableOpacity, Text, Image, ScrollView } from 'react-native'
+import { View, TouchableOpacity, Text, Image } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import React, { useEffect, useState, useCallback, useContext } from 'react'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'

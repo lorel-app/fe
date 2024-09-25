@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Dimensions } from 'react-native'
+import { View, Dimensions } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 import { PostShop, PostContent } from '@/components/PostTypes'
@@ -40,7 +41,7 @@ const HomeScreen = () => {
 
   return (
     <ScrollView vertical showsVerticalScrollIndicator={false}>
-      <View style={isWideScreen ? styles.containerGrid : styles.scrollView}>
+      <View style={isWideScreen ? styles.containerGrid : styles.container}>
         {posts.map((post, index) => {
           const mediaUrls = post.media.map(m => ({
             uri: m.url,

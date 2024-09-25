@@ -8,7 +8,7 @@ const shadowStyle = {
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.25,
   shadowRadius: 4,
-  elevation: 5 // For Android shadow
+  elevation: 5
 }
 
 export const useGlobalStyles = () => {
@@ -23,14 +23,11 @@ export const useGlobalStyles = () => {
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: 10,
-      backgroundColor: colors.background
+      backgroundColor: colors.background,
+      height: 80
     },
     headerItems: {
       flexDirection: 'row',
-      alignItems: 'center'
-    },
-
-    scrollView: {
       alignItems: 'center'
     },
 
