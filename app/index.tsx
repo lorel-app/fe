@@ -2,9 +2,9 @@ import * as React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import ThemeContext from '@/components/ThemeContext'
 import AppDarkTheme from '@/constants/AppDarkTheme'
 import AppLightTheme from '@/constants/AppLightTheme'
-import ThemeContext from '@/components/ThemeContext'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { AuthProvider } from '@/utils/authContext'
 import { AlertProvider } from '@/hooks/useAlertModal'
@@ -22,11 +22,11 @@ export default function Index() {
   return (
     <AuthProvider>
       <ThemeContext.Provider value={themeData}>
-        <AlertProvider>
-          <NavigationContainer
-            independent={true}
-            theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
-          >
+        <NavigationContainer
+          independent={true}
+          theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
+        >
+          <AlertProvider>
             <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
               <Stack.Screen
                 name="MainTabs"
@@ -39,9 +39,10 @@ export default function Index() {
                 options={{ headerShown: false }}
               />
             </Stack.Navigator>
-            <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
-          </NavigationContainer>
-        </AlertProvider>
+          </AlertProvider>
+          <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
+        </NavigationContainer>
+        {/* </AlertProvider> */}
       </ThemeContext.Provider>
     </AuthProvider>
   )

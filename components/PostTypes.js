@@ -50,7 +50,7 @@ const PostShop = ({
           renderItem={({ item, index }) => (
             <View style={styles.slide}>
               <Image
-                style={[styles.image, styles.shadow]}
+                style={[styles.image, styles.boxShadow]}
                 source={{ uri: item.uri }}
                 //testID={`container_swiper_renderItem_screen_${index}`}
                 // onPress={{}}

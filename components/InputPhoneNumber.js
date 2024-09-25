@@ -23,14 +23,18 @@ const InputPhoneNumber = ({ phoneNumber, setPhoneNumber, setCountryCode }) => {
   }
 
   return (
-    <View style={[styles.container, { padding: 0 }]}>
+    <View style={styles.inputWithIcon}>
       {/* Fix isFocus state to hide border */}
       {/* https://www.npmjs.com/package/react-native-phone-input */}
       <PhoneInput
-        style={styles.input}
+        style={[styles.input, { paddingLeft: 10 }, { paddingVertical: 0 }]}
         textStyle={{
           color: colors.text,
-          fontSize: 16
+          fontSize: 16,
+          height: 44,
+          borderRadius: 10,
+          marginHorizontal: 5,
+          outlineStyle: 'none'
         }}
         ref={phoneInput}
         initialCountry="de"
@@ -55,11 +59,11 @@ const InputPhoneNumber = ({ phoneNumber, setPhoneNumber, setCountryCode }) => {
         theme={styles.countryPicker}
       />
       {/* handle isFocus state */}
-      <Text style={styles.errorText}>
+      {/* <Text style={styles.errorText}>
         {phoneInput.current?.isValidNumber()
           ? ''
           : 'Please enter a valid number'}
-      </Text>
+      </Text> */}
     </View>
   )
 }

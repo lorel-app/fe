@@ -72,7 +72,11 @@ const HomeScreen = () => {
           } else if (post.type === 'CONTENT') {
             return (
               <View
-                style={isWideScreen ? styles.gridPost : styles.post}
+                style={[
+                  isWideScreen ? styles.gridPost : styles.post,
+                  { borderTopColor: colors.card },
+                  { borderTopWidth: 2 }
+                ]}
                 key={post.id}
               >
                 <PostContent

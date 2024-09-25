@@ -1,11 +1,16 @@
 import React, { createContext, useContext, useState, useCallback } from 'react'
 import ModalScreen from '@/components/ModalScreen'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useTheme } from '@react-navigation/native'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { Text, View } from 'react-native'
+import Spacer from '@/components/Spacer'
 
 const AlertContext = createContext()
 
 export const AlertProvider = ({ children }) => {
+  const { colors } = useTheme()
+  const styles = useGlobalStyles()
   const [alert, setAlert] = useState({
     visible: false,
     children: null
@@ -14,19 +19,18 @@ export const AlertProvider = ({ children }) => {
   const showAlert = useCallback((type, title) => {
     const icon =
       type === 'error' ? (
-        <Icon name="error" size={48} color="red" />
+        <Icon name="error" size={38} color={colors.accent} />
       ) : (
-        <Icon name="check-circle" size={48} color="green" />
+        <Icon name="check-circle" size={38} color={colors.primary} />
       )
 
     setAlert({
       visible: true,
       children: (
-        <View style={{ alignItems: 'center' }}>
+        <View style={styles.container}>
           {icon}
-          <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 10 }}>
-            {title}
-          </Text>
+          <Spacer />
+          <Text style={styles.title}>{title}</Text>
         </View>
       )
     })

@@ -79,9 +79,18 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
           <ButtonIcon
             iconName="chat-bubble-outline"
             onPress={() => console.log('Icon pressed')}
+            style={{ margin: 1 }}
           />
-          <ButtonIcon iconName="bookmark-outline" onPress={{}} />
-          <ButtonIcon iconName="favorite-outline" onPress={{}} />
+          <ButtonIcon
+            iconName="bookmark-outline"
+            onPress={{}}
+            style={{ margin: 1 }}
+          />
+          <ButtonIcon
+            iconName="favorite-outline"
+            onPress={{}}
+            style={{ margin: 1 }}
+          />
         </View>
       </View>
     </>

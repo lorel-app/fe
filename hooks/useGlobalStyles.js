@@ -4,10 +4,8 @@ import { useTheme } from '@react-navigation/native'
 const { width } = Dimensions.get('window')
 
 const shadowStyle = {
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.25,
-  shadowRadius: 4,
+  // boxShadow for IOS?
+  boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.3)',
   elevation: 5
 }
 
@@ -15,7 +13,7 @@ export const useGlobalStyles = () => {
   const { colors } = useTheme()
 
   return StyleSheet.create({
-    shadow: {
+    boxShadow: {
       ...shadowStyle
     },
     header: {
@@ -35,7 +33,7 @@ export const useGlobalStyles = () => {
       flex: 1,
       padding: 16,
       alignItems: 'center',
-      width: width
+      width: '100%'
     },
     containerLeft: {
       flex: 1,
@@ -161,28 +159,40 @@ export const useGlobalStyles = () => {
       backgroundColor: colors.background,
       color: colors.text,
       padding: 10,
-      //borderColor: colors.primaryTint,
       borderRadius: 10,
-      width: width
+      marginVertical: 10,
+      outlineStyle: 'none',
+      width: '100%'
+    },
+    /// think about it
+    inputFocused: {
+      fontSize: 16,
+      backgroundColor: colors.background,
+      color: colors.text,
+      padding: 10,
+      borderRadius: 10,
+      margin: 10,
+      borderWidth: 2,
+      borderColor: colors.primary,
+      outlineStyle: 'border'
     },
     inputLight: {
       fontSize: 16,
       backgroundColor: colors.card,
       color: colors.text,
       padding: 10,
-      // borderColor: colors.primaryTint,
       borderRadius: 10,
-      width: width
+      width: '100%'
     },
     inputWithIcon: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      backgroundColor: colors.background,
+      //backgroundColor: colors.background
       borderRadius: 10,
-      paddingVertical: 8,
-      paddingHorizontal: 10,
-      width: width
+      width: '100%'
+      //paddingVertical: 8,
+      // paddingHorizontal: 10
     },
     button: {
       backgroundColor: colors.primary,
@@ -233,12 +243,9 @@ export const useGlobalStyles = () => {
       borderRadius: 20,
       padding: 25,
       alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
       width: '80%',
-      maxWidth: 500
+      maxWidth: 500,
+      ...shadowStyle
     },
     overlay: {
       flex: 1,
@@ -308,6 +315,35 @@ export const useGlobalStyles = () => {
       width: 100,
       height: 100,
       borderRadius: 50
+    },
+
+    switch: {
+      width: 50,
+      height: 26,
+      borderRadius: 15,
+      justifyContent: 'center',
+      padding: 5,
+      borderWidth: 1,
+      borderColor: colors.card
+    },
+    switchOn: {
+      backgroundColor: colors.card
+    },
+    switchOff: {
+      backgroundColor: colors.tint
+    },
+    thumb: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: colors.primary,
+      position: 'absolute'
+    },
+    thumbOn: {
+      left: 26
+    },
+    thumbOff: {
+      left: 0
     }
   })
 }

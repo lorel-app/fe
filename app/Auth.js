@@ -46,10 +46,16 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
   const handleSignUp = async () => {
     const { username, email, phone, password, confirmPassword } = form
-
     if (!username || !email || !phone || !password || !confirmPassword) {
       showAlert('error', 'Please fill in all fields.')
-      // username = 3-30 chars a-z, 0-9, . and _
+      return
+    }
+    const usernameRegex = /^[a-zA-Z0-9._]{3,30}$/
+    if (!usernameRegex.test(username)) {
+      showAlert(
+        'error',
+        'Usernames must be 3-30 characters long and can only contain letters, numbers, periods, and underscores.'
+      )
       return
     }
     if (password !== confirmPassword) {
@@ -57,9 +63,13 @@ export default function SignUpLogInModal({ visible, onClose }) {
       return
     }
     try {
-      const response = await api.signUp({ username, email, phone, password })
+      const response = await api.signUp({
+        username: username.toLowerCase(),
+        email,
+        phone,
+        password
+      })
       if (response.success) {
-        // handle 400 / 409 / 500
         handleVerification(response.data, password)
         onClose()
         return
@@ -73,14 +83,15 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
   const handleLogin = async () => {
     const { identity, password } = form
-
     if (!identity || !password) {
       showAlert('error', 'Please fill in all fields.')
       return
     }
-
     try {
-      const response = await login({ identity, password })
+      const response = await login({
+        identity: identity.toLowerCase(),
+        password
+      })
       if (response.success) {
         onClose()
         showAlert('success', response.data.message)
@@ -106,21 +117,18 @@ export default function SignUpLogInModal({ visible, onClose }) {
     setVerificationToken(verificationToken)
     const user = data.user
     setUser(user)
-
     if (!user.isEmailVerified) {
       sendEmail(verificationToken)
       setIsVerifyEmail(true)
       setIsVerifyModalVisible(true)
       return
     }
-
     if (user.isEmailVerified && !user.isPhoneVerified) {
       sendPhone(verificationToken)
       setIsVerifyEmail(false)
       setIsVerifyModalVisible(true)
       return
     }
-
     if (user.isEmailVerified && user.isPhoneVerified) {
       const response = await login({
         identity: user.email,
@@ -207,7 +215,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
           {isSignUp && (
             <View style={styles.inputWithIcon}>
               <TextInput
-                style={styles.text}
+                style={styles.input}
                 placeholder="Confirm Password"
                 value={form.confirmPassword}
                 onChangeText={text => handleChange('confirmPassword', text)}
@@ -220,7 +228,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               />
             </View>
           )}
-
+          <Spacer />
           <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
             <Text style={styles.buttonText}>
               {isSignUp ? 'Sign Up' : 'Log In'}
@@ -309,7 +317,6 @@ export function VerifyModal({
           value={code}
           onChangeText={setCode}
         />
-
         <TouchableOpacity style={styles.button} onPress={verifyCode}>
           <Text style={styles.buttonText}>Verify</Text>
         </TouchableOpacity>
