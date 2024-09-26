@@ -182,7 +182,10 @@ export const useGlobalStyles = () => {
       color: colors.text,
       padding: 10,
       borderRadius: 10,
-      width: '100%'
+      marginVertical: 10,
+      width: '100%',
+      outlineStyle: 'none',
+      flexGrow: 1
     },
     inputWithIcon: {
       flexDirection: 'row',
@@ -344,6 +347,15 @@ export const useGlobalStyles = () => {
     },
     thumbOff: {
       left: 0
+    },
+    dropdown: {
+      position: 'absolute',
+      top: 60,
+      left: 0,
+      right: 0,
+      backgroundColor: colors.secondaryTint,
+      borderRadius: 5,
+      ...shadowStyle
     }
   })
 }

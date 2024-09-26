@@ -177,6 +177,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               placeholder="Username"
               value={form.username}
               onChangeText={text => handleChange('username', text)}
+              maxLength={30}
             />
           )}
 

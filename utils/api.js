@@ -197,6 +197,43 @@ const allPosts = async (limit = 10, offset = 0) => {
   return response
 }
 
+// const addPost = async body => {
+//   const response = await apiInstance.post('/post', body)
+//   return response
+// }
+const addPost = async body => {
+  const formData = new FormData()
+  formData.append('type', body.type)
+  formData.append('caption', body.caption)
+  formData.append('description', body.description)
+  if (body.title) {
+    formData.append('title', body.title)
+  }
+  if (body.price) {
+    formData.append('price', body.price)
+  }
+  if (body.tags) {
+    formData.append('tags', body.tags)
+  }
+  // Append tags as an array
+  // if (Array.isArray(body.tags)) {
+  //   body.tags.forEach(tag => {
+  //     formData.append('tags[]', tag) // Adjust this based on your API expectations
+  //   })
+  // }
+  if (Array.isArray(body.media)) {
+    body.media.forEach(file => {
+      formData.append('file', file)
+    })
+  }
+  const response = await apiInstance.post('/post', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  return response
+}
+
 const allTags = async () => {
   const response = await apiInstance.get('/tag')
   return response
@@ -215,6 +252,7 @@ export default {
   getMe,
   updateProfilePic,
   allPosts,
+  addPost,
   allTags,
   loadTokens,
   setOnTokenChangeCallback

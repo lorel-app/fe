@@ -5,7 +5,7 @@ const Spacer = () => (
   <View
     style={{
       height: 30,
-      width: '100%',
+      width: 30,
       opacity: 0
     }}
   />
