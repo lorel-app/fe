@@ -1,15 +1,16 @@
-import React from "react";
-import { Modal, View, TouchableWithoutFeedback } from "react-native";
-import ButtonIcon from "@/components/ButtonIcon";
-import { useTheme } from "@react-navigation/native";
-import { useGlobalStyles } from "@/hooks/useGlobalStyles";
+import React from 'react'
+import { Modal, View, TouchableWithoutFeedback } from 'react-native'
+import ButtonIcon from '@/components/ButtonIcon'
+import { useTheme } from '@react-navigation/native'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 
 export default function ModalScreen({ visible, onClose, children }) {
-  const { colors } = useTheme();
-  const styles = useGlobalStyles();
+  const { colors } = useTheme()
+  const styles = useGlobalStyles()
 
   return (
     <Modal
+      appElement={document.getElementById('root')}
       animationType="fade"
       transparent={true}
       visible={visible}
@@ -30,5 +31,5 @@ export default function ModalScreen({ visible, onClose, children }) {
         </View>
       </TouchableWithoutFeedback>
     </Modal>
-  );
+  )
 }

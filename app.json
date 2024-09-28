@@ -31,7 +31,13 @@
       "favicon": "./assets/images/LogoTemp.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Lorel accesses your library to allow you to upload images and videos."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
