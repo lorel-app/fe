@@ -1,3 +1,28 @@
+# [1.1.0](https://github.com/lorel-app/fe/compare/v1.0.0...v1.1.0) (2024-09-28)
+
+
+### Bug Fixes
+
+* 🐛 case sensitivity issue ([e02c6f5](https://github.com/lorel-app/fe/commit/e02c6f57ae2deb688a862480d08b57351997f0aa))
+* 🐛 verification fixed ([8247ac1](https://github.com/lorel-app/fe/commit/8247ac16a7f14efb2101aa601f144f655b18fdb2))
+* 🐛 windows is driving me insane ([d7e6a85](https://github.com/lorel-app/fe/commit/d7e6a85598ea63772c239de3684c5e0f6f6fb7fd))
+
+
+### Features
+
+* 🫡 add expo web build script ([9a48ccf](https://github.com/lorel-app/fe/commit/9a48ccf404aac8f565931b0d588989b6d48ada32))
+* 🫡 added logout route ([6c06c35](https://github.com/lorel-app/fe/commit/6c06c350b8bd393f50784ba05f2852adf3b987b1))
+* 🫡 Alertmodal setup and some cleaning ([ff1ad92](https://github.com/lorel-app/fe/commit/ff1ad922f14d9669c20b5ae1c1ec51b44d6b6cf0))
+* 🫡 authContext for global user state ([381105c](https://github.com/lorel-app/fe/commit/381105cbfb1568fb2aca7ea2ceb51a08dc983e08))
+* 🫡 Basic add and search screens ([1bae0ed](https://github.com/lorel-app/fe/commit/1bae0ed9f5c7eb6fcddb9926b965f047b6a070ae))
+* 🫡 Buy Screen ([cf578af](https://github.com/lorel-app/fe/commit/cf578afa9927e213b41c07699b397b043ee1bae9))
+* 🫡 buy screen added (post details) ([d968c41](https://github.com/lorel-app/fe/commit/d968c41edaca8887eea7b05cc6253580454d9931))
+* 🫡 components for posts, handle display picture update ([312cf5c](https://github.com/lorel-app/fe/commit/312cf5c75f14c6f6b330bf429392902b2b9fadae))
+* 🫡 Feed with Carousels ([cf27bd1](https://github.com/lorel-app/fe/commit/cf27bd13b2dbd5dc4aa32780b119ab5c394955ad))
+* 🫡 MediaPicker functionality (web) for addPost ([32ee4ac](https://github.com/lorel-app/fe/commit/32ee4ac25ba06d8f439803281dbf020a446a34b1))
+* 🫡 Verification ([ed431a0](https://github.com/lorel-app/fe/commit/ed431a0dcb829169d672e1ba63a9e879b40d4113))
+* homescreen and posts ([e048e34](https://github.com/lorel-app/fe/commit/e048e3457cb16b2c27c21f79034c88e39e505c36))
+
 # [1.1.0-dev.11](https://github.com/lorel-app/fe/compare/v1.1.0-dev.10...v1.1.0-dev.11) (2024-09-28)
 
 
