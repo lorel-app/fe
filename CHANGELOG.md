@@ -1,3 +1,10 @@
+## [1.1.1-dev.1](https://github.com/lorel-app/fe/compare/v1.1.0...v1.1.1-dev.1) (2024-09-28)
+
+
+### Bug Fixes
+
+* 🐛 window undefines build issue ([3911cb0](https://github.com/lorel-app/fe/commit/3911cb0f486da5423285d6d77637542e2d2dc776))
+
 # [1.1.0](https://github.com/lorel-app/fe/compare/v1.0.0...v1.1.0) (2024-09-28)
 
 
