@@ -1,3 +1,10 @@
+# [1.1.0-dev.11](https://github.com/lorel-app/fe/compare/v1.1.0-dev.10...v1.1.0-dev.11) (2024-09-28)
+
+
+### Features
+
+* 🫡 MediaPicker functionality (web) for addPost ([32ee4ac](https://github.com/lorel-app/fe/commit/32ee4ac25ba06d8f439803281dbf020a446a34b1))
+
 # [1.1.0-dev.10](https://github.com/lorel-app/fe/compare/v1.1.0-dev.9...v1.1.0-dev.10) (2024-09-25)
 
 
