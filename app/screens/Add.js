@@ -7,7 +7,6 @@ import AuthContext from '@/utils/authContext'
 import { useMediaPicker } from '@/hooks/useMediaPicker'
 import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
-import { Picker } from '@react-native-picker/picker'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import UnauthenticatedView from '@/components/UnauthenticatedView'
 import Spacer from '@/components/Spacer'
@@ -26,6 +25,8 @@ const AddScreen = props => {
     { label: 'Content', value: 'CONTENT' },
     { label: 'Item for Sale', value: 'SHOP' }
   ]
+
+  const { images, pickImages } = useMediaPicker()
 
   const [form, setForm] = useState({
     type: selectedOption,
@@ -49,6 +50,12 @@ const AddScreen = props => {
         description: ''
       })
     }, [selectedOption])
+  )
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setForm(prevForm => ({ ...prevForm, media: images.map(img => img.file) })) // Update with selected images
+    }, [images])
   )
 
   const handleChange = (key, value) => {
@@ -77,7 +84,7 @@ const AddScreen = props => {
       return
     }
     try {
-      const response = await api.addPost(
+      const response = await api.addPost({
         type,
         media,
         title,
@@ -85,7 +92,7 @@ const AddScreen = props => {
         caption,
         tags,
         description
-      )
+      })
       if (response.status === 400) {
         showAlert('error', response.data.message)
         return
@@ -125,16 +132,18 @@ const AddScreen = props => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={[styles.containerLeft, { padding: 0 }]}
           >
-            <View style={[styles.gridPost, { backgroundColor: colors.card }]}>
-              <Image
-                source={{
-                  uri: 'https://images.ctfassets.net/ub3bwfd53mwy/5zi8myLobtihb1cWl3tj8L/45a40e66765f26beddf7eeee29f74723/6_Image.jpg'
-                }}
-                resizeMode="contain"
-                style={styles.image}
-                value="media"
-              />
-            </View>
+            {images.map((image, index) => (
+              <View
+                key={index}
+                style={[styles.gridPost, { backgroundColor: colors.card }]}
+              >
+                <Image
+                  source={{ uri: image.uri }}
+                  resizeMode="contain"
+                  style={styles.image}
+                />
+              </View>
+            ))}
             <View style={[styles.gridPost, { backgroundColor: colors.card }]}>
               <Image
                 source={{
@@ -149,7 +158,7 @@ const AddScreen = props => {
               <ButtonIcon
                 iconName="add-photo-alternate"
                 iconSize={80}
-                onPress={{}}
+                onPress={pickImages}
               />
             </View>
             <Spacer />

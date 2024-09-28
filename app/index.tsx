@@ -42,7 +42,6 @@ export default function Index() {
           </AlertProvider>
           <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
         </NavigationContainer>
-        {/* </AlertProvider> */}
       </ThemeContext.Provider>
     </AuthProvider>
   )

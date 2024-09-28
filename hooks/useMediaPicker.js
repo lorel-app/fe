@@ -2,26 +2,28 @@ import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 
 export function useMediaPicker() {
-  const [image, setImage] = useState(null)
+  const [images, setImages] = useState([])
 
-  const pickImage = async () => {
+  const pickImages = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      quality: 1
+      quality: 1,
+      allowsMultipleSelection: true
     })
 
     if (!result.canceled) {
-      // setImage(result.assets[0].uri);
-      const response = await fetch(result.assets[0].uri)
-      const blob = await response.blob()
-      // To match Multer's file handling, you can create a File object with a specific name
-      const file = new File([blob], 'profile-picture.jpg', {
-        type: blob.type
-      })
-      setImage(file)
+      const newImages = await Promise.all(
+        result.assets.map(async asset => {
+          const response = await fetch(asset.uri)
+          const blob = await response.blob()
+          const file = new File([blob], 'image.jpg', { type: blob.type })
+          return { uri: asset.uri, file } // Keep both uri and file
+        })
+      )
+      setImages(newImages)
     }
   }
 
-  return { image, pickImage }
+  return { images, pickImages }
 }

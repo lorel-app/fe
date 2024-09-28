@@ -22,9 +22,6 @@ const UnauthenticatedView = () => {
       <SignUpLogInModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
-        onLoginSuccess={() => {
-          setModalVisible(false)
-        }}
       />
     </View>
   )

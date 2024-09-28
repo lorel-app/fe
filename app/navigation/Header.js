@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, Alert } from 'react-native'
+import { View } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import LogoSvg from '@/assets/images/LogoMain.svg'
 import ButtonSwitch from '@/components/ButtonSwitch'

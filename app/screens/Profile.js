@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import React, { useEffect, useState, useCallback, useContext } from 'react'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useMediaPicker } from '@/hooks/useMediaPicker'
+import { useImagePicker } from '@/hooks/useImagePicker'
 import api from '@/utils/api'
 import AuthContext from '@/utils/authContext'
 import { useAlertModal } from '@/hooks/useAlertModal'
@@ -14,7 +14,7 @@ const ProfileScreen = () => {
   const showAlert = useAlertModal()
   const [displayPicture, setDisplayPicture] = useState(null)
   const { isAuthenticated, user, loadUser } = useContext(AuthContext)
-  const { image, pickImage } = useMediaPicker()
+  const { image, pickImage } = useImagePicker()
 
   const fetchUser = useCallback(async () => {
     if (isAuthenticated && user) {

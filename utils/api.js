@@ -223,9 +223,17 @@ const addPost = async body => {
   // }
   if (Array.isArray(body.media)) {
     body.media.forEach(file => {
-      formData.append('file', file)
+      formData.append('files', file)
     })
   }
+
+  const logFormData = formData => {
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value)
+    }
+  }
+  logFormData(formData)
+
   const response = await apiInstance.post('/post', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
