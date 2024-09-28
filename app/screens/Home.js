@@ -18,11 +18,9 @@ const HomeScreen = () => {
     const fetchPosts = async () => {
       try {
         const response = await api.allPosts()
-        if (response.success) {
-          setPosts(response.data.posts)
-        } else {
-          console.error(response.error)
-        }
+        response.success
+          ? setPosts(response.data.posts)
+          : console.error(response.error)
       } catch (error) {
         console.error('Failed to fetch posts', error)
       }

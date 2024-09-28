@@ -103,6 +103,7 @@ const setTokens = async (access, refresh) => {
 
 const loadTokens = async () => {
   try {
+    if (typeof window === 'undefined') return null
     const storedAccessToken = await AsyncStorage.getItem('accessToken')
     const storedRefreshToken = await AsyncStorage.getItem('refreshToken')
 

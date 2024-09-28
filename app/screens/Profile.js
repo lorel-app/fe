@@ -17,15 +17,11 @@ const ProfileScreen = () => {
   const { image, pickImage } = useImagePicker()
 
   const fetchUser = useCallback(async () => {
-    if (isAuthenticated && user) {
-      setDisplayPicture(user.displayPictureThumb)
-    }
+    isAuthenticated && user && setDisplayPicture(user.displayPictureThumb)
   }, [isAuthenticated, user])
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchUser()
-    }
+    isAuthenticated && fetchUser()
   }, [isAuthenticated, fetchUser])
 
   useEffect(() => {
@@ -33,12 +29,9 @@ const ProfileScreen = () => {
       if (image) {
         try {
           const response = await api.updateProfilePic(image)
-          if (response.success) {
-            const newDisplayPicture = response.data.displayPicture.medium
-            setDisplayPicture(newDisplayPicture)
-          } else {
-            showAlert('error', response.data.message)
-          }
+          response.success
+            ? setDisplayPicture(response.data.displayPicture.medium)
+            : showAlert('error', response.data.message)
         } catch (error) {
           console.error('Error uploading profile image:', error)
         }

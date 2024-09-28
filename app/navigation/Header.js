@@ -18,11 +18,9 @@ export default function Header() {
 
   const handleLogout = async () => {
     const response = await logout()
-    if (response.success) {
-      showAlert('success', 'Successfully logged out.')
-    } else {
-      showAlert('error', 'Something went wrong')
-    }
+    response.success
+      ? showAlert('success', 'Successfully logged out.')
+      : showAlert('error', 'Something went wrong')
   }
 
   return (

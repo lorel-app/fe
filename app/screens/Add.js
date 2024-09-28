@@ -13,7 +13,7 @@ import Spacer from '@/components/Spacer'
 import ButtonIcon from '@/components/ButtonIcon'
 import DropDownMenu from '@/components/DropDownMenu'
 
-const AddScreen = props => {
+const AddScreen = () => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
@@ -93,18 +93,14 @@ const AddScreen = props => {
         tags,
         description
       })
-      if (response.status === 400) {
-        showAlert('error', response.data.message)
-        return
-      }
-      if (response.success) {
-        showAlert('success', response.data.message)
-        navigation.navigate('Home')
-        return
-      }
+      response.status === 400
+        ? showAlert('error', response.data.message)
+        : response.success
+          ? (showAlert('success', response.data.message),
+            navigation.navigate('Home'))
+          : showAlert('error', 'Something went wrong, please try again later.')
     } catch {
       showAlert('error', 'Something went wrong, please try again later.')
-      return
     }
   }
 
@@ -166,7 +162,7 @@ const AddScreen = props => {
         </View>
 
         <View style={styles.container}>
-          {selectedOption === 'SHOP' && (
+          {selectedOption === 'SHOP' ? (
             <TextInput
               style={styles.inputLight}
               placeholder="Title"
@@ -175,8 +171,8 @@ const AddScreen = props => {
               maxLength={55}
               autoCapitalize="words"
             />
-          )}
-          {selectedOption === 'SHOP' && (
+          ) : null}
+          {selectedOption === 'SHOP' ? (
             <TextInput
               style={styles.inputLight}
               placeholder="Currency, Price"
@@ -185,7 +181,7 @@ const AddScreen = props => {
               keyboardType="numeric"
               maxLength={55}
             />
-          )}
+          ) : null}
           <TextInput
             style={[styles.inputLight, { height: captionHeight }]}
             placeholder="*Caption"
@@ -197,7 +193,7 @@ const AddScreen = props => {
             multiline={true}
             maxLength={255}
           />
-          {selectedOption === 'SHOP' && (
+          {selectedOption === 'SHOP' ? (
             <TextInput
               style={[styles.inputLight, { height: descriptionHeight }]}
               placeholder="Description"
@@ -209,7 +205,7 @@ const AddScreen = props => {
               multiline={true}
               maxLength={1000}
             />
-          )}
+          ) : null}
           <Text style={styles.inputLight}>Tag selection placeholder</Text>
           <Spacer />
           <Spacer />
