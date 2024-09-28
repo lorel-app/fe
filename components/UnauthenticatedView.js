@@ -4,6 +4,8 @@ import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import SignUpLogInModal from '@/app/Auth'
 import Spacer from '@/components/Spacer'
 
+// fix zIndex issue for showALert
+
 const UnauthenticatedView = () => {
   const styles = useGlobalStyles()
   const [modalVisible, setModalVisible] = React.useState(false)
