@@ -36,7 +36,8 @@ function Tabs() {
         tabBarStyle: {
           backgroundColor: colors.card
         },
-        headerShown: false
+        headerShown: false,
+        unmountOnBlur: true
         // tabBarBadge + tabBarBadgeStyle for notifications
       })}
     >

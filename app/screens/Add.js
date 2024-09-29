@@ -1,8 +1,14 @@
-import { View, TouchableOpacity, Text, TextInput, Image } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  TextInput,
+  Image,
+  ActivityIndicator
+} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import React, { useState, useRef, useContext } from 'react'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
 import AuthContext from '@/utils/authContext'
 import { useMediaPicker } from '@/hooks/useMediaPicker'
 import api from '@/utils/api'
@@ -16,7 +22,7 @@ import DropDownMenu from '@/components/DropDownMenu'
 const AddScreen = () => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
-  const { isAuthenticated, user, loadUser } = useContext(AuthContext)
+  const { isAuthenticated } = useContext(AuthContext)
   const navigation = useNavigation()
 
   const [selectedOption, setSelectedOption] = useState('CONTENT')
@@ -26,6 +32,7 @@ const AddScreen = () => {
   ]
 
   const { images, pickImages } = useMediaPicker()
+  const [loading, setLoading] = useState(false)
 
   const [form, setForm] = useState({
     type: selectedOption,
@@ -39,21 +46,7 @@ const AddScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setForm({
-        type: selectedOption,
-        media: [],
-        title: '',
-        price: '',
-        caption: '',
-        tags: '',
-        description: ''
-      })
-    }, [selectedOption])
-  )
-
-  useFocusEffect(
-    React.useCallback(() => {
-      setForm(prevForm => ({ ...prevForm, media: images.map(img => img.file) })) // Update with selected images
+      setForm(prevForm => ({ ...prevForm, media: images.map(img => img.file) }))
     }, [images])
   )
 
@@ -82,6 +75,7 @@ const AddScreen = () => {
       )
       return
     }
+    setLoading(true)
     try {
       const response = await api.addPost({
         type,
@@ -100,6 +94,8 @@ const AddScreen = () => {
           : showAlert('error', 'Something went wrong, please try again later.')
     } catch {
       showAlert('error', 'Something went wrong, please try again later.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -161,14 +157,17 @@ const AddScreen = () => {
             />
           ) : null}
           {selectedOption === 'SHOP' ? (
-            <TextInput
-              style={styles.inputLight}
-              placeholder="Currency, Price"
-              value={form.price}
-              onChangeText={text => handleChange('price', text)}
-              keyboardType="numeric"
-              maxLength={55}
-            />
+            <View style={[styles.rowSpan, { padding: 0 }]}>
+              <Text style={[styles.textAccent, { marginRight: 10 }]}>EUR</Text>
+              <TextInput
+                style={styles.inputLight}
+                placeholder="00.00"
+                value={form.price}
+                onChangeText={text => handleChange('price', text)}
+                keyboardType="numeric"
+                maxLength={55}
+              />
+            </View>
           ) : null}
           <TextInput
             style={[styles.inputLight, { height: captionHeight }]}
@@ -200,11 +199,21 @@ const AddScreen = () => {
         </View>
       </ScrollView>
 
-      <TouchableOpacity style={styles.buttonAbsolute} onPress={handlePost}>
-        <Text style={styles.buttonText}>
-          {selectedOption === 'SHOP' ? 'Add to Shop' : 'Add'}
-        </Text>
-      </TouchableOpacity>
+      <View>
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#E88570"
+            style={styles.containerFull}
+          />
+        ) : (
+          <TouchableOpacity style={styles.buttonAbsolute} onPress={handlePost}>
+            <Text style={styles.buttonText}>
+              {selectedOption === 'SHOP' ? 'Add to Shop' : 'Add'}
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </>
   ) : (
     <UnauthenticatedView />
