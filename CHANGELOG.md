@@ -1,3 +1,10 @@
+# [1.2.0-dev.1](https://github.com/lorel-app/fe/compare/v1.1.1-dev.3...v1.2.0-dev.1) (2024-09-29)
+
+
+### Features
+
+* 🫡 infinite scroll for home, dynamic loading ([33bb0ba](https://github.com/lorel-app/fe/commit/33bb0baad553d20ec3deb43ebe7a387fcf0558eb))
+
 ## [1.1.1-dev.3](https://github.com/lorel-app/fe/compare/v1.1.1-dev.2...v1.1.1-dev.3) (2024-09-29)
 
 
