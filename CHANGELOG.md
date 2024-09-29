@@ -1,3 +1,10 @@
+# [1.2.0-dev.2](https://github.com/lorel-app/fe/compare/v1.2.0-dev.1...v1.2.0-dev.2) (2024-09-29)
+
+
+### Features
+
+* 🫡 lifeCycle management 101 ([a4f1bd7](https://github.com/lorel-app/fe/commit/a4f1bd7f21268cb726a23a760029c2470f20e23f))
+
 # [1.2.0-dev.1](https://github.com/lorel-app/fe/compare/v1.1.1-dev.3...v1.2.0-dev.1) (2024-09-29)
 
 
