@@ -55,20 +55,19 @@ export const useGlobalStyles = () => {
       ...shadowStyle
     },
     containerGrid: {
+      padding: 100,
       flexDirection: 'row',
       flexWrap: 'wrap',
       justifyContent: 'space-around',
       alignItems: 'center'
     },
-
     gridPost: {
       flexBasis: '40%',
-      maxWidth: '25%',
+      maxWidth: 500,
       marginBottom: 20,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 25,
-      margin: 15
+      borderRadius: 25
     },
 
     post: {
