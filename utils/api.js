@@ -108,7 +108,11 @@ const loadTokens = async () => {
     const storedRefreshToken = await AsyncStorage.getItem('refreshToken')
 
     if (storedAccessToken && storedRefreshToken) {
-      setTokens(storedAccessToken, storedRefreshToken)
+      await setTokens(storedAccessToken, storedRefreshToken)
+      return {
+        accessToken: storedAccessToken,
+        refreshToken: storedRefreshToken
+      }
     } else {
       return null
     }
@@ -198,10 +202,6 @@ const allPosts = async (limit = 10, offset = 0) => {
   return response
 }
 
-// const addPost = async body => {
-//   const response = await apiInstance.post('/post', body)
-//   return response
-// }
 const addPost = async body => {
   const formData = new FormData()
   formData.append('type', body.type)
