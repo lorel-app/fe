@@ -1,3 +1,10 @@
+## [1.1.1-dev.2](https://github.com/lorel-app/fe/compare/v1.1.1-dev.1...v1.1.1-dev.2) (2024-09-29)
+
+
+### Bug Fixes
+
+* 🐛 User was logged out on refresh ([c596423](https://github.com/lorel-app/fe/commit/c596423b2950bfb542ac4e25e42e6b0dccacbf0b))
+
 ## [1.1.1-dev.1](https://github.com/lorel-app/fe/compare/v1.1.0...v1.1.1-dev.1) (2024-09-28)
 
 
