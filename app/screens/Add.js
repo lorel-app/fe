@@ -15,7 +15,6 @@ import DropDownMenu from '@/components/DropDownMenu'
 
 const AddScreen = () => {
   const styles = useGlobalStyles()
-  const { colors } = useTheme()
   const showAlert = useAlertModal()
   const { isAuthenticated, user, loadUser } = useContext(AuthContext)
   const navigation = useNavigation()
@@ -111,14 +110,16 @@ const AddScreen = () => {
         contentContainerStyle={{ paddingHorizontal: 10 }}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
-          <Text style={styles.title}>What are you posting?</Text>
+          <Text style={[styles.title, { textAlign: 'left' }]}>
+            What are you posting?
+          </Text>
           <DropDownMenu
             options={options}
             selectedValue={selectedOption}
             onSelect={setSelectedOption}
           />
         </View>
-        <View style={{ height: 280 }}>
+        <View style={{}}>
           <ScrollView
             ref={scrollViewRef}
             onContentSizeChange={() =>
@@ -129,28 +130,15 @@ const AddScreen = () => {
             contentContainerStyle={[styles.containerLeft, { padding: 0 }]}
           >
             {images.map((image, index) => (
-              <View
-                key={index}
-                style={[styles.gridPost, { backgroundColor: colors.card }]}
-              >
+              <View key={index} style={styles.imageGrid}>
                 <Image
                   source={{ uri: image.uri }}
                   resizeMode="contain"
-                  style={styles.image}
+                  style={styles.imageFit}
                 />
               </View>
             ))}
-            <View style={[styles.gridPost, { backgroundColor: colors.card }]}>
-              <Image
-                source={{
-                  uri: 'https://images.ctfassets.net/ub3bwfd53mwy/5zi8myLobtihb1cWl3tj8L/45a40e66765f26beddf7eeee29f74723/6_Image.jpg'
-                }}
-                resizeMode="contain"
-                style={styles.image}
-                value="media"
-              />
-            </View>
-            <View style={[styles.gridPost, { backgroundColor: colors.card }]}>
+            <View style={styles.imageGrid}>
               <ButtonIcon
                 iconName="add-photo-alternate"
                 iconSize={80}

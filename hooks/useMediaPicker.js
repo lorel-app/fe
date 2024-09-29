@@ -18,10 +18,10 @@ export function useMediaPicker() {
           const response = await fetch(asset.uri)
           const blob = await response.blob()
           const file = new File([blob], 'image.jpg', { type: blob.type })
-          return { uri: asset.uri, file } // Keep both uri and file
+          return { uri: asset.uri, file }
         })
       )
-      setImages(newImages)
+      setImages(prevImages => [...prevImages, ...newImages])
     }
   }
 

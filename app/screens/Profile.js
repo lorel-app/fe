@@ -13,7 +13,7 @@ const ProfileScreen = () => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
   const [displayPicture, setDisplayPicture] = useState(null)
-  const { isAuthenticated, user, loadUser } = useContext(AuthContext)
+  const { isAuthenticated, user } = useContext(AuthContext)
   const { image, pickImage } = useImagePicker()
 
   const fetchUser = useCallback(async () => {

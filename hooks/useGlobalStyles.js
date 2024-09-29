@@ -63,6 +63,7 @@ export const useGlobalStyles = () => {
 
     gridPost: {
       flexBasis: '40%',
+      maxWidth: '25%',
       marginBottom: 20,
       alignItems: 'center',
       justifyContent: 'center',
@@ -96,6 +97,21 @@ export const useGlobalStyles = () => {
       maxHeight: width * 4,
       resizeMode: 'contain',
       marginBottom: 8
+    },
+    imageGrid: {
+      height: 300,
+      width: 300,
+      marginBottom: 20,
+      borderRadius: 25,
+      margin: 15,
+      padding: 15,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.card
+    },
+    imageFit: {
+      width: '100%',
+      height: '100%'
     },
 
     paginationContainer: {
