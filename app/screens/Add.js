@@ -91,7 +91,7 @@ const AddScreen = () => {
         : response.success
           ? (showAlert('success', response.data.message),
             navigation.navigate('Home'))
-          : showAlert('error', 'Something went wrong, please try again later.')
+          : showAlert('error', response.data.message)
     } catch {
       showAlert('error', 'Something went wrong, please try again later.')
     } finally {

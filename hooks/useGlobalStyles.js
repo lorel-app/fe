@@ -74,7 +74,8 @@ export const useGlobalStyles = () => {
       width: width * 0.94,
       alignItems: 'center',
       borderRadius: 25,
-      margin: 15
+      margin: 15,
+      padding: 10
     },
 
     carouselContainer: {
@@ -307,19 +308,24 @@ export const useGlobalStyles = () => {
     },
 
     rowFlex: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      flexShrink: 1
+      flex: 1,
+      flexShrink: 1,
+      flexDirection: 'column',
+      justifyContent: 'flex-start'
     },
 
-    rowFit: {
+    rowWrap: {
       flexDirection: 'row',
+      flexWrap: 'wrap',
+      margin: 0
+    },
+
+    rowEnd: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
       alignItems: 'center',
-      flexShrink: 0,
-      margin: 2
-      //minWidth: "20%",
+      alignSelf: 'flex-end',
+      marginLeft: 15
     },
 
     profilePic: {

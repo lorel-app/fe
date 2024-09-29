@@ -38,59 +38,62 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
 
       {children}
 
-      <View style={styles.rowSpan}>
-        {caption ? (
-          <Text style={styles.text}>
-            {caption}
-            {dateTime ? (
-              <Text style={styles.textLight}> ({formatDate(dateTime)})</Text>
-            ) : null}
-          </Text>
-        ) : null}
-      </View>
-
-      <View style={styles.rowSpan}>
+      <View style={[styles.rowSpan, { padding: 10 }]}>
         <View style={styles.rowFlex}>
-          {tags?.map((tag, index) => (
-            <TouchableOpacity key={index} style={styles.buttonSmall}>
-              <Text
-                style={{
-                  color: (() => {
-                    switch (tag.type) {
-                      case 'SUBJECT':
-                        return colors.tertiary
-                      case 'MEDIUM':
-                        return colors.primary
-                      case 'STYLE':
-                        return colors.secondary
-                      default:
-                        return colors.text
-                    }
-                  })()
-                }}
-              >
-                {tag.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
+          {caption ? (
+            <Text style={[styles.text, { paddingBottom: 10 }]}>
+              {caption}
+              {dateTime ? (
+                <Text style={styles.textLight}> ({formatDate(dateTime)})</Text>
+              ) : null}
+            </Text>
+          ) : null}
+
+          <View style={styles.rowWrap}>
+            {tags?.map((tag, index) => (
+              <TouchableOpacity key={index} style={styles.buttonSmall}>
+                <Text
+                  style={{
+                    color: (() => {
+                      switch (tag.type) {
+                        case 'SUBJECT':
+                          return colors.tertiary
+                        case 'MEDIUM':
+                          return colors.primary
+                        case 'STYLE':
+                          return colors.secondary
+                        default:
+                          return colors.text
+                      }
+                    })()
+                  }}
+                >
+                  {tag.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-        <View style={styles.rowFit}>
-          <Text style={styles.textLight}>999</Text>
-          <ButtonIcon
-            iconName="chat-bubble-outline"
-            onPress={() => console.log('Icon pressed')}
-            style={{ margin: 1 }}
-          />
-          <ButtonIcon
-            iconName="bookmark-outline"
-            onPress={{}}
-            style={{ margin: 1 }}
-          />
-          <ButtonIcon
-            iconName="favorite-outline"
-            onPress={{}}
-            style={{ margin: 1 }}
-          />
+
+        <View style={styles.rowEnd}>
+          <View style={{ alignItems: 'center' }}>
+            <ButtonIcon
+              iconName="chat-bubble-outline"
+              iconSize={32}
+              onPress={() => console.log('Icon pressed')}
+              style={{ margin: 3 }}
+            />
+            <Text style={styles.textLight}>999</Text>
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <ButtonIcon
+              iconName="favorite-outline"
+              iconSize={32}
+              onPress={{}}
+              style={{ margin: 3 }}
+            />
+            <Text style={styles.textLight}>999</Text>
+          </View>
         </View>
       </View>
     </>
