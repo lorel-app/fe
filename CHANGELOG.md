@@ -1,3 +1,10 @@
+## [1.1.1-dev.3](https://github.com/lorel-app/fe/compare/v1.1.1-dev.2...v1.1.1-dev.3) (2024-09-29)
+
+
+### Bug Fixes
+
+* 🐛 append images on seperate adds, authContext returns user ([b4ecae2](https://github.com/lorel-app/fe/commit/b4ecae2dd179715828ac5e5a665733eb9f72bac9))
+
 ## [1.1.1-dev.2](https://github.com/lorel-app/fe/compare/v1.1.1-dev.1...v1.1.1-dev.2) (2024-09-29)
 
 
