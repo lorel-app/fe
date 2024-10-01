@@ -1,3 +1,10 @@
+# [1.2.0-dev.3](https://github.com/lorel-app/fe/compare/v1.2.0-dev.2...v1.2.0-dev.3) (2024-10-01)
+
+
+### Bug Fixes
+
+* 🐛 Fix for platform specific width and no network errors ([3b0b37a](https://github.com/lorel-app/fe/commit/3b0b37a3ea04c27a7ced11e646982996ecc5c526))
+
 # [1.2.0-dev.2](https://github.com/lorel-app/fe/compare/v1.2.0-dev.1...v1.2.0-dev.2) (2024-09-29)
 
 
