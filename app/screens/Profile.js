@@ -30,7 +30,7 @@ const ProfileScreen = () => {
         try {
           const response = await api.updateProfilePic(image)
           response.success
-            ? setDisplayPicture(response.data.displayPicture.medium)
+            ? setDisplayPicture(response.data.displayPicture)
             : showAlert('error', response.data.message)
         } catch (error) {
           console.error('Error uploading profile image:', error)
