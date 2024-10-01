@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, View, TouchableWithoutFeedback } from 'react-native'
+import { Modal, View, TouchableWithoutFeedback, Platform } from 'react-native'
 import ButtonIcon from '@/components/ButtonIcon'
 import { useTheme } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -10,7 +10,9 @@ export default function ModalScreen({ visible, onClose, children }) {
 
   return (
     <Modal
-      appElement={document.getElementById('root')}
+      appElement={
+        Platform.OS === 'web' ? document.getElementById('root') : undefined
+      }
       animationType="fade"
       transparent={true}
       visible={visible}

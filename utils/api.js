@@ -20,6 +20,7 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.response.use(
   function (response) {
+    console.error('enters response')
     return {
       success: true,
       status: response.status || 200,
@@ -27,6 +28,14 @@ apiInstance.interceptors.response.use(
     }
   },
   async function (originalRequest) {
+    if (!originalRequest.response) {
+      // catches network error
+      return {
+        success: false,
+        status: null,
+        data: originalRequest
+      }
+    }
     if (originalRequest.response.status === 401) {
       const client = axios.create({
         baseURL: BASE_URL,
@@ -184,10 +193,7 @@ const verifyPhone = async body => {
 
 const getMe = async body => {
   const response = await apiInstance.get('/me', body)
-  if (response.success) {
-    return response
-  }
-  return null
+  return response
 }
 
 const updateProfilePic = async file => {

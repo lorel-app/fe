@@ -1,12 +1,24 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, Platform } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
-const { width } = Dimensions.get('window')
+// temp
+const { width } = Platform.OS === 'web' ? Dimensions.get('window') : 500
 
+// test
 const shadowStyle = {
-  // boxShadow for IOS?
-  boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.3)',
-  elevation: 5
+  ...(Platform.OS === 'web' && {
+    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.3)'
+  }),
+  ...(Platform.OS === 'ios' && {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6
+  }),
+  ...(Platform.OS === 'android' && {
+    elevation: 5,
+    backgroundColor: '#000000'
+  })
 }
 
 export const useGlobalStyles = () => {
