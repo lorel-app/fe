@@ -27,7 +27,7 @@ export const AlertProvider = ({ children }) => {
     setAlert({
       visible: true,
       children: (
-        <View style={styles.container}>
+        <View style={styles.modalChildren}>
           {icon}
           <Spacer />
           <Text style={styles.title}>{title}</Text>

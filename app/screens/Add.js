@@ -46,7 +46,7 @@ const AddScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setForm(prevForm => ({ ...prevForm, media: images.map(img => img.file) }))
+      setForm(prevForm => ({ ...prevForm, media: images.map(img => img) }))
     }, [images])
   )
 
@@ -77,6 +77,7 @@ const AddScreen = () => {
     }
     setLoading(true)
     try {
+      console.log('Media to be sent:', media)
       const response = await api.addPost({
         type,
         media,
@@ -92,7 +93,8 @@ const AddScreen = () => {
           ? (showAlert('success', response.data.message),
             navigation.navigate('Home'))
           : showAlert('error', response.data.message)
-    } catch {
+    } catch (error) {
+      console.log(error)
       showAlert('error', 'Something went wrong, please try again later.')
     } finally {
       setLoading(false)

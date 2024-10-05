@@ -23,7 +23,9 @@
       "package": "com.lorel",
       "compileSdkVersion": 34,
       "targetSdkVersion": 34,
-      "buildToolsVersion": "34.0.0"
+      "buildToolsVersion": "34.0.0",
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "usesCleartextTraffic": true
     },
     "web": {
       "bundler": "metro",
@@ -41,6 +43,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c9f59e46-4dc9-4c50-b7dd-b731e4f0fa88"
+      }
     }
   }
 }

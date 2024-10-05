@@ -12,13 +12,17 @@ export function useImagePicker() {
     })
 
     if (!result.canceled) {
-      // setImage(result.assets[0].uri);
-      const response = await fetch(result.assets[0].uri)
+      const { uri, type } = result.assets[0]
+      const response = await fetch(uri)
       const blob = await response.blob()
-      // To match Multer's file handling, you can create a File object with a specific name
-      const file = new File([blob], 'profile-picture.jpg', {
-        type: blob.type
-      })
+
+      // To match Multer's file handling, create a File object
+      const file = {
+        uri,
+        type: blob.type || type,
+        name: 'profile-picture.jpg'
+      }
+
       setImage(file)
     }
   }

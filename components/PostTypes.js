@@ -50,15 +50,16 @@ const PostShop = ({
           renderItem={({ item, index }) => (
             <View style={styles.slide}>
               <Image
-                style={[styles.image, styles.boxShadow]}
+                style={styles.imageShop}
                 source={{ uri: item.uri }}
-                //testID={`container_swiper_renderItem_screen_${index}`}
+                testID={`container_swiper_renderItem_screen_${index}`}
                 // onPress={{}}
               ></Image>
             </View>
           )}
           showPagination={showPagination}
           PaginationComponent={CustomPagination}
+          e2eID="container_swiper_renderItem"
         />
       </View>
       <TouchableOpacity
@@ -111,12 +112,13 @@ const PostContent = ({ user, media, caption, tags, dateTime }) => {
               <Image
                 style={styles.image}
                 source={{ uri: item.uri }}
-                // testID={`container_swiper_renderItem_screen_${index}`}
+                testID={`container_swiper_renderItem_screen_${index}`}
               ></Image>
             </View>
           )}
           showPagination={showPagination}
           PaginationComponent={CustomPagination}
+          e2eID="container_swiper_renderItem"
         />
       </View>
     </Post>

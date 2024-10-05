@@ -25,7 +25,12 @@ export default function Header() {
 
   return (
     <View style={styles.header}>
-      <LogoSvg fill={colors.secondary} width={250 / 2.5} height={61 / 2.5} />
+      <LogoSvg
+        fill={colors.secondary}
+        width={250 / 2.5}
+        height={61 / 2.5}
+        style={{ flex: 0 }}
+      />
       <View style={[styles.headerItems]}>
         <ButtonSwitch />
         {isAuthenticated ? (

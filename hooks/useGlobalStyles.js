@@ -1,8 +1,9 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native'
+import { useState, useEffect } from 'react'
 import { useTheme } from '@react-navigation/native'
 
-// temp
-const { width } = Platform.OS === 'web' ? Dimensions.get('window') : 500
+const windowDimensions = Dimensions.get('window')
+const screenDimensions = Dimensions.get('screen')
 
 // test
 const shadowStyle = {
@@ -16,12 +17,27 @@ const shadowStyle = {
     shadowRadius: 6
   }),
   ...(Platform.OS === 'android' && {
-    elevation: 5,
-    backgroundColor: '#000000'
+    elevation: 5
   })
 }
 
 export const useGlobalStyles = () => {
+  const [dimensions, setDimensions] = useState({
+    window: windowDimensions,
+    screen: screenDimensions
+  })
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener(
+      'change',
+      ({ window, screen }) => {
+        setDimensions({ window, screen })
+      }
+    )
+    return () => subscription?.remove()
+  }, [])
+  const width = Math.min(dimensions.window.width, 600)
+
   const { colors } = useTheme()
 
   return StyleSheet.create({
@@ -38,11 +54,14 @@ export const useGlobalStyles = () => {
     },
     headerItems: {
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      flex: 1
     },
 
     container: {
-      flex: 1,
+      // ANDROID IS NOT A FAN OF FLEX
+      // flex: 1,
       padding: 16,
       alignItems: 'center',
       width: '100%'
@@ -51,7 +70,7 @@ export const useGlobalStyles = () => {
       flex: 1,
       paddingLeft: 10,
       paddingBottom: 10,
-      width: width
+      width: '100%'
     },
     containerFull: {
       flex: 1,
@@ -63,7 +82,7 @@ export const useGlobalStyles = () => {
       position: 'absolute',
       zIndex: 1000,
       paddingVertical: 0,
-      width: width,
+      width: '100%',
       ...shadowStyle
     },
     containerGrid: {
@@ -83,7 +102,7 @@ export const useGlobalStyles = () => {
     },
 
     post: {
-      width: width * 0.94,
+      width: width,
       alignItems: 'center',
       borderRadius: 25,
       margin: 15,
@@ -91,25 +110,24 @@ export const useGlobalStyles = () => {
     },
 
     carouselContainer: {
-      width: 500,
-      //height: width * 0.75,
-      flex: 1
+      width: width,
+      flexGrow: 1
     },
-
     slide: {
-      width: 500,
+      width: width,
       alignItems: 'center'
     },
-
-    // STILL NEEDS WORK :( image component?
     image: {
-      width: '85%',
-      maxWidth: width * 0.85,
-      minHeight: 300,
-      maxHeight: width * 4,
-      resizeMode: 'contain',
-      marginBottom: 8
+      width: width * 0.95,
+      height: width,
+      resizeMode: 'contain'
     },
+    imageShop: {
+      width: width * 0.85,
+      height: width,
+      resizeMode: 'contain'
+    },
+
     imageGrid: {
       height: 300,
       width: 300,
@@ -180,8 +198,6 @@ export const useGlobalStyles = () => {
       fontWeight: '500',
       textAlign: 'center'
     },
-    // add states fro additional styling: onFocus, onBlur, onInputError?
-    // https://stackoverflow.com/questions/34087459/focus-style-for-textinput-in-react-native
     input: {
       fontSize: 16,
       backgroundColor: colors.background,
@@ -190,7 +206,8 @@ export const useGlobalStyles = () => {
       borderRadius: 10,
       marginVertical: 10,
       outlineStyle: 'none',
-      width: '100%'
+      width: '100%',
+      minWidth: '100%'
     },
     /// think about it
     inputFocused: {
@@ -221,6 +238,7 @@ export const useGlobalStyles = () => {
       alignItems: 'center',
       //backgroundColor: colors.background
       borderRadius: 10,
+      // can remoe this on Android
       width: '100%'
       //paddingVertical: 8,
       // paddingHorizontal: 10
@@ -277,6 +295,11 @@ export const useGlobalStyles = () => {
       width: '80%',
       maxWidth: 500,
       ...shadowStyle
+    },
+    modalChildren: {
+      padding: 20,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     overlay: {
       flex: 1,

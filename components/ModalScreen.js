@@ -1,5 +1,11 @@
 import React from 'react'
-import { Modal, View, TouchableWithoutFeedback, Platform } from 'react-native'
+import {
+  Text,
+  Modal,
+  View,
+  TouchableWithoutFeedback,
+  Platform
+} from 'react-native'
 import ButtonIcon from '@/components/ButtonIcon'
 import { useTheme } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'

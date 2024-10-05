@@ -15,6 +15,8 @@ const ButtonIcon = ({ onPress, iconName, iconSize, iconColor, style }) => {
         name={iconName}
         size={effectiveIconSize}
         color={effectiveIconColor}
+        // android needs fontSize - doesn't work dynamically
+        style={{ fontSize: 24 }}
       />
     </TouchableOpacity>
   )

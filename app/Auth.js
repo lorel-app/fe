@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import ModalScreen from '@/components/ModalScreen'
 import InputPhoneNumber from '@/components/InputPhoneNumber'
 import ButtonIcon from '@/components/ButtonIcon'
@@ -7,10 +7,12 @@ import Spacer from '@/components/Spacer'
 import AuthContext from '@/utils/authContext'
 import api from '@/utils/api'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useTheme } from '@react-navigation/native'
 import { useAlertModal } from '@/hooks/useAlertModal'
 
 export default function SignUpLogInModal({ visible, onClose }) {
   const styles = useGlobalStyles()
+  const { colors } = useTheme()
   const { login } = useContext(AuthContext)
   const showAlert = useAlertModal()
 
@@ -134,7 +136,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
   return (
     <>
       <ModalScreen visible={visible} onClose={onClose}>
-        <View style={styles.container}>
+        <View style={styles.modalChildren}>
           <Text style={styles.title}>
             {isSignUp ? 'Sign Up (Step 1/3)' : 'Log In'}
           </Text>
@@ -144,6 +146,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             <TextInput
               style={styles.input}
               placeholder="Username"
+              placeholderTextColor={colors.text}
               value={form.username}
               onChangeText={text => handleChange('username', text)}
               maxLength={30}
@@ -153,6 +156,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
           <TextInput
             style={styles.input}
             placeholder={isSignUp ? 'Email' : 'Username or Email'}
+            placeholderTextColor={colors.text}
             value={isSignUp ? form.email : form.identity}
             onChangeText={text =>
               handleChange(isSignUp ? 'email' : 'identity', text)
@@ -171,6 +175,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             <TextInput
               style={styles.input}
               placeholder="Password"
+              placeholderTextColor={colors.text}
               value={form.password}
               onChangeText={text => handleChange('password', text)}
               secureTextEntry={!passwordVisible}
@@ -179,6 +184,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               onPress={() => setPasswordVisible(!passwordVisible)}
               iconName={passwordVisible ? 'visibility-off' : 'visibility'}
               iconSize={24}
+              //style={{ fontSize: 24 }}
             />
           </View>
 
@@ -187,6 +193,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               <TextInput
                 style={styles.input}
                 placeholder="Confirm Password"
+                placeholderTextColor={colors.text}
                 value={form.confirmPassword}
                 onChangeText={text => handleChange('confirmPassword', text)}
                 secureTextEntry={!passwordVisible}
@@ -195,6 +202,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
                 onPress={() => setPasswordVisible(!passwordVisible)}
                 iconName={passwordVisible ? 'visibility-off' : 'visibility'}
                 iconSize={24}
+                //style={{ fontSize: 24 }}
               />
             </View>
           ) : null}
@@ -232,6 +240,7 @@ export function VerifyModal({
   isVerifyEmail
 }) {
   const styles = useGlobalStyles()
+  const { colors } = useTheme()
   const [code, setCode] = useState('')
   const showAlert = useAlertModal()
 
@@ -266,7 +275,7 @@ export function VerifyModal({
 
   return (
     <ModalScreen visible={visible} onClose={onClose}>
-      <View style={styles.container}>
+      <View style={styles.modalChildren}>
         <Text style={styles.title}>
           {isVerifyEmail ? 'Sign Up (Step 2/3)' : 'Sign Up (Step 3/3)'}
         </Text>
@@ -279,6 +288,7 @@ export function VerifyModal({
         <TextInput
           style={styles.input}
           placeholder="000000"
+          placeholderTextColor={colors.text}
           value={code}
           onChangeText={setCode}
         />

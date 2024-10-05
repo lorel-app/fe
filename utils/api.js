@@ -20,7 +20,6 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.response.use(
   function (response) {
-    console.error('enters response')
     return {
       success: true,
       status: response.status || 200,
@@ -59,12 +58,6 @@ apiInstance.interceptors.response.use(
       const newAccessToken = response.data.accessToken
       await setTokens(newAccessToken, refreshToken)
       client.defaults.headers['Authorization'] = `Bearer ${newAccessToken}`
-      // temp
-      console.log(
-        'set tokens, proceed to retry response',
-        newAccessToken,
-        refreshToken
-      )
       try {
         const retryResponse = await client({
           method: originalRequest.config.method,
@@ -198,7 +191,11 @@ const getMe = async body => {
 
 const updateProfilePic = async file => {
   const formData = new FormData()
-  formData.append('file', file)
+  formData.append('file', {
+    uri: file.uri,
+    type: file.type,
+    name: file.name
+  })
   const response = await apiInstance.put('me/display-picture', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -218,7 +215,9 @@ const addPost = async body => {
   const formData = new FormData()
   formData.append('type', body.type)
   formData.append('caption', body.caption)
-  formData.append('description', body.description)
+  if (body.description) {
+    formData.append('description', body.description)
+  }
   if (body.title) {
     formData.append('title', body.title)
   }
@@ -228,24 +227,47 @@ const addPost = async body => {
   if (body.tags) {
     formData.append('tags', body.tags)
   }
-  // Append tags as an array
-  // if (Array.isArray(body.tags)) {
-  //   body.tags.forEach(tag => {
-  //     formData.append('tags[]', tag) // Adjust this based on your API expectations
+
+  // if (Array.isArray(body.media)) {
+  //   body.media.forEach(file => {
+  //     formData.append('files', file)
   //   })
   // }
+
   if (Array.isArray(body.media)) {
     body.media.forEach(file => {
-      formData.append('files', file)
+      formData.append('files', {
+        uri: file.uri,
+        type: file.type,
+        name: file.name
+      })
     })
   }
 
-  const response = await apiInstance.post('/post', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
-  return response
+  // LOG FOR ANDROID ONLY
+  // console.log('FormData contents:')
+  // formData._parts.forEach(([key, value]) => {
+  //   if (Array.isArray(value)) {
+  //     console.log(`${key}:`)
+  //     value.forEach((item, index) => {
+  //       console.log(`  [${index}]:`, item)
+  //     })
+  //   } else {
+  //     console.log(`${key}:`, value)
+  //   }
+  // })
+
+  try {
+    const response = await apiInstance.post('/post', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    console.log(response, 'RESPONSSE')
+    return response
+  } catch (error) {
+    console.error('Test network error:', error)
+  }
 }
 
 const allTags = async () => {
