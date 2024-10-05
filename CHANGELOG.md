@@ -1,3 +1,10 @@
+# [1.2.0-dev.4](https://github.com/lorel-app/fe/compare/v1.2.0-dev.3...v1.2.0-dev.4) (2024-10-05)
+
+
+### Bug Fixes
+
+* 🐛 android sucks ([b1f7250](https://github.com/lorel-app/fe/commit/b1f7250b420b3ed6dc911ed207daf184ab0ab223))
+
 # [1.2.0-dev.3](https://github.com/lorel-app/fe/compare/v1.2.0-dev.2...v1.2.0-dev.3) (2024-10-01)
 
 
