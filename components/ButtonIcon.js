@@ -7,7 +7,7 @@ const ButtonIcon = ({ onPress, iconName, iconSize, iconColor, style }) => {
   const { colors } = useTheme()
   const effectiveIconColor = iconColor || colors.secondaryTint
   const effectiveIconSize = iconSize || 24
-  const effectiveStyle = [{ margin: 10 }, style]
+  const effectiveStyle = [{ margin: 15 }, style]
 
   return (
     <TouchableOpacity style={effectiveStyle} onPress={onPress}>

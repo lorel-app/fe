@@ -4,7 +4,8 @@ import {
   Text,
   TextInput,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import React, { useState, useRef, useContext } from 'react'
@@ -46,7 +47,14 @@ const AddScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setForm(prevForm => ({ ...prevForm, media: images.map(img => img) }))
+      if (Platform.OS === 'web') {
+        setForm(prevForm => ({
+          ...prevForm,
+          media: images.map(img => img.file)
+        }))
+      } else {
+        setForm(prevForm => ({ ...prevForm, media: images.map(img => img) }))
+      }
     }, [images])
   )
 
@@ -77,7 +85,6 @@ const AddScreen = () => {
     }
     setLoading(true)
     try {
-      console.log('Media to be sent:', media)
       const response = await api.addPost({
         type,
         media,
@@ -127,8 +134,8 @@ const AddScreen = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={[styles.containerLeft, { padding: 0 }]}
           >
-            {images.map((image, index) => (
-              <View key={index} style={styles.imageGrid}>
+            {images.map(image => (
+              <View key={image.uri} style={styles.imageGrid}>
                 <Image
                   source={{ uri: image.uri }}
                   resizeMode="contain"

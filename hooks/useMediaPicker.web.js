@@ -9,9 +9,7 @@ export function useMediaPicker() {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
       quality: 1,
-      allowsMultipleSelection: true,
-      //I DONT KNOW THE LIMIT
-      selectionLimit: 10
+      allowsMultipleSelection: true
     })
 
     if (!result.canceled) {
@@ -19,12 +17,10 @@ export function useMediaPicker() {
         result.assets.map(async asset => {
           const response = await fetch(asset.uri)
           const blob = await response.blob()
-
-          return {
-            uri: asset.uri,
-            type: blob.type || asset.type,
-            name: asset.uri.split('/').pop() || 'image.jpg'
-          }
+          const file = new File([blob], 'image.jpg', {
+            type: blob.type || type
+          })
+          return { uri: asset.uri, file }
         })
       )
       setImages(prevImages => [...prevImages, ...newImages])

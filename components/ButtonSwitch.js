@@ -14,7 +14,7 @@ const ButtonSwitch = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <TouchableOpacity
         style={[styles.switch, isEnabled ? styles.switchOn : styles.switchOff]}
         onPress={toggleSwitch}

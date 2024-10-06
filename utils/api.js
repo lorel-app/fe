@@ -1,5 +1,6 @@
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Platform } from 'react-native'
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL
 
@@ -196,6 +197,7 @@ const updateProfilePic = async file => {
     type: file.type,
     name: file.name
   })
+  // not implemented on web - waiting for profile route
   const response = await apiInstance.put('me/display-picture', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -213,61 +215,37 @@ const allPosts = async (limit = 10, offset = 0) => {
 
 const addPost = async body => {
   const formData = new FormData()
-  formData.append('type', body.type)
-  formData.append('caption', body.caption)
-  if (body.description) {
-    formData.append('description', body.description)
-  }
-  if (body.title) {
-    formData.append('title', body.title)
-  }
-  if (body.price) {
-    formData.append('price', body.price)
-  }
+
+  const scalars = ['type', 'caption', 'title', 'description', 'price']
+  scalars.forEach(scalar => {
+    if (body[scalar]) formData.append(scalar, body[scalar])
+  })
+
+  // tags not handles yet
   if (body.tags) {
     formData.append('tags', body.tags)
   }
 
-  // if (Array.isArray(body.media)) {
-  //   body.media.forEach(file => {
-  //     formData.append('files', file)
-  //   })
-  // }
-
   if (Array.isArray(body.media)) {
     body.media.forEach(file => {
-      formData.append('files', {
-        uri: file.uri,
-        type: file.type,
-        name: file.name
-      })
-    })
-  }
-
-  // LOG FOR ANDROID ONLY
-  // console.log('FormData contents:')
-  // formData._parts.forEach(([key, value]) => {
-  //   if (Array.isArray(value)) {
-  //     console.log(`${key}:`)
-  //     value.forEach((item, index) => {
-  //       console.log(`  [${index}]:`, item)
-  //     })
-  //   } else {
-  //     console.log(`${key}:`, value)
-  //   }
-  // })
-
-  try {
-    const response = await apiInstance.post('/post', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
+      if (Platform.OS === 'web') {
+        formData.append('files', file)
+      } else {
+        // not tested on ios
+        formData.append('files', {
+          uri: file.uri,
+          type: file.type,
+          name: file.name
+        })
       }
     })
-    console.log(response, 'RESPONSSE')
-    return response
-  } catch (error) {
-    console.error('Test network error:', error)
   }
+  const response = await apiInstance.post('/post', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  return response
 }
 
 const allTags = async () => {

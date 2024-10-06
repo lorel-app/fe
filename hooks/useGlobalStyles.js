@@ -47,16 +47,14 @@ export const useGlobalStyles = () => {
     header: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: 10,
+      paddingHorizontal: 10,
       backgroundColor: colors.background,
       height: 80
     },
     headerItems: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-end',
-      flex: 1
+      justifyContent: 'flex-end'
     },
 
     container: {
