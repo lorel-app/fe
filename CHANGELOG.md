@@ -1,3 +1,10 @@
+# [1.2.0-dev.5](https://github.com/lorel-app/fe/compare/v1.2.0-dev.4...v1.2.0-dev.5) (2024-10-06)
+
+
+### Bug Fixes
+
+* 🐛 platform specific useMediaPicker issue ([eabbfdb](https://github.com/lorel-app/fe/commit/eabbfdb9fccbd151d742f9674573a11420f9f132))
+
 # [1.2.0-dev.4](https://github.com/lorel-app/fe/compare/v1.2.0-dev.3...v1.2.0-dev.4) (2024-10-05)
 
 
