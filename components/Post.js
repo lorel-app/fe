@@ -1,9 +1,11 @@
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 import ButtonIcon from './ButtonIcon'
+import api from '@/utils/api'
+import { useAlertModal } from '@/hooks/useAlertModal'
 
 const formatDate = isoString => {
   const date = new Date(isoString)
@@ -12,9 +14,46 @@ const formatDate = isoString => {
   return `${day} ${month}`
 }
 
-const Post = ({ user, caption, tags, dateTime, children }) => {
+const Post = ({
+  id,
+  user,
+  likeCount: initialLikeCount,
+  liked: initialLikedStatus,
+  caption,
+  tags,
+  dateTime,
+  children
+}) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
+  const showAlert = useAlertModal()
+
+  const [likeCount, setLikeCount] = useState(initialLikeCount)
+  const [liked, setLiked] = useState(initialLikedStatus)
+  const handleLike = async () => {
+    try {
+      let response
+      if (!liked) {
+        response = await api.likePost(id)
+        if (response.success) {
+          setLikeCount(prevLikeCount => prevLikeCount + 1)
+          setLiked(true)
+        } else {
+          showAlert('error', 'Please log in first.')
+        }
+      } else {
+        response = await api.unlikePost(id)
+        if (response.success) {
+          setLikeCount(prevLikeCount => prevLikeCount - 1)
+          setLiked(false)
+        } else {
+          showAlert('error', 'Please log in first.')
+        }
+      }
+    } catch (error) {
+      console.log('Failed to like/unlike post:', error.message)
+    }
+  }
 
   return (
     <>
@@ -87,12 +126,13 @@ const Post = ({ user, caption, tags, dateTime, children }) => {
           </View>
           <View style={{ alignItems: 'center' }}>
             <ButtonIcon
-              iconName="favorite-outline"
+              iconName={liked ? 'favorite' : 'favorite-outline'}
+              iconColor={liked ? colors.tertiary : colors.secondaryTint}
               iconSize={32}
-              onPress={{}}
+              onPress={() => handleLike()}
               style={{ margin: 3 }}
             />
-            <Text style={styles.textLight}>999</Text>
+            <Text style={styles.textLight}>{likeCount}</Text>
           </View>
         </View>
       </View>

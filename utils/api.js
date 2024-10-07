@@ -213,6 +213,16 @@ const allPosts = async (limit = 10, offset = 0) => {
   return response
 }
 
+const likePost = async postId => {
+  const response = await apiInstance.post(`like/${postId}`)
+  return response
+}
+
+const unlikePost = async postId => {
+  const response = await apiInstance.delete(`like/${postId}`)
+  return response
+}
+
 const addPost = async body => {
   const formData = new FormData()
 
@@ -266,6 +276,8 @@ export default {
   getMe,
   updateProfilePic,
   allPosts,
+  likePost,
+  unlikePost,
   addPost,
   allTags,
   loadTokens,

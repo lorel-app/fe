@@ -8,8 +8,11 @@ import { CustomPagination } from './Pagination'
 import { useNavigation } from '@react-navigation/native'
 
 const PostShop = ({
+  id,
   user,
   media,
+  likeCount,
+  liked,
   title,
   price,
   caption,
@@ -36,7 +39,10 @@ const PostShop = ({
 
   return (
     <Post
+      id={id}
       user={user}
+      likeCount={likeCount}
+      liked={liked}
       title={title}
       price={price}
       caption={caption}
@@ -98,12 +104,29 @@ const PostShop = ({
   )
 }
 
-const PostContent = ({ user, media, caption, tags, dateTime }) => {
+const PostContent = ({
+  id,
+  user,
+  media,
+  likeCount,
+  liked,
+  caption,
+  tags,
+  dateTime
+}) => {
   const styles = useGlobalStyles()
   const showPagination = media.length > 1
 
   return (
-    <Post user={user} caption={caption} tags={tags} dateTime={dateTime}>
+    <Post
+      id={id}
+      user={user}
+      likeCount={likeCount}
+      liked={liked}
+      caption={caption}
+      tags={tags}
+      dateTime={dateTime}
+    >
       <View style={styles.carouselContainer}>
         <SwiperFlatListWithGestureHandler
           data={media}

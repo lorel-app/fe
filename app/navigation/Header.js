@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { View } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import LogoSvg from '@/assets/images/LogoMain.svg'
 import ButtonSwitch from '@/components/ButtonSwitch'
 import ButtonIcon from '@/components/ButtonIcon'
@@ -15,11 +16,13 @@ export default function Header() {
   const showAlert = useAlertModal()
   const { isAuthenticated, logout } = useContext(AuthContext)
   const [modalVisible, setModalVisible] = useState(false)
+  const navigation = useNavigation()
 
   const handleLogout = async () => {
     const response = await logout()
     response.success
-      ? showAlert('success', 'Successfully logged out.')
+      ? (showAlert('success', 'Successfully logged out.'),
+        navigation.navigate('Home'))
       : showAlert('error', 'Something went wrong')
   }
 

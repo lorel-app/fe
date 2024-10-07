@@ -21,6 +21,7 @@ const HomeScreen = () => {
     setLoading(true)
     try {
       const response = await api.allPosts(10, offset)
+      console.log(response)
       if (response.success) {
         setPosts(prevPosts => [...prevPosts, ...response.data.posts])
         setHasMore(response.data.posts.length > 0)
@@ -60,8 +61,11 @@ const HomeScreen = () => {
       >
         {post.type === 'SHOP' ? (
           <PostShop
+            id={post.id}
             user={post.user}
             media={mediaUrls}
+            likeCount={post.likeCount}
+            liked={post.liked}
             title={post.title}
             price={post.price}
             caption={post.caption}
@@ -71,8 +75,11 @@ const HomeScreen = () => {
           />
         ) : post.type === 'CONTENT' ? (
           <PostContent
+            id={post.id}
             user={post.user}
             media={mediaUrls}
+            likeCount={post.likeCount}
+            liked={post.liked}
             caption={post.caption}
             tags={post.tags}
             dateTime={post.createdAt}

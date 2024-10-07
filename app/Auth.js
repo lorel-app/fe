@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import ModalScreen from '@/components/ModalScreen'
 import InputPhoneNumber from '@/components/InputPhoneNumber'
 import ButtonIcon from '@/components/ButtonIcon'
@@ -15,6 +16,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
   const { colors } = useTheme()
   const { login } = useContext(AuthContext)
   const showAlert = useAlertModal()
+  const navigation = useNavigation()
 
   const [isSignUp, setIsSignUp] = useState(false)
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -87,7 +89,9 @@ export default function SignUpLogInModal({ visible, onClose }) {
         password
       })
       response.success
-        ? (onClose(), showAlert('success', response.data.message))
+        ? (onClose(),
+          showAlert('success', response.data.message),
+          navigation.navigate('Home'))
         : response.status === 403
           ? (handleVerification(response.data, password), onClose())
           : showAlert('error', response.data.message)
