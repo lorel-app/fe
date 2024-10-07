@@ -231,9 +231,10 @@ const addPost = async body => {
     if (body[scalar]) formData.append(scalar, body[scalar])
   })
 
-  // tags not handles yet
-  if (body.tags) {
-    formData.append('tags', body.tags)
+  if (Array.isArray(body.tags)) {
+    body.tags.forEach(tag => {
+      formData.append('tags', tag)
+    })
   }
 
   if (Array.isArray(body.media)) {

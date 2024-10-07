@@ -19,6 +19,7 @@ import UnauthenticatedView from '@/components/UnauthenticatedView'
 import Spacer from '@/components/Spacer'
 import ButtonIcon from '@/components/ButtonIcon'
 import DropDownMenu from '@/components/DropDownMenu'
+import SelectTags from '@/components/SelectTags'
 
 const AddScreen = () => {
   const styles = useGlobalStyles()
@@ -41,7 +42,7 @@ const AddScreen = () => {
     title: '',
     price: '',
     caption: '',
-    tags: '',
+    tags: [],
     description: ''
   })
 
@@ -74,8 +75,13 @@ const AddScreen = () => {
     setDescriptionHeight(Math.min(contentSize.height, 1000))
   }
 
+  let selectedTags = []
+  const handleTagsChange = tags => {
+    selectedTags = tags
+  }
+
   const handlePost = async () => {
-    const { type, media, title, price, caption, tags, description } = form
+    const { type, media, title, price, caption, description } = form
     if (media.length === 0 || !caption) {
       showAlert(
         'error',
@@ -85,20 +91,20 @@ const AddScreen = () => {
     }
     setLoading(true)
     try {
+      console.log(selectedTags)
       const response = await api.addPost({
         type,
         media,
         title,
         price,
         caption,
-        tags,
+        tags: selectedTags,
         description
       })
       response.status === 400
         ? showAlert('error', response.data.message)
         : response.success
-          ? (showAlert('success', response.data.message),
-            navigation.navigate('Home'))
+          ? navigation.navigate('Profile')
           : showAlert('error', response.data.message)
     } catch (error) {
       console.log(error)
@@ -202,7 +208,8 @@ const AddScreen = () => {
               maxLength={1000}
             />
           ) : null}
-          <Text style={styles.inputLight}>Tag selection placeholder</Text>
+          <Text style={styles.input}>Add tags to your post</Text>
+          <SelectTags onTagsChange={handleTagsChange} />
           <Spacer />
           <Spacer />
         </View>
