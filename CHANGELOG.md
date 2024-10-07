@@ -1,3 +1,10 @@
+# [1.2.0-dev.7](https://github.com/lorel-app/fe/compare/v1.2.0-dev.6...v1.2.0-dev.7) (2024-10-07)
+
+
+### Features
+
+* 🫡 Select Tags component ([a28d4bf](https://github.com/lorel-app/fe/commit/a28d4bf994e4246b59720c37609a3c38b13985e2))
+
 # [1.2.0-dev.6](https://github.com/lorel-app/fe/compare/v1.2.0-dev.5...v1.2.0-dev.6) (2024-10-07)
 
 
