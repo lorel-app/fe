@@ -1,3 +1,10 @@
+# [1.2.0-dev.6](https://github.com/lorel-app/fe/compare/v1.2.0-dev.5...v1.2.0-dev.6) (2024-10-07)
+
+
+### Features
+
+* 🫡 Like/Unlike functionality ([92ac36f](https://github.com/lorel-app/fe/commit/92ac36f797e6f67063187a797d3e284b4bcde9f8))
+
 # [1.2.0-dev.5](https://github.com/lorel-app/fe/compare/v1.2.0-dev.4...v1.2.0-dev.5) (2024-10-06)
 
 
