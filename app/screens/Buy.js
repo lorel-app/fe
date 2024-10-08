@@ -17,21 +17,21 @@ const BuyScreen = () => {
       <HeaderStack title={title} />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: 40, flexGrow: 1 }}
+        contentContainerStyle={styles.containerStack}
       >
         <TouchableOpacity style={styles.row}>
           {user.displayPictureThumb ? (
             <Image
               source={{ uri: user.displayPictureThumb }}
               resizeMode="cover"
-              style={styles.myProfilePic}
+              style={styles.profilePicLarge}
             />
           ) : (
-            <Icon name="circle" size={100} style={styles.myProfilePic} />
+            <Icon name="circle" size={100} style={styles.profilePicLarge} />
           )}
           {user ? <Text style={styles.text}>{user.username}</Text> : null}
         </TouchableOpacity>
-        <View style={{ flex: 1 }}>
+        <View style={styles.slide}>
           {media.map((item, index) => (
             <Image
               key={index}

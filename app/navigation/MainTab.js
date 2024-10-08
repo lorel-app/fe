@@ -20,11 +20,11 @@ function Tabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color }) => {
           return (
             <MaterialIcons
               name={tabIcons[route.name]}
-              size={size}
+              size={32}
               color={color}
             />
           )

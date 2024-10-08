@@ -11,6 +11,7 @@ import { AlertProvider } from '@/hooks/useAlertModal'
 import Tabs from './navigation/MainTab'
 import Header from './navigation/Header'
 import BuyScreen from '@/app/screens/Buy'
+import UserScreen from '@/app/screens/User'
 
 const Stack = createStackNavigator()
 
@@ -36,6 +37,11 @@ export default function Index() {
               <Stack.Screen
                 name="Buy"
                 component={BuyScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="User"
+                component={UserScreen}
                 options={{ headerShown: false }}
               />
             </Stack.Navigator>

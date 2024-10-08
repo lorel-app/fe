@@ -84,9 +84,9 @@ const PostShop = ({
         }
       >
         {title ? (
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { textAlign: 'left' }]}>{title}</Text>
         ) : (
-          <Text>Untitled</Text>
+          <Text style={[styles.title, { textAlign: 'left' }]}>Untitled</Text>
         )}
         <View style={styles.row}>
           {price ? (

@@ -36,6 +36,8 @@ export const useGlobalStyles = () => {
     )
     return () => subscription?.remove()
   }, [])
+
+  // adjust maxWidth functionality so that it works for Home and User/Profile
   const width = Math.min(dimensions.window.width, 600)
 
   const { colors } = useTheme()
@@ -60,7 +62,7 @@ export const useGlobalStyles = () => {
     container: {
       // ANDROID IS NOT A FAN OF FLEX
       // flex: 1,
-      padding: 16,
+      // paddingHo: 16,
       alignItems: 'center',
       width: '100%'
     },
@@ -80,23 +82,17 @@ export const useGlobalStyles = () => {
       position: 'absolute',
       zIndex: 1000,
       paddingVertical: 0,
+      paddingHorizontal: 10,
       width: '100%',
       ...shadowStyle
     },
-    containerGrid: {
-      padding: 100,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      alignItems: 'center'
+    containerStack: {
+      paddingHorizontal: 0
     },
-    gridPost: {
-      flexBasis: '40%',
-      maxWidth: 500,
-      marginBottom: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 25
+    containerGrid: {
+      width: width / 3,
+      height: width / 3,
+      padding: 2
     },
 
     post: {
@@ -169,6 +165,12 @@ export const useGlobalStyles = () => {
       color: colors.text,
       fontSize: 14,
       padding: 2
+    },
+    textBold: {
+      color: colors.text,
+      fontSize: 14,
+      fontWeight: '500',
+      padding: 0
     },
     textCenter: {
       color: colors.text,
@@ -367,7 +369,7 @@ export const useGlobalStyles = () => {
       height: 24,
       borderRadius: 50
     },
-    myProfilePic: {
+    profilePicLarge: {
       margin: 5,
       width: 100,
       height: 100,

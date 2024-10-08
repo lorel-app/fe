@@ -190,6 +190,11 @@ const getMe = async body => {
   return response
 }
 
+const getUser = async userId => {
+  const response = await apiInstance.get(`user/${userId}`)
+  return response
+}
+
 const updateProfilePic = async file => {
   const formData = new FormData()
   formData.append('file', {
@@ -213,6 +218,23 @@ const allPosts = async (limit = 10, offset = 0) => {
   return response
 }
 
+// placeholder routes
+const shopPosts = async (limit = 10, offset = 0) => {
+  const response = await apiInstance.get('/', {
+    params: { limit, offset }
+  })
+  console.log('shopPosts loaded')
+  return response
+}
+
+const contentPosts = async (limit = 10, offset = 0) => {
+  const response = await apiInstance.get('/', {
+    params: { limit, offset }
+  })
+  console.log('contentPosts loaded')
+  return response
+}
+
 const likePost = async postId => {
   const response = await apiInstance.post(`like/${postId}`)
   return response
@@ -220,6 +242,18 @@ const likePost = async postId => {
 
 const unlikePost = async postId => {
   const response = await apiInstance.delete(`like/${postId}`)
+  return response
+}
+
+// not implemented: wait for isFollowing bool and think about the route
+
+const followUser = async userId => {
+  const response = await apiInstance.post(`follower/${userId}`)
+  return response
+}
+
+const unfollowUser = async userId => {
+  const response = await apiInstance.delete(`follower/${userId}`)
   return response
 }
 
@@ -275,10 +309,15 @@ export default {
   verifyEmail,
   verifyPhone,
   getMe,
+  getUser,
   updateProfilePic,
   allPosts,
+  shopPosts,
+  contentPosts,
   likePost,
   unlikePost,
+  followUser,
+  unfollowUser,
   addPost,
   allTags,
   loadTokens,

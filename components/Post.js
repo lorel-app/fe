@@ -2,7 +2,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
+import { useTheme, useNavigation } from '@react-navigation/native'
 import ButtonIcon from './ButtonIcon'
 import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
@@ -24,6 +24,15 @@ const Post = ({
   dateTime,
   children
 }) => {
+  const navigation = useNavigation()
+
+  const navigateToUserScreen = user => {
+    navigation.navigate('User', {
+      user: user,
+      showHeader: true
+    })
+  }
+
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
@@ -58,7 +67,10 @@ const Post = ({
   return (
     <>
       <View style={styles.rowSpan}>
-        <TouchableOpacity style={styles.row}>
+        <TouchableOpacity
+          style={styles.row}
+          onPress={() => navigateToUserScreen(user)}
+        >
           {user.displayPictureThumb ? (
             <Image
               source={{ uri: user.displayPictureThumb }}
