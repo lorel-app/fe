@@ -1,3 +1,10 @@
+# [1.2.0-dev.8](https://github.com/lorel-app/fe/compare/v1.2.0-dev.7...v1.2.0-dev.8) (2024-10-08)
+
+
+### Features
+
+* 🫡 User/Profile Screen Functionality and Design ([c285b59](https://github.com/lorel-app/fe/commit/c285b5918ecb4165ef7db7f7eb94e34a8ddf2af9))
+
 # [1.2.0-dev.7](https://github.com/lorel-app/fe/compare/v1.2.0-dev.6...v1.2.0-dev.7) (2024-10-07)
 
 
