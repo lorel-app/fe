@@ -37,8 +37,8 @@ export const useGlobalStyles = () => {
     return () => subscription?.remove()
   }, [])
 
-  // adjust maxWidth functionality so that it works for Home and User/Profile
   const width = Math.min(dimensions.window.width, 600)
+  const fullWidth = dimensions.window.width
 
   const { colors } = useTheme()
 
@@ -90,8 +90,8 @@ export const useGlobalStyles = () => {
       paddingHorizontal: 0
     },
     containerGrid: {
-      width: width / 3,
-      height: width / 3,
+      width: fullWidth / 3,
+      height: fullWidth / 3,
       padding: 2
     },
 

@@ -6,11 +6,10 @@ import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useImagePicker } from '@/hooks/useImagePicker'
 import api from '@/utils/api'
 import AuthContext from '@/utils/authContext'
-import { useAlertModal } from '@/hooks/useAlertModal'
 import UnauthenticatedView from '@/components/UnauthenticatedView'
 import UserScreen from '@/app/screens/User'
 
-const ProfileScreen = () => {
+const ProfileScreen = navigation => {
   const styles = useGlobalStyles()
   const { isAuthenticated, user } = useContext(AuthContext)
   const routeParams = {

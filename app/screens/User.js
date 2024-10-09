@@ -84,8 +84,11 @@ const UserScreen = ({ route }) => {
     setLoading(true)
     try {
       const response = await (type === 'shop'
-        ? api.shopPosts(10, offsetShop)
-        : api.contentPosts(10, offsetContent))
+        ? api.userPosts(userInfo.id, { offset: offsetShop, postType: 'SHOP' })
+        : api.userPosts(userInfo.id, {
+            offset: offsetContent,
+            postType: 'CONTENT'
+          }))
 
       if (response.success) {
         if (type === 'shop') {

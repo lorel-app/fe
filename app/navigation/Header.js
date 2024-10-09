@@ -20,10 +20,15 @@ export default function Header() {
 
   const handleLogout = async () => {
     const response = await logout()
-    response.success
-      ? (showAlert('success', 'Successfully logged out.'),
-        navigation.navigate('Home'))
-      : showAlert('error', 'Something went wrong')
+    if (response.success) {
+      showAlert('success', 'Successfully logged out.')
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }]
+      })
+    } else {
+      showAlert('error', 'Something went wrong')
+    }
   }
 
   return (

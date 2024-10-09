@@ -218,20 +218,16 @@ const allPosts = async (limit = 10, offset = 0) => {
   return response
 }
 
-// placeholder routes
-const shopPosts = async (limit = 10, offset = 0) => {
-  const response = await apiInstance.get('/', {
-    params: { limit, offset }
+const userPosts = async (userId, options) => {
+  const defaults = {
+    limit: 12,
+    offset: 0,
+    postType: 'ALL'
+  }
+  const opts = { ...defaults, ...options }
+  const response = await apiInstance.get(`/post/${userId}`, {
+    params: opts
   })
-  console.log('shopPosts loaded')
-  return response
-}
-
-const contentPosts = async (limit = 10, offset = 0) => {
-  const response = await apiInstance.get('/', {
-    params: { limit, offset }
-  })
-  console.log('contentPosts loaded')
   return response
 }
 
@@ -312,8 +308,7 @@ export default {
   getUser,
   updateProfilePic,
   allPosts,
-  shopPosts,
-  contentPosts,
+  userPosts,
   likePost,
   unlikePost,
   followUser,

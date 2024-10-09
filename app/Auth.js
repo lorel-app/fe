@@ -91,7 +91,10 @@ export default function SignUpLogInModal({ visible, onClose }) {
       response.success
         ? (onClose(),
           showAlert('success', response.data.message),
-          navigation.navigate('Home'))
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }]
+          }))
         : response.status === 403
           ? (handleVerification(response.data, password), onClose())
           : showAlert('error', response.data.message)

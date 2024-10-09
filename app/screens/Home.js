@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, FlatList, ActivityIndicator } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 import { PostShop, PostContent } from '@/components/PostTypes'
 import { useAlertModal } from '@/hooks/useAlertModal'
+import { useFocusEffect } from '@react-navigation/native'
+import AuthContext from '@/utils/authContext'
 import api from '@/utils/api'
 
 const HomeScreen = () => {
+  const { loading: authLoading } = useContext(AuthContext)
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const [posts, setPosts] = useState([])
@@ -17,7 +20,6 @@ const HomeScreen = () => {
 
   const fetchPosts = async () => {
     if (loading || !hasMore) return
-
     setLoading(true)
     try {
       const response = await api.allPosts(10, offset)
@@ -38,9 +40,13 @@ const HomeScreen = () => {
     }
   }
 
-  useEffect(() => {
-    fetchPosts()
-  }, []) // Empty dependency array to run only once on mount
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!authLoading) {
+        setPosts([]), fetchPosts()
+      }
+    }, [authLoading])
+  )
 
   const renderItem = ({ item: post }) => {
     const mediaUrls = post.media.map(m => ({
