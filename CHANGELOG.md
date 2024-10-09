@@ -1,3 +1,10 @@
+# [1.2.0-dev.9](https://github.com/lorel-app/fe/compare/v1.2.0-dev.8...v1.2.0-dev.9) (2024-10-09)
+
+
+### Bug Fixes
+
+* 🐛 Late AuthContext issue, width issue ([03bc434](https://github.com/lorel-app/fe/commit/03bc434c8358bf9a4e2d360c4b6e0070d50c59ab))
+
 # [1.2.0-dev.8](https://github.com/lorel-app/fe/compare/v1.2.0-dev.7...v1.2.0-dev.8) (2024-10-08)
 
 
