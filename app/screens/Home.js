@@ -59,7 +59,8 @@ const HomeScreen = () => {
         style={[
           styles.post,
           post.type === 'SHOP'
-            ? { backgroundColor: colors.card }
+            ? // temp until I decide what to do
+              { borderTopColor: colors.card, borderTopWidth: 2 }
             : { borderTopColor: colors.card, borderTopWidth: 2 }
         ]}
         key={post.id}

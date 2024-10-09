@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme, useNavigation } from '@react-navigation/native'
 import ButtonIcon from './ButtonIcon'
+import ButtonFollow from './ButtonFollow'
 import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
 
@@ -82,9 +83,7 @@ const Post = ({
           )}
           <Text style={styles.text}>{user.username}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonSmall}>
-          <Text style={styles.text}>Follow</Text>
-        </TouchableOpacity>
+        <ButtonFollow user={user} />
       </View>
 
       {children}

@@ -4,8 +4,9 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons' // Import MaterialIcons
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useNavigation } from '@react-navigation/native'
+import ButtonFollow from '@/components/ButtonFollow'
 
-const HeaderStack = ({ title }) => {
+const HeaderStack = ({ title, user }) => {
   const { colors } = useTheme()
   const globalStyles = useGlobalStyles()
   const navigation = useNavigation()
@@ -27,6 +28,7 @@ const HeaderStack = ({ title }) => {
           {title ? title : 'Go Back'}
         </Text>
       </View>
+      <ButtonFollow user={user} />
       <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
         <Icon name="more-vert" size={24} color={colors.primary} />
       </TouchableOpacity>

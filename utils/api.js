@@ -241,8 +241,6 @@ const unlikePost = async postId => {
   return response
 }
 
-// not implemented: wait for isFollowing bool and think about the route
-
 const followUser = async userId => {
   const response = await apiInstance.post(`follower/${userId}`)
   return response

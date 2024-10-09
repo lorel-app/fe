@@ -30,7 +30,7 @@ export const AlertProvider = ({ children }) => {
         <View style={styles.modalChildren}>
           {icon}
           <Spacer />
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
         </View>
       )
     })

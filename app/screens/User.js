@@ -49,7 +49,7 @@ const UserScreen = ({ route }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const { user = {}, showHeader = true } = route.params || {}
-  const [userInfo, setUserInfo] = useState(null)
+  const [userInfo, setUserInfo] = useState(false)
   const [loading, setLoading] = useState(true)
   const [shopPosts, setShopPosts] = useState([])
   const [contentPosts, setContentPosts] = useState([])
@@ -117,23 +117,35 @@ const UserScreen = ({ route }) => {
 
   return (
     <>
-      {showHeader && <HeaderStack title={user.username} />}
+      {showHeader && <HeaderStack title={user.username} user={user} />}
       {userInfo && (
         <View style={styles.container}>
-          <Image
-            source={{ uri: userInfo.displayPicture }}
-            style={styles.profilePicLarge}
-          />
-          <View style={[styles.rowSpan, { paddingHorizontal: 40 }]}>
-            <TouchableOpacity style={{ alignItems: 'center' }}>
-              <Text style={styles.textBold}>Followers</Text>
-              <Text style={styles.textBold}>{userInfo.followersCount}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ alignItems: 'center' }}>
+          <View>
+            <Image
+              source={{ uri: userInfo.displayPicture }}
+              style={styles.coverPic}
+            />
+            <Image
+              source={{ uri: userInfo.displayPicture }}
+              style={styles.profilePicLarge}
+            />
+          </View>
+          <View
+            style={[
+              styles.rowSpan,
+              { maxWidth: 600 },
+              { paddingHorizontal: 25 }
+            ]}
+          >
+            <TouchableOpacity style={styles.profileButtons}>
               <Text style={styles.textBold}>Following</Text>
               <Text style={styles.textBold}>{userInfo.followingCount}</Text>
             </TouchableOpacity>
-            <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity style={styles.profileButtons}>
+              <Text style={styles.textBold}>Followers</Text>
+              <Text style={styles.textBold}>{userInfo.followersCount}</Text>
+            </TouchableOpacity>
+            <View style={styles.profileButtons}>
               <Text style={styles.textBold}>Likes</Text>
               <Text style={styles.textBold}>{userInfo.totalLikes}</Text>
             </View>

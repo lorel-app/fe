@@ -76,8 +76,14 @@ const AddScreen = () => {
   }
 
   let selectedTags = []
+
   const handleTagsChange = tags => {
-    selectedTags = tags
+    if (tags.length <= 6) {
+      selectedTags = tags
+      setForm(prevForm => ({ ...prevForm, tags }))
+    } else {
+      showAlert('error', 'You can only select up to 6 tags.')
+    }
   }
 
   const handlePost = async () => {
@@ -91,7 +97,6 @@ const AddScreen = () => {
     }
     setLoading(true)
     try {
-      console.log(selectedTags)
       const response = await api.addPost({
         type,
         media,
@@ -101,6 +106,13 @@ const AddScreen = () => {
         tags: selectedTags,
         description
       })
+      if (response.status === 413) {
+        showAlert(
+          'error',
+          'Upload failed. Please ensure the total size of your photos and videos does not exceed 20MB.'
+        )
+        return
+      }
       response.status === 400
         ? showAlert('error', response.data.message)
         : response.success
@@ -118,7 +130,7 @@ const AddScreen = () => {
     <>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 10 }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
           <Text style={[styles.title, { textAlign: 'left' }]}>
@@ -155,6 +167,7 @@ const AddScreen = () => {
                 iconSize={80}
                 onPress={pickImages}
               />
+              <Text style={styles.textLight}>(Max 5)</Text>
             </View>
             <Spacer />
           </ScrollView>
@@ -208,7 +221,10 @@ const AddScreen = () => {
               maxLength={1000}
             />
           ) : null}
-          <Text style={styles.input}>Add tags to your post</Text>
+          <View style={[styles.row, { padding: 10 }, { marginBottom: 10 }]}>
+            <Text style={styles.text}>Add tags to your post</Text>
+            <Text style={styles.textLight}>(Max 6)</Text>
+          </View>
           <SelectTags onTagsChange={handleTagsChange} />
           <Spacer />
           <Spacer />

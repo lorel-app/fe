@@ -9,7 +9,8 @@ export function useMediaPicker() {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
       quality: 1,
-      allowsMultipleSelection: true
+      allowsMultipleSelection: true,
+      selectionLimit: 5
     })
 
     if (!result.canceled) {

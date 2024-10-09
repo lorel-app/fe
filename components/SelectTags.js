@@ -97,7 +97,9 @@ const SelectTags = ({ onTagsChange }) => {
         {selectedTags.length > 0 ? (
           renderSelectedTagButtons()
         ) : (
-          <Text style={styles.buttonSmallSelected}>No tags selected</Text>
+          <Text style={[styles.buttonSmallSelected, styles.text]}>
+            No tags selected
+          </Text>
         )}
         {selectedTags.length > 0 && (
           <TouchableOpacity

@@ -96,11 +96,13 @@ export const useGlobalStyles = () => {
     },
 
     post: {
-      width: width,
+      width: width * 0.95,
+      backgroundColor: colors.card,
       alignItems: 'center',
       borderRadius: 25,
       margin: 15,
-      padding: 10
+      padding: 10,
+      ...shadowStyle
     },
 
     carouselContainer: {
@@ -369,11 +371,29 @@ export const useGlobalStyles = () => {
       height: 24,
       borderRadius: 50
     },
+
     profilePicLarge: {
-      margin: 5,
+      position: 'absolute',
       width: 100,
       height: 100,
-      borderRadius: 50
+      borderRadius: 50,
+      top: 180,
+      left: '50%',
+      transform: [{ translateX: -50 }],
+      borderWidth: 3,
+      borderColor: colors.secondaryTint
+    },
+    coverPic: {
+      width: fullWidth,
+      maxWidth: 900,
+      height: 250,
+      resizeMode: 'cover',
+      marginBottom: 30
+      // borderBottomWidth: 3
+    },
+    profileButtons: {
+      width: width / 6,
+      alignItems: 'center'
     },
 
     switch: {

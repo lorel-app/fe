@@ -10,8 +10,7 @@ export function useMediaPicker() {
       allowsEditing: false,
       quality: 1,
       allowsMultipleSelection: true,
-      //I DONT KNOW THE LIMIT
-      selectionLimit: 10
+      selectionLimit: 5
     })
 
     if (!result.canceled) {
