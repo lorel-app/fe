@@ -1,3 +1,10 @@
+# [1.2.0-dev.10](https://github.com/lorel-app/fe/compare/v1.2.0-dev.9...v1.2.0-dev.10) (2024-10-09)
+
+
+### Features
+
+* 🫡 Follow Button Component, pre state handle ([e828898](https://github.com/lorel-app/fe/commit/e8288987bb8cf80475c17e4854cb34cd5cccd1b1))
+
 # [1.2.0-dev.9](https://github.com/lorel-app/fe/compare/v1.2.0-dev.8...v1.2.0-dev.9) (2024-10-09)
 
 
