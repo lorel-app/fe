@@ -7,6 +7,8 @@ import ButtonIcon from './ButtonIcon'
 import ButtonFollow from './ButtonFollow'
 import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
+import { SwiperFlatListWithGestureHandler } from 'react-native-swiper-flatlist/WithGestureHandler'
+import { CustomPagination } from './Pagination'
 
 const formatDate = isoString => {
   const date = new Date(isoString)
@@ -23,23 +25,20 @@ const Post = ({
   caption,
   tags,
   dateTime,
-  children
+  media,
+  title,
+  price,
+  description,
+  type
 }) => {
   const navigation = useNavigation()
-
-  const navigateToUserScreen = user => {
-    navigation.navigate('User', {
-      user: user,
-      showHeader: true
-    })
-  }
-
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
 
   const [likeCount, setLikeCount] = useState(initialLikeCount)
   const [liked, setLiked] = useState(initialLikedStatus)
+
   const handleLike = async () => {
     try {
       let response
@@ -65,12 +64,27 @@ const Post = ({
     }
   }
 
+  const navigateToBuyScreen = post => {
+    navigation.navigate('Buy', {
+      user: post.user,
+      media: post.media,
+      title: post.title,
+      price: post.price,
+      caption: post.caption,
+      description: post.description,
+      tags: post.tags,
+      dateTime: post.createdAt
+    })
+  }
+
   return (
     <>
       <View style={styles.rowSpan}>
         <TouchableOpacity
           style={styles.row}
-          onPress={() => navigateToUserScreen(user)}
+          onPress={() =>
+            navigation.navigate('User', { user, showHeader: true })
+          }
         >
           {user.displayPictureThumb ? (
             <Image
@@ -86,36 +100,80 @@ const Post = ({
         <ButtonFollow user={user} />
       </View>
 
-      {children}
+      <View style={styles.carouselContainer}>
+        <SwiperFlatListWithGestureHandler
+          data={media}
+          renderItem={({ item, index }) => (
+            <View style={styles.slide}>
+              <Image
+                style={styles.image}
+                source={{ uri: item.uri }}
+                testID={`container_swiper_renderItem_screen_${index}`}
+              />
+            </View>
+          )}
+          showPagination={media.length > 1}
+          PaginationComponent={CustomPagination}
+        />
+      </View>
+
+      {type === 'SHOP' ? (
+        <TouchableOpacity
+          style={styles.rowSpan}
+          onPress={() =>
+            navigateToBuyScreen({
+              user,
+              media,
+              title,
+              price,
+              caption,
+              description,
+              tags,
+              dateTime
+            })
+          }
+        >
+          {title ? (
+            <Text style={[styles.title, { textAlign: 'left' }]}>{title}</Text>
+          ) : (
+            <Text style={[styles.title, { textAlign: 'left' }]}>Untitled</Text>
+          )}
+          <View style={styles.row}>
+            {price ? (
+              <Text style={styles.textAccent}>EUR {price}</Text>
+            ) : (
+              <Text>0</Text>
+            )}
+            <Icon
+              name="keyboard-arrow-right"
+              style={[styles.textAccent, { paddingTop: 3 }]}
+            />
+          </View>
+        </TouchableOpacity>
+      ) : null}
 
       <View style={[styles.rowSpan, { padding: 10 }]}>
         <View style={styles.rowFlex}>
-          {caption ? (
+          {caption && (
             <Text style={[styles.text, { paddingBottom: 10 }]}>
               {caption}
-              {dateTime ? (
+              {dateTime && (
                 <Text style={styles.textLight}> ({formatDate(dateTime)})</Text>
-              ) : null}
+              )}
             </Text>
-          ) : null}
+          )}
 
           <View style={styles.rowWrap}>
             {tags?.map((tag, index) => (
               <TouchableOpacity key={index} style={styles.buttonSmall}>
                 <Text
                   style={{
-                    color: (() => {
-                      switch (tag.type) {
-                        case 'SUBJECT':
-                          return colors.tertiary
-                        case 'MEDIUM':
-                          return colors.primary
-                        case 'STYLE':
-                          return colors.secondary
-                        default:
-                          return colors.text
-                      }
-                    })()
+                    color:
+                      tag.type === 'SUBJECT'
+                        ? colors.tertiary
+                        : tag.type === 'MEDIUM'
+                          ? colors.primary
+                          : colors.secondary
                   }}
                 >
                   {tag.name}
@@ -140,7 +198,7 @@ const Post = ({
               iconName={liked ? 'favorite' : 'favorite-outline'}
               iconColor={liked ? colors.tertiary : colors.secondaryTint}
               iconSize={32}
-              onPress={() => handleLike()}
+              onPress={handleLike}
               style={{ margin: 3 }}
             />
             <Text style={styles.textLight}>{likeCount}</Text>

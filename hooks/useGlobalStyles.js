@@ -102,6 +102,7 @@ export const useGlobalStyles = () => {
       borderRadius: 25,
       margin: 15,
       padding: 10,
+      flex: 1,
       ...shadowStyle
     },
 
@@ -115,12 +116,7 @@ export const useGlobalStyles = () => {
     },
     image: {
       width: width * 0.95,
-      height: width,
-      resizeMode: 'contain'
-    },
-    imageShop: {
-      width: width * 0.85,
-      height: width,
+      minHeight: width,
       resizeMode: 'contain'
     },
 

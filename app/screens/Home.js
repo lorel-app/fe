@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { View, FlatList, ActivityIndicator } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
-import { PostShop, PostContent } from '@/components/PostTypes'
+import Post from '@/components/Post'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { useFocusEffect } from '@react-navigation/native'
 import AuthContext from '@/utils/authContext'
@@ -43,7 +43,8 @@ const HomeScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       if (!authLoading) {
-        setPosts([]), fetchPosts()
+        setPosts([])
+        fetchPosts()
       }
     }, [authLoading])
   )
@@ -58,39 +59,24 @@ const HomeScreen = () => {
       <View
         style={[
           styles.post,
-          post.type === 'SHOP'
-            ? // temp until I decide what to do
-              { borderTopColor: colors.card, borderTopWidth: 2 }
-            : { borderTopColor: colors.card, borderTopWidth: 2 }
+          { borderTopColor: colors.card, borderTopWidth: 2 }
         ]}
         key={post.id}
       >
-        {post.type === 'SHOP' ? (
-          <PostShop
-            id={post.id}
-            user={post.user}
-            media={mediaUrls}
-            likeCount={post.likeCount}
-            liked={post.liked}
-            title={post.title}
-            price={post.price}
-            caption={post.caption}
-            description={post.description}
-            tags={post.tags}
-            dateTime={post.createdAt}
-          />
-        ) : post.type === 'CONTENT' ? (
-          <PostContent
-            id={post.id}
-            user={post.user}
-            media={mediaUrls}
-            likeCount={post.likeCount}
-            liked={post.liked}
-            caption={post.caption}
-            tags={post.tags}
-            dateTime={post.createdAt}
-          />
-        ) : null}
+        <Post
+          id={post.id}
+          user={post.user}
+          media={mediaUrls}
+          likeCount={post.likeCount}
+          liked={post.liked}
+          caption={post.caption}
+          tags={post.tags}
+          dateTime={post.createdAt}
+          title={post.title}
+          price={post.price}
+          description={post.description}
+          type={post.type}
+        />
       </View>
     )
   }
@@ -113,8 +99,8 @@ const HomeScreen = () => {
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={true}
       onEndReached={fetchPosts}
-      onEndReachedThreshold={0.5} // Trigger when scrolled 50% from the end
-      ListFooterComponent={renderFooter} // Show loader at the bottom
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={renderFooter}
     />
   )
 }
