@@ -1,3 +1,10 @@
+# [1.2.0-dev.11](https://github.com/lorel-app/fe/compare/v1.2.0-dev.10...v1.2.0-dev.11) (2024-10-10)
+
+
+### Bug Fixes
+
+* 🐛 Refactor Home/PostTypes/Types ([3f9a02c](https://github.com/lorel-app/fe/commit/3f9a02c98132a2754c7d4224367817a2e26d7179))
+
 # [1.2.0-dev.10](https://github.com/lorel-app/fe/compare/v1.2.0-dev.9...v1.2.0-dev.10) (2024-10-09)
 
 
