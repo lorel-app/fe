@@ -1,3 +1,10 @@
+# [1.2.0-dev.12](https://github.com/lorel-app/fe/compare/v1.2.0-dev.11...v1.2.0-dev.12) (2024-10-10)
+
+
+### Bug Fixes
+
+* 🐛 Following context for follow/unfollow functionality ([b82fa1a](https://github.com/lorel-app/fe/commit/b82fa1af7ad051197b726aa4f9364929c0030441))
+
 # [1.2.0-dev.11](https://github.com/lorel-app/fe/compare/v1.2.0-dev.10...v1.2.0-dev.11) (2024-10-10)
 
 
