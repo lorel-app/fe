@@ -28,7 +28,7 @@ const HeaderStack = ({ title, user }) => {
           {title ? title : 'Go Back'}
         </Text>
       </View>
-      {/* <ButtonFollow user={user} /> */}
+      <ButtonFollow user={user} />
       <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
         <Icon name="more-vert" size={24} color={colors.primary} />
       </TouchableOpacity>

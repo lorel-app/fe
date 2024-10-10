@@ -8,6 +8,7 @@ import AppLightTheme from '@/constants/AppLightTheme'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { AuthProvider } from '@/utils/authContext'
 import { AlertProvider } from '@/hooks/useAlertModal'
+import { FollowingProvider } from '@/hooks/useFollowingContext'
 import Tabs from './navigation/MainTab'
 import Header from './navigation/Header'
 import BuyScreen from '@/app/screens/Buy'
@@ -23,31 +24,33 @@ export default function Index() {
   return (
     <AuthProvider>
       <ThemeContext.Provider value={themeData}>
-        <NavigationContainer
-          independent={true}
-          theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
-        >
-          <AlertProvider>
-            <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
-              <Stack.Screen
-                name="MainTabs"
-                component={MainScreens}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Buy"
-                component={BuyScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="User"
-                component={UserScreen}
-                options={{ headerShown: false }}
-              />
-            </Stack.Navigator>
-          </AlertProvider>
-          <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
-        </NavigationContainer>
+        <FollowingProvider>
+          <NavigationContainer
+            independent={true}
+            theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
+          >
+            <AlertProvider>
+              <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
+                <Stack.Screen
+                  name="MainTabs"
+                  component={MainScreens}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Buy"
+                  component={BuyScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="User"
+                  component={UserScreen}
+                  options={{ headerShown: false }}
+                />
+              </Stack.Navigator>
+            </AlertProvider>
+            <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
+          </NavigationContainer>
+        </FollowingProvider>
       </ThemeContext.Provider>
     </AuthProvider>
   )

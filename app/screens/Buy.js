@@ -14,7 +14,7 @@ const BuyScreen = () => {
 
   return (
     <>
-      <HeaderStack title={title} />
+      <HeaderStack title={title} user={user} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.containerStack}

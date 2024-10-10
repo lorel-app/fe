@@ -1,5 +1,5 @@
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme, useNavigation } from '@react-navigation/native'
@@ -9,6 +9,7 @@ import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { SwiperFlatListWithGestureHandler } from 'react-native-swiper-flatlist/WithGestureHandler'
 import { CustomPagination } from './Pagination'
+import AuthContext from '@/utils/authContext'
 
 const formatDate = isoString => {
   const date = new Date(isoString)
@@ -32,6 +33,7 @@ const Post = ({
   type
 }) => {
   const navigation = useNavigation()
+  const { user: me } = useContext(AuthContext)
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
@@ -82,9 +84,13 @@ const Post = ({
       <View style={styles.rowSpan}>
         <TouchableOpacity
           style={styles.row}
-          onPress={() =>
-            navigation.navigate('User', { user, showHeader: true })
-          }
+          onPress={() => {
+            if (me && me.id === user.id) {
+              navigation.navigate('Profile')
+            } else {
+              navigation.navigate('User', { user, showHeader: true })
+            }
+          }}
         >
           {user.displayPictureThumb ? (
             <Image
@@ -97,7 +103,7 @@ const Post = ({
           )}
           <Text style={styles.text}>{user.username}</Text>
         </TouchableOpacity>
-        <ButtonFollow user={user} />
+        {me && me.id !== user.id && <ButtonFollow user={user} />}
       </View>
 
       <View style={styles.carouselContainer}>
