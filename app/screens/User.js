@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import SocialIcon from '@/assets/images/SocialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import HeaderStack from '../navigation/HeaderStack'
 import { useAlertModal } from '@/hooks/useAlertModal'
@@ -149,6 +150,19 @@ const UserScreen = ({ route }) => {
               <Text style={styles.textBold}>Likes</Text>
               <Text style={styles.textBold}>{userInfo.totalLikes}</Text>
             </View>
+          </View>
+
+          <View style={{ flexDirection: 'row' }}>
+            <SocialIcon icon="facebook" />
+            <SocialIcon icon="x" />
+            <SocialIcon icon="instagram" />
+            <SocialIcon icon="linkedIn" />
+            <SocialIcon icon="behance" />
+            <SocialIcon icon="tikTok" />
+            <SocialIcon icon="pinterest" />
+            <SocialIcon icon="youtube" />
+            <SocialIcon icon="reddit" />
+            <SocialIcon icon="twitch" />
           </View>
         </View>
       )}

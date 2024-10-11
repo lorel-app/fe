@@ -51,7 +51,7 @@ export const useGlobalStyles = () => {
       alignItems: 'center',
       paddingHorizontal: 10,
       backgroundColor: colors.background,
-      height: 80
+      height: 60
     },
     headerItems: {
       flexDirection: 'row',

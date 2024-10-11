@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react'
 import { View } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import { useNavigation } from '@react-navigation/native'
-import LogoSvg from '@/assets/images/LogoMain.svg'
+import LogoMain from '@/assets/images/LogoMain'
+
 import ButtonSwitch from '@/components/ButtonSwitch'
 import ButtonIcon from '@/components/ButtonIcon'
 import SignUpLogInModal from '@/app/Auth'
@@ -34,7 +35,7 @@ export default function Header() {
   return (
     <View style={styles.header}>
       <View style={{ flex: 1 }}>
-        <LogoSvg fill={colors.secondary} width={250 / 2.5} height={61 / 2.5} />
+        <LogoMain fill={colors.secondary} width={250 / 2.5} height={61 / 2.5} />
       </View>
       <View style={[styles.headerItems]}>
         <ButtonSwitch />

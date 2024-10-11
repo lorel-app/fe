@@ -8,30 +8,30 @@ import ButtonFollow from '@/components/ButtonFollow'
 
 const HeaderStack = ({ title, user }) => {
   const { colors } = useTheme()
-  const globalStyles = useGlobalStyles()
+  const styles = useGlobalStyles()
   const navigation = useNavigation()
 
   return (
-    <View style={globalStyles.header}>
-      <View style={globalStyles.headerItems}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="keyboard-arrow-left" size={24} color={colors.primary} />
-        </TouchableOpacity>
-        <Text
-          style={{
-            color: colors.text,
-            marginLeft: 10,
-            fontSize: 18,
-            fontWeight: 'bold'
-          }}
+    <View style={styles.header}>
+      <View style={[{ flex: 1 }]}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.row}
         >
-          {title ? title : 'Go Back'}
-        </Text>
+          <Icon name="keyboard-arrow-left" size={30} color={colors.primary} />
+          <Text
+            style={[styles.title, { paddingLeft: 10 }, { paddingBottom: 5 }]}
+          >
+            {title ? title : 'Go Back'}
+          </Text>
+        </TouchableOpacity>
       </View>
-      <ButtonFollow user={user} />
-      <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
-        <Icon name="more-vert" size={24} color={colors.primary} />
-      </TouchableOpacity>
+      <View style={styles.headerItems}>
+        <ButtonFollow user={user} />
+        <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
+          <Icon name="more-vert" size={24} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
