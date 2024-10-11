@@ -59,6 +59,15 @@ export const useGlobalStyles = () => {
       justifyContent: 'flex-end'
     },
 
+    heightIsWidth: {
+      height: width
+    },
+
+    loader: {
+      width: width,
+      padding: 50
+    },
+
     container: {
       // ANDROID IS NOT A FAN OF FLEX
       // flex: 1,

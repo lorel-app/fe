@@ -13,10 +13,14 @@ const ButtonFollow = ({ user }) => {
 
   const handleFollow = async () => {
     try {
+      let response
       if (!isFollowing) {
-        await followUser(user.id)
+        response = await followUser(user.id)
       } else {
-        await unfollowUser(user.id)
+        response = await unfollowUser(user.id)
+      }
+      if (!response.success) {
+        showAlert('error', 'Please log in first')
       }
     } catch (error) {
       showAlert('Whoops', error.message)

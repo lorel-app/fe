@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   Image,
-  ActivityIndicator,
   Platform
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -20,6 +19,7 @@ import Spacer from '@/components/Spacer'
 import ButtonIcon from '@/components/ButtonIcon'
 import DropDownMenu from '@/components/DropDownMenu'
 import SelectTags from '@/components/SelectTags'
+import Loader from '@/components/Loader'
 
 const AddScreen = () => {
   const styles = useGlobalStyles()
@@ -233,11 +233,7 @@ const AddScreen = () => {
 
       <View>
         {loading ? (
-          <ActivityIndicator
-            size="large"
-            color="#E88570"
-            style={styles.containerFull}
-          />
+          <Loader />
         ) : (
           <TouchableOpacity style={styles.buttonAbsolute} onPress={handlePost}>
             <Text style={styles.buttonText}>

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, FlatList, ActivityIndicator } from 'react-native'
+import { View, FlatList } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 import Post from '@/components/Post'
@@ -7,6 +7,7 @@ import { useAlertModal } from '@/hooks/useAlertModal'
 import { useFocusEffect } from '@react-navigation/native'
 import AuthContext from '@/utils/authContext'
 import api from '@/utils/api'
+import Loader from '@/components/Loader'
 
 const HomeScreen = () => {
   const { loading: authLoading } = useContext(AuthContext)
@@ -81,15 +82,6 @@ const HomeScreen = () => {
     )
   }
 
-  const renderFooter = () => {
-    if (!loading) return null
-    return (
-      <View style={{ padding: 10 }}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    )
-  }
-
   return (
     <FlatList
       data={posts}
@@ -100,7 +92,7 @@ const HomeScreen = () => {
       removeClippedSubviews={true}
       onEndReached={fetchPosts}
       onEndReachedThreshold={0.5}
-      ListFooterComponent={renderFooter}
+      ListFooterComponent={loading && <Loader />}
     />
   )
 }

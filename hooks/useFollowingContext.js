@@ -8,31 +8,31 @@ export const FollowingProvider = ({ children }) => {
 
   const followUser = async userId => {
     try {
-      await api.followUser(userId)
-      setUserFollows(prev => ({
-        ...prev,
-        [userId]: true
-      }))
+      const response = await api.followUser(userId)
+      if (response.success) {
+        setUserFollows(prev => ({
+          ...prev,
+          [userId]: true
+        }))
+      }
+      return response
     } catch (error) {
-      setUserFollows(prev => ({
-        ...prev,
-        [userId]: false
-      }))
+      return { success: false, message: error.message }
     }
   }
 
   const unfollowUser = async userId => {
     try {
-      await api.unfollowUser(userId)
-      setUserFollows(prev => ({
-        ...prev,
-        [userId]: false
-      }))
+      const response = await api.unfollowUser(userId)
+      if (response.success) {
+        setUserFollows(prev => ({
+          ...prev,
+          [userId]: false
+        }))
+      }
+      return response
     } catch (error) {
-      setUserFollows(prev => ({
-        ...prev,
-        [userId]: true
-      }))
+      return { success: false, message: error.message }
     }
   }
 
