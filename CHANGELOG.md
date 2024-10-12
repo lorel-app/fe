@@ -1,3 +1,10 @@
+# [1.2.0-dev.14](https://github.com/lorel-app/fe/compare/v1.2.0-dev.13...v1.2.0-dev.14) (2024-10-12)
+
+
+### Bug Fixes
+
+* 🐛 followersCount updates onUn/Follow ([54c7b79](https://github.com/lorel-app/fe/commit/54c7b79f2ab71edc84da08af86d35dd0e676abf7))
+
 # [1.2.0-dev.13](https://github.com/lorel-app/fe/compare/v1.2.0-dev.12...v1.2.0-dev.13) (2024-10-11)
 
 
