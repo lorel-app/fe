@@ -1,3 +1,10 @@
+# [1.2.0-dev.15](https://github.com/lorel-app/fe/compare/v1.2.0-dev.14...v1.2.0-dev.15) (2024-10-12)
+
+
+### Bug Fixes
+
+* 🐛 ScrollView in UserScreen ([fcd783b](https://github.com/lorel-app/fe/commit/fcd783bf0d4d76b394baf7fc2963df8e65e0a0c9))
+
 # [1.2.0-dev.14](https://github.com/lorel-app/fe/compare/v1.2.0-dev.13...v1.2.0-dev.14) (2024-10-12)
 
 
