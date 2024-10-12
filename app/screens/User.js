@@ -52,7 +52,6 @@ const UserScreen = ({ route }) => {
   const { colors } = useTheme()
   const { user = {}, showHeader = true } = route.params || {}
   const [userInfo, setUserInfo] = useState({})
-  const [loadingUser, setLoadingUser] = useState(true)
   const [loadingPosts, setLoadingPosts] = useState(true)
   const [shopPosts, setShopPosts] = useState([])
   const [contentPosts, setContentPosts] = useState([])
@@ -73,8 +72,6 @@ const UserScreen = ({ route }) => {
         }
       } catch (err) {
         console.log('Error fetching user data:', err.message)
-      } finally {
-        setLoadingUser(false)
       }
     }
     fetchUserData()
@@ -91,7 +88,6 @@ const UserScreen = ({ route }) => {
 
   const fetchPosts = async type => {
     if (
-      loadingUser ||
       (type === 'shop' ? !hasMoreShopPosts : !hasMoreContentPosts) ||
       (type === 'shop' && shopPostsFetched.current)
     )
@@ -102,8 +98,8 @@ const UserScreen = ({ route }) => {
 
     try {
       const response = await (type === 'shop'
-        ? api.userPosts(userInfo.id, { offset: offsetShop, postType: 'SHOP' })
-        : api.userPosts(userInfo.id, {
+        ? api.userPosts(user.id, { offset: offsetShop, postType: 'SHOP' })
+        : api.userPosts(user.id, {
             offset: offsetContent,
             postType: 'CONTENT'
           }))
@@ -188,7 +184,7 @@ const UserScreen = ({ route }) => {
           </View>
         </View>
         {/* nested scroll needs to be tested with more posts and on native */}
-        <View style={styles.heightIsWidth}>
+        <View style={styles.height}>
           <Tab.Navigator
             screenOptions={({ route }) => ({
               tabBarIcon: ({ color }) => {

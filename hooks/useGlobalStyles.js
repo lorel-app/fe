@@ -39,6 +39,7 @@ export const useGlobalStyles = () => {
 
   const width = Math.min(dimensions.window.width, 600)
   const fullWidth = dimensions.window.width
+  const height = dimensions.window.height
 
   const { colors } = useTheme()
 
@@ -59,8 +60,8 @@ export const useGlobalStyles = () => {
       justifyContent: 'flex-end'
     },
 
-    heightIsWidth: {
-      height: width
+    height: {
+      height: height - 60
     },
 
     loader: {
