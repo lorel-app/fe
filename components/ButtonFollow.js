@@ -1,29 +1,37 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { useFollowingContext } from '@/hooks/useFollowingContext'
+import AuthContext from '@/utils/authContext'
 
-const ButtonFollow = ({ user }) => {
+const ButtonFollow = ({ user, onFollowToggle }) => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
   const { userFollows, followUser, unfollowUser } = useFollowingContext()
+  const { user: me } = useContext(AuthContext)
+
+  if (me && me.id === user.id) {
+    return null
+  }
 
   const isFollowing = userFollows[user.id] ?? user.userFollows
 
   const handleFollow = async () => {
-    try {
-      let response
-      if (!isFollowing) {
-        response = await followUser(user.id)
+    if (isFollowing) {
+      const response = await unfollowUser(user.id)
+      if (response.success) {
+        onFollowToggle && onFollowToggle(false)
       } else {
-        response = await unfollowUser(user.id)
-      }
-      if (!response.success) {
         showAlert('error', 'Please log in first')
       }
-    } catch (error) {
-      showAlert('Whoops', error.message)
+    } else {
+      const response = await followUser(user.id)
+      if (response.success) {
+        onFollowToggle && onFollowToggle(true)
+      } else {
+        showAlert('error', 'Please log in first')
+      }
     }
   }
 

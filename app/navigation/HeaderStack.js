@@ -1,12 +1,11 @@
 import React from 'react'
-import { useTheme } from '@react-navigation/native'
 import { View, Text, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons' // Import MaterialIcons
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import ButtonFollow from '@/components/ButtonFollow'
 
-const HeaderStack = ({ title, user }) => {
+const HeaderStack = ({ title, user, onFollowToggle }) => {
   const { colors } = useTheme()
   const styles = useGlobalStyles()
   const navigation = useNavigation()
@@ -26,10 +25,15 @@ const HeaderStack = ({ title, user }) => {
           </Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.headerItems}>
-        <ButtonFollow user={user} />
+        {onFollowToggle ? (
+          <ButtonFollow user={user} onFollowToggle={onFollowToggle} />
+        ) : (
+          <ButtonFollow user={user} />
+        )}
         <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
-          <Icon name="more-vert" size={24} color={colors.primary} />
+          <Icon name="more-vert" size={24} />
         </TouchableOpacity>
       </View>
     </View>

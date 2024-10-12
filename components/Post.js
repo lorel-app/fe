@@ -103,7 +103,7 @@ const Post = ({
           )}
           <Text style={styles.text}>{user.username}</Text>
         </TouchableOpacity>
-        {(!me || me.id !== user.id) && <ButtonFollow user={user} />}
+        <ButtonFollow user={user} />
       </View>
 
       <View style={styles.carouselContainer}>

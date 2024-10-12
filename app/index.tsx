@@ -24,12 +24,12 @@ export default function Index() {
   return (
     <AuthProvider>
       <ThemeContext.Provider value={themeData}>
-        <FollowingProvider>
-          <NavigationContainer
-            independent={true}
-            theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
-          >
-            <AlertProvider>
+        <NavigationContainer
+          independent={true}
+          theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
+        >
+          <AlertProvider>
+            <FollowingProvider>
               <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
                 <Stack.Screen
                   name="MainTabs"
@@ -47,10 +47,10 @@ export default function Index() {
                   options={{ headerShown: false }}
                 />
               </Stack.Navigator>
-            </AlertProvider>
-            <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
-          </NavigationContainer>
-        </FollowingProvider>
+            </FollowingProvider>
+          </AlertProvider>
+          <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
+        </NavigationContainer>
       </ThemeContext.Provider>
     </AuthProvider>
   )
