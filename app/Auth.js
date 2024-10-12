@@ -47,19 +47,19 @@ export default function SignUpLogInModal({ visible, onClose }) {
   const handleSignUp = async () => {
     const { username, email, phone, password, confirmPassword } = form
     if (!username || !email || !phone || !password || !confirmPassword) {
-      showAlert('error', 'Please fill in all fields.')
+      showAlert('error', 'Please fill in all fields')
       return
     }
     const usernameRegex = /^[a-zA-Z0-9._]{3,30}$/
     if (!usernameRegex.test(username)) {
       showAlert(
         'error',
-        'Usernames must be at least 3 characters long and can only contain letters, numbers, periods, and underscores.'
+        'Usernames must be at least 3 characters long and can only contain letters, numbers, periods, and underscores'
       )
       return
     }
     if (password !== confirmPassword) {
-      showAlert('error', 'Passwords do not match.')
+      showAlert('error', 'Passwords do not match')
       return
     }
     try {
@@ -80,7 +80,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
   const handleLogin = async () => {
     const { identity, password } = form
     if (!identity || !password) {
-      showAlert('error', 'Please fill in all fields.')
+      showAlert('error', 'Please fill in all fields')
       return
     }
     try {
@@ -131,13 +131,13 @@ export default function SignUpLogInModal({ visible, onClose }) {
   const sendEmail = async verificationToken => {
     const response = await api.sendVerificationEmail({ verificationToken })
     !response.success &&
-      showAlert('error', 'Something went wrong. Please try again later.')
+      showAlert('error', 'Something went wrong, please try again later')
   }
 
   const sendPhone = async verificationToken => {
     const response = await api.sendVerificationPhone({ verificationToken })
     !response.success &&
-      showAlert('error', 'Something went wrong. Please try again later.')
+      showAlert('error', 'Something went wrong, please try again later')
   }
 
   return (
@@ -257,7 +257,7 @@ export function VerifyModal({
 
   const verifyCode = async () => {
     if (!code) {
-      showAlert('error', 'Please fill in all fields.')
+      showAlert('error', 'Please fill in all fields')
       return
     }
     try {

@@ -50,7 +50,7 @@ const Post = ({
           setLikeCount(prevLikeCount => prevLikeCount + 1)
           setLiked(true)
         } else {
-          showAlert('error', 'Please log in first.')
+          showAlert('error', 'Please log in first')
         }
       } else {
         response = await api.unlikePost(id)
@@ -58,7 +58,7 @@ const Post = ({
           setLikeCount(prevLikeCount => prevLikeCount - 1)
           setLiked(false)
         } else {
-          showAlert('error', 'Please log in first.')
+          showAlert('error', 'Please log in first')
         }
       }
     } catch (error) {

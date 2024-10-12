@@ -82,7 +82,7 @@ const AddScreen = () => {
       selectedTags = tags
       setForm(prevForm => ({ ...prevForm, tags }))
     } else {
-      showAlert('error', 'You can only select up to 6 tags.')
+      showAlert('error', 'You can only select up to 6 tags')
     }
   }
 
@@ -91,7 +91,7 @@ const AddScreen = () => {
     if (media.length === 0 || !caption) {
       showAlert(
         'error',
-        'At least one image/video and a caption are mandatory for all posts.'
+        'At least one image/video and a caption are mandatory for all posts'
       )
       return
     }
@@ -109,7 +109,7 @@ const AddScreen = () => {
       if (response.status === 413) {
         showAlert(
           'error',
-          'Upload failed. Please ensure the total size of your photos and videos does not exceed 20MB.'
+          'Upload failed. Please ensure the total size of your photos and videos does not exceed 20MB'
         )
         return
       }
@@ -120,7 +120,7 @@ const AddScreen = () => {
           : showAlert('error', response.data.message)
     } catch (error) {
       console.log(error)
-      showAlert('error', 'Something went wrong, please try again later.')
+      showAlert('error', 'Something went wrong, please try again later')
     } finally {
       setLoading(false)
     }

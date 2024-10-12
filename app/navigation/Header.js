@@ -22,7 +22,7 @@ export default function Header() {
   const handleLogout = async () => {
     const response = await logout()
     if (response.success) {
-      showAlert('success', 'Successfully logged out.')
+      showAlert('success', 'Successfully logged out')
       navigation.reset({
         index: 0,
         routes: [{ name: 'Home' }]
