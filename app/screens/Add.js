@@ -43,6 +43,7 @@ const AddScreen = () => {
     price: '',
     caption: '',
     tags: [],
+    // description is required right now and should not be
     description: ''
   })
 
@@ -58,6 +59,11 @@ const AddScreen = () => {
       }
     }, [images])
   )
+
+  const handleOptionSelect = value => {
+    setSelectedOption(value)
+    setForm(prevForm => ({ ...prevForm, type: value }))
+  }
 
   const handleChange = (key, value) => {
     setForm(prevForm => ({ ...prevForm, [key]: value }))
@@ -88,6 +94,7 @@ const AddScreen = () => {
 
   const handlePost = async () => {
     const { type, media, title, price, caption, description } = form
+    console.log(form)
     if (media.length === 0 || !caption) {
       showAlert(
         'error',
@@ -139,7 +146,7 @@ const AddScreen = () => {
           <DropDownMenu
             options={options}
             selectedValue={selectedOption}
-            onSelect={setSelectedOption}
+            onSelect={handleOptionSelect}
           />
         </View>
         <View style={{}}>

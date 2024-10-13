@@ -31,7 +31,7 @@ function Tabs() {
         },
 
         tabBarActiveTintColor: colors.secondary,
-        tabBarInactiveTintColor: colors.tint,
+        tabBarInactiveTintColor: colors.secondaryTint,
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: colors.card
