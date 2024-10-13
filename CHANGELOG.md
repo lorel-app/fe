@@ -1,3 +1,10 @@
+# [1.2.0-dev.16](https://github.com/lorel-app/fe/compare/v1.2.0-dev.15...v1.2.0-dev.16) (2024-10-13)
+
+
+### Bug Fixes
+
+* 🐛 handle fetchPosts in userScreen ([2f37648](https://github.com/lorel-app/fe/commit/2f37648ceb9b04e6504b16e394982b31a0461b95))
+
 # [1.2.0-dev.15](https://github.com/lorel-app/fe/compare/v1.2.0-dev.14...v1.2.0-dev.15) (2024-10-12)
 
 
