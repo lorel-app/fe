@@ -5,7 +5,12 @@ import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useNavigation, useTheme } from '@react-navigation/native'
 import ButtonFollow from '@/components/ButtonFollow'
 
-const HeaderStack = ({ title, user, onFollowToggle }) => {
+const HeaderStack = ({
+  title,
+  user,
+  onFollowToggle,
+  hideFollowButton = false
+}) => {
   const { colors } = useTheme()
   const styles = useGlobalStyles()
   const navigation = useNavigation()
@@ -19,19 +24,20 @@ const HeaderStack = ({ title, user, onFollowToggle }) => {
         >
           <Icon name="keyboard-arrow-left" size={30} color={colors.primary} />
           <Text
-            style={[styles.title, { paddingLeft: 10 }, { paddingBottom: 5 }]}
+            style={[styles.textBold, { paddingLeft: 5 }, { paddingBottom: 2 }]}
           >
-            {title ? title : 'Go Back'}
+            {title ? title : ''}
           </Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.headerItems}>
-        {onFollowToggle ? (
-          <ButtonFollow user={user} onFollowToggle={onFollowToggle} />
-        ) : (
-          <ButtonFollow user={user} />
-        )}
+        {!hideFollowButton &&
+          (onFollowToggle ? (
+            <ButtonFollow user={user} onFollowToggle={onFollowToggle} />
+          ) : (
+            <ButtonFollow user={user} />
+          ))}
         <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
           <Icon name="more-vert" size={24} />
         </TouchableOpacity>

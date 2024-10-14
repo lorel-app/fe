@@ -12,6 +12,7 @@ import { FollowingProvider } from '@/hooks/useFollowingContext'
 import Tabs from './navigation/MainTab'
 import Header from './navigation/Header'
 import BuyScreen from '@/app/screens/Buy'
+import CommentScreen from '@/app/screens/Comment'
 import UserScreen from '@/app/screens/User'
 
 const Stack = createStackNavigator()
@@ -34,6 +35,11 @@ export default function Index() {
                 <Stack.Screen
                   name="MainTabs"
                   component={MainScreens}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Comment"
+                  component={CommentScreen}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen

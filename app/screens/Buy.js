@@ -26,7 +26,7 @@ const BuyScreen = ({ route }) => {
       {showHeader && <HeaderStack title={post.title} user={user} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.containerStack}
+        contentContainerStyle={styles.container}
       >
         <TouchableOpacity
           onPress={() => navigation.navigate('User', { user })}

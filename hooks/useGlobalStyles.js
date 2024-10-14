@@ -96,9 +96,6 @@ export const useGlobalStyles = () => {
       width: '100%',
       ...shadowStyle
     },
-    containerStack: {
-      paddingHorizontal: 0
-    },
     containerGrid: {
       width: fullWidth / 3,
       height: fullWidth / 3,
@@ -446,6 +443,24 @@ export const useGlobalStyles = () => {
       backgroundColor: colors.secondaryTint,
       borderRadius: 5,
       ...shadowStyle
+    },
+
+    sendBarInput: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      backgroundColor: colors.tint
+    },
+    barInput: {
+      flex: 1,
+      borderRadius: 10,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      fontSize: 16,
+      backgroundColor: colors.background,
+      color: colors.text,
+      outlineStyle: 'none'
     }
   })
 }

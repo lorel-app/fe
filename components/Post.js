@@ -169,7 +169,7 @@ const Post = ({ post }) => {
             <ButtonIcon
               iconName="chat-bubble-outline"
               iconSize={32}
-              onPress={() => console.log('Icon pressed')}
+              onPress={() => navigation.navigate('Comment', { post, user })}
               style={{ margin: 3 }}
             />
             <Text style={styles.textLight}>999</Text>
