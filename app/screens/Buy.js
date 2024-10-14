@@ -2,30 +2,34 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { useRoute, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 import HeaderStack from '../navigation/HeaderStack'
 
-const BuyScreen = () => {
+const formatDate = isoString => {
+  const date = new Date(isoString)
+  const day = date.getDate()
+  const month = date.toLocaleString('default', { month: 'long' })
+  const year = date.getFullYear()
+  return `${day} ${month} ${year}`
+}
+
+const BuyScreen = ({ route }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
-  const route = useRoute()
   const navigation = useNavigation()
-  const { user, media, title, price, caption, description, tags, dateTime } =
-    route.params
+  const { post = {}, user = {}, showHeader = true } = route.params || {}
 
   return (
     <>
-      <HeaderStack title={title} user={user} />
+      {showHeader && <HeaderStack title={post.title} user={user} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.containerStack}
       >
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('User', { user, showHeader: true })
-          }
+          onPress={() => navigation.navigate('User', { user })}
           style={styles.rowEnd}
         >
           {user ? <Text style={styles.text}>{user.username}</Text> : null}
@@ -39,21 +43,20 @@ const BuyScreen = () => {
             <Icon name="circle" size={100} style={styles.profilePicLarge} />
           )}
         </TouchableOpacity>
-        <View style={[styles.container, { flex: 1 }]}>
-          {media.map((item, index) => (
+        <View style={styles.container}>
+          {post.media.map((item, index) => (
             <View key={index} style={{ minHeight: 0 }}>
-              <Image source={{ uri: item.uri }} style={styles.image} />
+              <Image source={{ uri: item.url }} style={styles.image} />
             </View>
           ))}
 
-          <Text style={styles.text}>Price: {price}</Text>
+          <Text style={styles.text}>Price: {post.price}</Text>
           <Text style={styles.text}>Posted by: {user.username}</Text>
-          <Text style={styles.text}>{caption}</Text>
-          <Text style={styles.text}>{description}</Text>
-          <Text style={styles.text}>Tags: {tags.join(', ')}</Text>
-          <Text style={styles.text}>{dateTime}</Text>
+          <Text style={styles.text}>{post.caption}</Text>
+          <Text style={styles.text}>{post.description}</Text>
+          <Text style={styles.text}>{formatDate(post.createdAt)}</Text>
           <View style={styles.rowWrap}>
-            {tags?.map((tag, index) => (
+            {post.tags?.map((tag, index) => (
               <TouchableOpacity key={index} style={styles.buttonSmall}>
                 <Text
                   style={{

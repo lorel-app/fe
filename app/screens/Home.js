@@ -51,11 +51,6 @@ const HomeScreen = () => {
   )
 
   const renderItem = ({ item: post }) => {
-    const mediaUrls = post.media.map(m => ({
-      uri: m.url,
-      type: m.type
-    }))
-
     return (
       <View
         style={[
@@ -64,20 +59,7 @@ const HomeScreen = () => {
         ]}
         key={post.id}
       >
-        <Post
-          id={post.id}
-          user={post.user}
-          media={mediaUrls}
-          likeCount={post.likeCount}
-          liked={post.liked}
-          caption={post.caption}
-          tags={post.tags}
-          dateTime={post.createdAt}
-          title={post.title}
-          price={post.price}
-          description={post.description}
-          type={post.type}
-        />
+        <Post post={post} />
       </View>
     )
   }

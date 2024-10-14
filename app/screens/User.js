@@ -149,7 +149,7 @@ const UserScreen = ({ route }) => {
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <ProfileHeader userInfo={userInfo} />
+          <ProfileHeader user={userInfo} />
         </View>
         <View style={{ flex: 1 }}>
           <NestedTabNavigator screens={screens} />

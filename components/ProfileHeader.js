@@ -3,11 +3,17 @@ import { View, Text, Image, TouchableOpacity, Linking } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import SocialIcon from '@/assets/images/SocialIcons'
 
-const ProfileHeader = ({ userInfo }) => {
+const ProfileHeader = ({ user }) => {
   const styles = useGlobalStyles()
+  console.log(user)
+  // bio
+  // coverPicture
+  // link []
+  // location
+  // occupation
 
   // temp
-  const mockuserInfo = {
+  const mockuser = {
     mocklinks: [
       { type: 'facebook', url: 'https://www.facebook.com/user' },
       { type: 'instagram', url: 'https://www.instagram.com/user' },
@@ -26,12 +32,9 @@ const ProfileHeader = ({ userInfo }) => {
   return (
     <>
       <View>
+        <Image source={{ uri: user.displayPicture }} style={styles.coverPic} />
         <Image
-          source={{ uri: userInfo.displayPicture }}
-          style={styles.coverPic}
-        />
-        <Image
-          source={{ uri: userInfo.displayPicture }}
+          source={{ uri: user.displayPicture }}
           style={styles.profilePicLarge}
         />
       </View>
@@ -40,21 +43,21 @@ const ProfileHeader = ({ userInfo }) => {
       >
         <TouchableOpacity style={styles.profileButtons}>
           <Text style={styles.textBold}>Following</Text>
-          <Text style={styles.textBold}>{userInfo.followingCount}</Text>
+          <Text style={styles.textBold}>{user.followingCount}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.profileButtons}>
           <Text style={styles.textBold}>Followers</Text>
-          <Text style={styles.textBold}>{userInfo.followersCount}</Text>
+          <Text style={styles.textBold}>{user.followersCount}</Text>
         </TouchableOpacity>
         <View style={styles.profileButtons}>
           <Text style={styles.textBold}>Likes</Text>
-          <Text style={styles.textBold}>{userInfo.totalLikes}</Text>
+          <Text style={styles.textBold}>{user.totalLikes}</Text>
         </View>
       </View>
 
       <View style={{ flexDirection: 'row' }}>
-        {mockuserInfo.mocklinks && mockuserInfo.mocklinks.length > 0
-          ? mockuserInfo.mocklinks.map((link, index) => (
+        {mockuser.mocklinks && mockuser.mocklinks.length > 0
+          ? mockuser.mocklinks.map((link, index) => (
               <TouchableOpacity key={index} onPress={() => openLink(link.url)}>
                 <SocialIcon icon={link.type} />
               </TouchableOpacity>

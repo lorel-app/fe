@@ -17,21 +17,21 @@ const formatDate = isoString => {
   const month = date.toLocaleString('default', { month: 'short' })
   return `${day} ${month}`
 }
+const Post = ({ post }) => {
+  const {
+    id,
+    user,
+    likeCount: initialLikeCount,
+    liked: initialLikedStatus,
+    caption,
+    tags,
+    createdAt,
+    media,
+    title,
+    price,
+    type
+  } = post
 
-const Post = ({
-  id,
-  user,
-  likeCount: initialLikeCount,
-  liked: initialLikedStatus,
-  caption,
-  tags,
-  dateTime,
-  media,
-  title,
-  price,
-  description,
-  type
-}) => {
   const navigation = useNavigation()
   const { user: me } = useContext(AuthContext)
   const styles = useGlobalStyles()
@@ -66,18 +66,10 @@ const Post = ({
     }
   }
 
-  const navigateToBuyScreen = post => {
-    navigation.navigate('Buy', {
-      user: post.user,
-      media: post.media,
-      title: post.title,
-      price: post.price,
-      caption: post.caption,
-      description: post.description,
-      tags: post.tags,
-      dateTime: post.createdAt
-    })
-  }
+  const mediaUrls = media.map(m => ({
+    uri: m.url,
+    type: m.type
+  }))
 
   return (
     <>
@@ -88,7 +80,7 @@ const Post = ({
             if (me && me.id === user.id) {
               navigation.navigate('Profile')
             } else {
-              navigation.navigate('User', { user, showHeader: true })
+              navigation.navigate('User', { user })
             }
           }}
         >
@@ -108,7 +100,7 @@ const Post = ({
 
       <View style={styles.carouselContainer}>
         <SwiperFlatListWithGestureHandler
-          data={media}
+          data={mediaUrls}
           renderItem={({ item, index }) => (
             <View style={styles.slide}>
               <Image
@@ -118,7 +110,7 @@ const Post = ({
               />
             </View>
           )}
-          showPagination={media.length > 1}
+          showPagination={mediaUrls.length > 1}
           PaginationComponent={CustomPagination}
         />
       </View>
@@ -126,30 +118,15 @@ const Post = ({
       {type === 'SHOP' ? (
         <TouchableOpacity
           style={styles.rowSpan}
-          onPress={() =>
-            navigateToBuyScreen({
-              user,
-              media,
-              title,
-              price,
-              caption,
-              description,
-              tags,
-              dateTime
-            })
-          }
+          onPress={() => navigation.navigate('Buy', { post, user })}
         >
-          {title ? (
-            <Text style={[styles.title, { textAlign: 'left' }]}>{title}</Text>
-          ) : (
-            <Text style={[styles.title, { textAlign: 'left' }]}>Untitled</Text>
-          )}
+          <Text style={[styles.title, { textAlign: 'left' }]}>
+            {title || 'Untitled'}
+          </Text>
           <View style={styles.row}>
-            {price ? (
-              <Text style={styles.textAccent}>EUR {price}</Text>
-            ) : (
-              <Text>0</Text>
-            )}
+            <Text style={styles.textAccent}>
+              {price ? `EUR ${price}` : '0'}
+            </Text>
             <Icon
               name="keyboard-arrow-right"
               style={[styles.textAccent, { paddingTop: 3 }]}
@@ -163,8 +140,8 @@ const Post = ({
           {caption && (
             <Text style={[styles.text, { paddingBottom: 10 }]}>
               {caption}
-              {dateTime && (
-                <Text style={styles.textLight}> ({formatDate(dateTime)})</Text>
+              {createdAt && (
+                <Text style={styles.textLight}> ({formatDate(createdAt)})</Text>
               )}
             </Text>
           )}
