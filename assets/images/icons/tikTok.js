@@ -1,4 +1,4 @@
-const tikTok = [
+const tiktok = [
   {
     type: 'path',
     props: {
@@ -37,4 +37,4 @@ const tikTok = [
   }
 ]
 
-export default tikTok
+export default tiktok

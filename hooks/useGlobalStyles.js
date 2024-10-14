@@ -174,6 +174,11 @@ export const useGlobalStyles = () => {
       fontSize: 14,
       padding: 2
     },
+    textSmall: {
+      color: colors.text,
+      fontSize: 12,
+      padding: 2
+    },
     textBold: {
       color: colors.text,
       fontSize: 14,
@@ -375,7 +380,8 @@ export const useGlobalStyles = () => {
       margin: 5,
       width: 24,
       height: 24,
-      borderRadius: 50
+      borderRadius: 50,
+      backgroundColor: colors.tint
     },
 
     profilePicLarge: {
@@ -383,18 +389,20 @@ export const useGlobalStyles = () => {
       width: 100,
       height: 100,
       borderRadius: 50,
-      top: 180,
+      top: 150,
       left: '50%',
       transform: [{ translateX: -50 }],
       borderWidth: 3,
-      borderColor: colors.secondaryTint
+      borderColor: colors.secondaryTint,
+      backgroundColor: colors.tint
     },
     coverPic: {
       width: fullWidth,
       maxWidth: 900,
-      height: 250,
+      height: 200,
       resizeMode: 'cover',
-      marginBottom: 30
+      marginBottom: 50,
+      backgroundColor: colors.card
       // borderBottomWidth: 3
     },
     profileButtons: {

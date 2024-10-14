@@ -1,4 +1,4 @@
-const linkedIn = [
+const linkedin = [
   {
     type: 'path',
     props: {
@@ -15,4 +15,4 @@ const linkedIn = [
   }
 ]
 
-export default linkedIn
+export default linkedin

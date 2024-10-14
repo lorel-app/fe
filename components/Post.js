@@ -124,9 +124,7 @@ const Post = ({ post }) => {
             {title || 'Untitled'}
           </Text>
           <View style={styles.row}>
-            <Text style={styles.textAccent}>
-              {price ? `EUR ${price}` : '0'}
-            </Text>
+            <Text style={styles.textAccent}>{price ? `€ ${price}` : '0'}</Text>
             <Icon
               name="keyboard-arrow-right"
               style={[styles.textAccent, { paddingTop: 3 }]}

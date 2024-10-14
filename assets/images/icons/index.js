@@ -1,10 +1,10 @@
 import facebook from './facebook'
 import instagram from './instagram'
 import x from './x'
-import linkedIn from './linkedIn'
+import linkedin from './linkedin'
 import behance from './behance'
 import youtube from './youtube'
-import tikTok from './tikTok'
+import tiktok from './tiktok'
 import pinterest from './pinterest'
 import reddit from './reddit'
 import twitch from './twitch'
@@ -13,10 +13,10 @@ const icons = {
   facebook,
   instagram,
   x,
-  linkedIn,
+  linkedin,
   behance,
   youtube,
-  tikTok,
+  tiktok,
   pinterest,
   reddit,
   twitch

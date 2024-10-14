@@ -10,7 +10,7 @@ import Svg, {
 } from 'react-native-svg'
 import icons from './icons'
 
-export default function SocialIcon({ icon, width = 32, height = 32 }) {
+export default function SocialIcon({ icon, width = 28, height = 28 }) {
   const iconData = icons[icon]
 
   if (!iconData) {
