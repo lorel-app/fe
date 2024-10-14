@@ -1,3 +1,10 @@
+# [1.2.0-dev.18](https://github.com/lorel-app/fe/compare/v1.2.0-dev.17...v1.2.0-dev.18) (2024-10-14)
+
+
+### Features
+
+* 🫡 Added Comment Screen ([40d22c0](https://github.com/lorel-app/fe/commit/40d22c055910aefa1bcf2398bae931b1d6102a09))
+
 # [1.2.0-dev.17](https://github.com/lorel-app/fe/compare/v1.2.0-dev.16...v1.2.0-dev.17) (2024-10-14)
 
 
