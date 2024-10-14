@@ -1,3 +1,10 @@
+# [1.2.0-dev.17](https://github.com/lorel-app/fe/compare/v1.2.0-dev.16...v1.2.0-dev.17) (2024-10-14)
+
+
+### Features
+
+* 🫡 Profile Header Done ([8a83a7c](https://github.com/lorel-app/fe/commit/8a83a7c8657a039479b04d8122c84145e9b5e7e4))
+
 # [1.2.0-dev.16](https://github.com/lorel-app/fe/compare/v1.2.0-dev.15...v1.2.0-dev.16) (2024-10-13)
 
 
