@@ -1,3 +1,10 @@
+# [1.2.0-dev.19](https://github.com/lorel-app/fe/compare/v1.2.0-dev.18...v1.2.0-dev.19) (2024-10-15)
+
+
+### Bug Fixes
+
+* 🐛 Update inputs and navigation ([c5248e1](https://github.com/lorel-app/fe/commit/c5248e19ebd0ba7bdd20cb540ed29c7a8867bda8))
+
 # [1.2.0-dev.18](https://github.com/lorel-app/fe/compare/v1.2.0-dev.17...v1.2.0-dev.18) (2024-10-14)
 
 
