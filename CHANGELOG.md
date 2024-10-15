@@ -1,3 +1,10 @@
+# [1.2.0-dev.20](https://github.com/lorel-app/fe/compare/v1.2.0-dev.19...v1.2.0-dev.20) (2024-10-15)
+
+
+### Features
+
+* 🫡 Edit Profile Menu and General Info Patch ([42713a7](https://github.com/lorel-app/fe/commit/42713a7f24f18995cdc4dab54cb160e8e0d5734c))
+
 # [1.2.0-dev.19](https://github.com/lorel-app/fe/compare/v1.2.0-dev.18...v1.2.0-dev.19) (2024-10-15)
 
 
