@@ -15,6 +15,10 @@ const HeaderStack = ({
   const styles = useGlobalStyles()
   const navigation = useNavigation()
 
+  const truncateTitle = title => {
+    return title.length > 20 ? `${title.substring(0, 20)}...` : title
+  }
+
   return (
     <View style={styles.header}>
       <View style={[{ flex: 1 }]}>
@@ -26,7 +30,7 @@ const HeaderStack = ({
           <Text
             style={[styles.textBold, { paddingLeft: 5 }, { paddingBottom: 2 }]}
           >
-            {title ? title : ''}
+            {title ? truncateTitle(title) : ''}
           </Text>
         </TouchableOpacity>
       </View>

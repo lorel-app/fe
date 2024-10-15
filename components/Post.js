@@ -17,10 +17,10 @@ const formatDate = isoString => {
   const month = date.toLocaleString('default', { month: 'short' })
   return `${day} ${month}`
 }
-const Post = ({ post }) => {
+const Post = ({ post, hideCommentButton = false }) => {
   const {
     id,
-    user,
+    user = {},
     likeCount: initialLikeCount,
     liked: initialLikedStatus,
     caption,
@@ -84,15 +84,11 @@ const Post = ({ post }) => {
             }
           }}
         >
-          {user.displayPictureThumb ? (
-            <Image
-              source={{ uri: user.displayPictureThumb }}
-              resizeMode="cover"
-              style={styles.profilePic}
-            />
-          ) : (
-            <Icon name="circle" size={24} style={styles.profilePic} />
-          )}
+          <Image
+            source={{ uri: user.displayPictureThumb }}
+            resizeMode="cover"
+            style={styles.profilePic}
+          />
           <Text style={styles.text}>{user.username}</Text>
         </TouchableOpacity>
         <ButtonFollow user={user} />
@@ -124,7 +120,12 @@ const Post = ({ post }) => {
             {title || 'Untitled'}
           </Text>
           <View style={styles.row}>
-            <Text style={styles.textAccent}>{price ? `€ ${price}` : '0'}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+              <Text style={styles.textAccent}>€ {price.split('.')[0]}</Text>
+              <Text style={[styles.textAccent, { fontSize: 14 }]}>
+                .{price.split('.')[1]}
+              </Text>
+            </View>
             <Icon
               name="keyboard-arrow-right"
               style={[styles.textAccent, { paddingTop: 3 }]}
@@ -165,15 +166,17 @@ const Post = ({ post }) => {
         </View>
 
         <View style={styles.rowEnd}>
-          <View style={{ alignItems: 'center' }}>
-            <ButtonIcon
-              iconName="chat-bubble-outline"
-              iconSize={32}
-              onPress={() => navigation.navigate('Comment', { post, user })}
-              style={{ margin: 3 }}
-            />
-            <Text style={styles.textLight}>999</Text>
-          </View>
+          {!hideCommentButton ? (
+            <View style={{ alignItems: 'center' }}>
+              <ButtonIcon
+                iconName="chat-bubble-outline"
+                iconSize={32}
+                onPress={() => navigation.navigate('Comment', { post })}
+                style={{ margin: 3 }}
+              />
+              <Text style={styles.textLight}>999</Text>
+            </View>
+          ) : null}
           <View style={{ alignItems: 'center' }}>
             <ButtonIcon
               iconName={liked ? 'favorite' : 'favorite-outline'}

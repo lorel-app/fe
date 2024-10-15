@@ -43,7 +43,6 @@ const AddScreen = () => {
     price: '',
     caption: '',
     tags: [],
-    // description is required right now and should not be
     description: ''
   })
 
@@ -95,10 +94,10 @@ const AddScreen = () => {
   const handlePost = async () => {
     const { type, media, title, price, caption, description } = form
     console.log(form)
-    if (media.length === 0 || !caption) {
+    if (media.length === 0) {
       showAlert(
         'error',
-        'At least one image/video and a caption are mandatory for all posts'
+        'At least one image or video is mandatory for all posts'
       )
       return
     }
@@ -187,12 +186,13 @@ const AddScreen = () => {
               placeholder="Title"
               value={form.title}
               onChangeText={text => handleChange('title', text)}
-              maxLength={55}
+              maxLength={50}
               autoCapitalize="words"
             />
           ) : null}
           {selectedOption === 'SHOP' ? (
             <View style={[styles.rowSpan, { padding: 0 }]}>
+              {/* Handle validation later */}
               <Text style={[styles.textAccent, { marginRight: 10 }]}>EUR</Text>
               <TextInput
                 style={styles.inputLight}
@@ -200,13 +200,13 @@ const AddScreen = () => {
                 value={form.price}
                 onChangeText={text => handleChange('price', text)}
                 keyboardType="numeric"
-                maxLength={55}
+                maxLength={50}
               />
             </View>
           ) : null}
           <TextInput
             style={[styles.inputLight, { height: captionHeight }]}
-            placeholder="*Caption"
+            placeholder="Caption"
             value={form.caption}
             onChangeText={text => handleChange('caption', text)}
             onContentSizeChange={event =>

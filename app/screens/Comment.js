@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
@@ -38,7 +37,7 @@ const CommentScreen = ({ route }) => {
         contentContainerStyle={styles.container}
       >
         <View style={styles.post}>
-          <Post post={post} />
+          <Post post={post} hideCommentButton={true} />
         </View>
       </ScrollView>
       <SendInputBar onSend={handleComment} placeholder="Add your comment..." />

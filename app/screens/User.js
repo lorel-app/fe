@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { View, ScrollView, FlatList, Image } from 'react-native'
+import { View, FlatList, Image, TouchableOpacity } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import api from '@/utils/api'
@@ -43,21 +45,31 @@ const useFetchPosts = (userId, postType) => {
   return { posts, loading, fetchPosts, hasMore }
 }
 
-const TabContent = ({ posts, fetchPosts, loading }) => {
+const TabContent = ({ posts, fetchPosts, loading, user }) => {
   const styles = useGlobalStyles()
+  const navigation = useNavigation()
 
   useEffect(() => {
     fetchPosts()
   }, [fetchPosts])
 
-  const renderItems = ({ item }) => (
-    <View style={styles.containerGrid}>
-      <Image
-        source={{ uri: item.media[0].url }}
-        style={[styles.imageFit, { resizeMode: 'cover' }]}
-      />
-    </View>
-  )
+  const renderItems = ({ item }) => {
+    console.log('Post item:', item, user)
+
+    return (
+      <TouchableOpacity
+        style={styles.containerGrid}
+        onPress={() =>
+          navigation.navigate('Comment', { post: { ...item, user } })
+        }
+      >
+        <Image
+          source={{ uri: item.media[0].url }}
+          style={[styles.imageFit, { resizeMode: 'cover' }]}
+        />
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <FlatList
@@ -123,6 +135,7 @@ const UserScreen = ({ route }) => {
           posts={shopPosts}
           fetchPosts={fetchShopPosts}
           loading={loadingShop}
+          user={user}
         />
       )
     },
@@ -133,6 +146,7 @@ const UserScreen = ({ route }) => {
           posts={contentPosts}
           fetchPosts={fetchContentPosts}
           loading={loadingContent}
+          user={user}
         />
       )
     }

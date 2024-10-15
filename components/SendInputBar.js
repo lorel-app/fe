@@ -24,6 +24,7 @@ const SendInputBar = ({ onSend, placeholder }) => {
         placeholder={placeholder}
         placeholderTextColor={colors.text}
         style={styles.barInput}
+        maxLength={5}
         multiline={true}
       />
       <TouchableOpacity style={{ paddingLeft: 8 }} onPress={handleSend}>
