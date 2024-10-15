@@ -195,6 +195,11 @@ const getUser = async userId => {
   return response
 }
 
+const editProfile = async body => {
+  const response = await apiInstance.patch('/profile', body)
+  return response
+}
+
 const updateProfilePic = async file => {
   const formData = new FormData()
   formData.append('file', {
@@ -304,6 +309,7 @@ export default {
   verifyPhone,
   getMe,
   getUser,
+  editProfile,
   updateProfilePic,
   allPosts,
   userPosts,

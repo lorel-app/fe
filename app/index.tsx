@@ -14,6 +14,7 @@ import Header from './navigation/Header'
 import BuyScreen from '@/app/screens/Buy'
 import CommentScreen from '@/app/screens/Comment'
 import UserScreen from '@/app/screens/User'
+import EditProfileScreen from '@/app/screens/EditProfile'
 
 const Stack = createStackNavigator()
 
@@ -50,6 +51,11 @@ export default function Index() {
                 <Stack.Screen
                   name="User"
                   component={UserScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="EditProfile"
+                  component={EditProfileScreen}
                   options={{ headerShown: false }}
                 />
               </Stack.Navigator>

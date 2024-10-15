@@ -54,8 +54,6 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
   }, [fetchPosts])
 
   const renderItems = ({ item }) => {
-    console.log('Post item:', item, user)
-
     return (
       <TouchableOpacity
         style={styles.containerGrid}

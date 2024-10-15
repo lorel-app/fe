@@ -4,7 +4,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTheme } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 
-const DropDownMenu = ({ options, selectedValue, onSelect }) => {
+const DropDownMenu = ({
+  options,
+  selectedValue,
+  onSelect,
+  hasIconButton = null
+}) => {
   const { colors } = useTheme()
   const styles = useGlobalStyles()
 
@@ -16,21 +21,34 @@ const DropDownMenu = ({ options, selectedValue, onSelect }) => {
   }
 
   return (
-    <View style={{ width: 160 }}>
-      <TouchableOpacity
-        style={[styles.button, styles.rowSpan]}
-        onPress={() => setIsOpen(!isOpen)}
-      >
-        <Text style={[styles.buttonText, { marginLeft: 5 }]}>
-          {options.find(option => option.value === selectedValue)?.label ||
-            'Select...'}
-        </Text>
-        <Icon
-          name={isOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-          size={24}
-          color={colors.textAlt}
-        />
-      </TouchableOpacity>
+    <View>
+      {!hasIconButton ? (
+        <TouchableOpacity
+          style={[styles.button, styles.rowSpan]}
+          onPress={() => setIsOpen(!isOpen)}
+        >
+          <Text style={[styles.buttonText, { marginLeft: 5 }]}>
+            {options.find(option => option.value === selectedValue)?.label ||
+              'Select'}
+          </Text>
+          <Icon
+            name={isOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
+            size={24}
+            color={colors.textAlt}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => setIsOpen(!isOpen)}
+        >
+          <Icon
+            name={isOpen ? 'close' : hasIconButton}
+            size={24}
+            color={colors.primary}
+          />
+        </TouchableOpacity>
+      )}
 
       {isOpen && (
         <View style={styles.dropdown}>
@@ -46,7 +64,33 @@ const DropDownMenu = ({ options, selectedValue, onSelect }) => {
                 ]}
                 onPress={() => handleSelect(item.value)}
               >
-                <Text style={styles.text}>{item.label}</Text>
+                <View style={styles.row}>
+                  {item.icon ? (
+                    <Icon
+                      style={{ paddingRight: 10 }}
+                      name={item.icon}
+                      size={18}
+                      color={
+                        item.icon === 'delete'
+                          ? colors.tertiary
+                          : colors.textAlt
+                      }
+                    />
+                  ) : null}
+                  <Text
+                    style={[
+                      styles.textBold,
+                      {
+                        color:
+                          item.icon === 'delete'
+                            ? colors.tertiary
+                            : colors.textAlt
+                      }
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                </View>
               </TouchableOpacity>
             )}
           />

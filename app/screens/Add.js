@@ -29,8 +29,8 @@ const AddScreen = () => {
 
   const [selectedOption, setSelectedOption] = useState('CONTENT')
   const options = [
-    { label: 'Content', value: 'CONTENT' },
-    { label: 'Item for Sale', value: 'SHOP' }
+    { label: 'Content', value: 'CONTENT', icon: 'interests' },
+    { label: 'Item for Sale', value: 'SHOP', icon: 'local-mall' }
   ]
 
   const { images, pickImages } = useMediaPicker()
@@ -142,11 +142,13 @@ const AddScreen = () => {
           <Text style={[styles.title, { textAlign: 'left' }]}>
             What are you posting?
           </Text>
-          <DropDownMenu
-            options={options}
-            selectedValue={selectedOption}
-            onSelect={handleOptionSelect}
-          />
+          <View style={{ marginLeft: 10 }}>
+            <DropDownMenu
+              options={options}
+              selectedValue={selectedOption}
+              onSelect={handleOptionSelect}
+            />
+          </View>
         </View>
         <View style={{}}>
           <ScrollView

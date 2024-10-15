@@ -113,6 +113,15 @@ export const useGlobalStyles = () => {
       ...shadowStyle
     },
 
+    card: {
+      width: width * 0.95,
+      backgroundColor: colors.card,
+      alignItems: 'center',
+      borderRadius: 10,
+      margin: 15,
+      padding: 10
+    },
+
     carouselContainer: {
       width: width,
       flexGrow: 1
@@ -373,6 +382,14 @@ export const useGlobalStyles = () => {
       marginLeft: 15
     },
 
+    divider: {
+      height: 1,
+      backgroundColor: colors.primaryTint,
+      width: width * 0.9,
+      maxWidth: 700,
+      margin: 10
+    },
+
     profilePic: {
       margin: 5,
       width: 24,
@@ -438,10 +455,23 @@ export const useGlobalStyles = () => {
     dropdown: {
       position: 'absolute',
       top: 60,
-      left: 0,
+      width: 200,
       right: 0,
-      backgroundColor: colors.secondaryTint,
-      borderRadius: 5,
+      // make primaryTint lighter for light mode
+      backgroundColor: colors.primaryTint,
+      borderRadius: 10,
+      ...shadowStyle
+    },
+    editButton: {
+      position: 'absolute',
+      top: 15,
+      right: 15,
+      alignSelf: 'center',
+      padding: 10,
+      borderRadius: 500,
+      // make primaryTint lighter for light mode
+      //backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      backgroundColor: colors.primaryTint,
       ...shadowStyle
     },
 
