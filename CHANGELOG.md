@@ -1,3 +1,10 @@
+# [1.2.0-dev.21](https://github.com/lorel-app/fe/compare/v1.2.0-dev.20...v1.2.0-dev.21) (2024-10-16)
+
+
+### Bug Fixes
+
+* 🐛 fixed case sensitive files ([8d3c663](https://github.com/lorel-app/fe/commit/8d3c663eeb5a203b8915b286e3942737e82e7822))
+
 # [1.2.0-dev.20](https://github.com/lorel-app/fe/compare/v1.2.0-dev.19...v1.2.0-dev.20) (2024-10-15)
 
 
