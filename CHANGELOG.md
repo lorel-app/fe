@@ -1,3 +1,10 @@
+# [1.2.0-dev.23](https://github.com/lorel-app/fe/compare/v1.2.0-dev.22...v1.2.0-dev.23) (2024-10-16)
+
+
+### Features
+
+* 🫡 UserPosts Screen ([da81596](https://github.com/lorel-app/fe/commit/da81596c1df161bf990237b343b0e2865ba1e7a6))
+
 # [1.2.0-dev.22](https://github.com/lorel-app/fe/compare/v1.2.0-dev.21...v1.2.0-dev.22) (2024-10-16)
 
 
