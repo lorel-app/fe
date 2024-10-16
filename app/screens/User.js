@@ -9,41 +9,7 @@ import HeaderStack from '../navigation/HeaderStack'
 import Loader from '@/components/Loader'
 import ProfileHeader from '@/components/ProfileHeader'
 import NestedTabNavigator from '@/app/navigation/NestedTab'
-
-const useFetchPosts = (userId, postType) => {
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
-  const [offset, setOffset] = useState(0)
-  const postsFetched = useRef(false)
-
-  const fetchPosts = async () => {
-    if (!hasMore || postsFetched.current) return
-    setLoading(true)
-    postsFetched.current = true
-
-    try {
-      const response = await api.userPosts(userId, {
-        offset,
-        postType
-      })
-
-      if (response.success) {
-        setPosts(prevPosts => [...prevPosts, ...response.data.posts])
-        setHasMore(response.data.posts.length > 0)
-        setOffset(prevOffset => prevOffset + response.data.posts.length)
-      } else {
-        setHasMore(false)
-      }
-    } catch (error) {
-      console.error(`Failed to fetch ${postType} posts`, error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return { posts, loading, fetchPosts, hasMore }
-}
+import useFetchUserPosts from '@/hooks/useFetchUserPosts'
 
 const TabContent = ({ posts, fetchPosts, loading, user }) => {
   const styles = useGlobalStyles()
@@ -58,7 +24,11 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
       <TouchableOpacity
         style={styles.containerGrid}
         onPress={() =>
-          navigation.navigate('Comment', { post: { ...item, user } })
+          navigation.navigate('UserPosts', {
+            postsType: item.type,
+            postId: item.id,
+            user
+          })
         }
       >
         <Image
@@ -95,12 +65,12 @@ const UserScreen = ({ route }) => {
     posts: shopPosts,
     fetchPosts: fetchShopPosts,
     loading: loadingShop
-  } = useFetchPosts(user.id, 'SHOP')
+  } = useFetchUserPosts(user.id, 'SHOP')
   const {
     posts: contentPosts,
     fetchPosts: fetchContentPosts,
     loading: loadingContent
-  } = useFetchPosts(user.id, 'CONTENT')
+  } = useFetchUserPosts(user.id, 'CONTENT')
 
   useEffect(() => {
     const fetchUserInfo = async () => {

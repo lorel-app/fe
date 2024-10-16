@@ -52,13 +52,7 @@ const HomeScreen = () => {
 
   const renderItem = ({ item: post }) => {
     return (
-      <View
-        style={[
-          styles.post,
-          { borderTopColor: colors.card, borderTopWidth: 2 }
-        ]}
-        key={post.id}
-      >
+      <View style={styles.post} key={post.id}>
         <Post post={post} />
       </View>
     )

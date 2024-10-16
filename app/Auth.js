@@ -198,6 +198,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               onChangeText={text => handleChange('password', text)}
               secureTextEntry={!passwordVisible}
               maxLength={64}
+              multiline={false}
             />
             <ButtonIcon
               onPress={() => setPasswordVisible(!passwordVisible)}
@@ -216,6 +217,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
                 onChangeText={text => handleChange('confirmPassword', text)}
                 secureTextEntry={!passwordVisible}
                 maxLength={64}
+                multiline={false}
               />
               <ButtonIcon
                 onPress={() => setPasswordVisible(!passwordVisible)}
