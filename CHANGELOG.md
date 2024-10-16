@@ -1,3 +1,10 @@
+# [1.2.0-dev.22](https://github.com/lorel-app/fe/compare/v1.2.0-dev.21...v1.2.0-dev.22) (2024-10-16)
+
+
+### Bug Fixes
+
+* 🐛 General validation and Android adaption for icons ([0feb831](https://github.com/lorel-app/fe/commit/0feb831035504dd63de8418f01112dc236ad8f24))
+
 # [1.2.0-dev.21](https://github.com/lorel-app/fe/compare/v1.2.0-dev.20...v1.2.0-dev.21) (2024-10-16)
 
 
