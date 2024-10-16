@@ -65,7 +65,12 @@ const ProfileHeader = ({ user }) => {
         >
           {user.location ? (
             <View style={styles.row}>
-              <Icon name={'place'} size={18} color={colors.secondaryTint} />
+              <Icon
+                style={styles.icon}
+                name={'place'}
+                size={18}
+                color={colors.secondaryTint}
+              />
               <Text style={styles.textSmall}>{user.location}</Text>
             </View>
           ) : null}
@@ -76,7 +81,12 @@ const ProfileHeader = ({ user }) => {
 
           {user.occupation ? (
             <View style={styles.row}>
-              <Icon name={'hail'} size={18} color={colors.secondaryTint} />
+              <Icon
+                style={styles.icon}
+                name={'hail'}
+                size={18}
+                color={colors.secondaryTint}
+              />
               <Text style={styles.textSmall}>{user.occupation}</Text>
             </View>
           ) : null}
@@ -123,7 +133,11 @@ const ProfileHeader = ({ user }) => {
                   onPress={() => openLink(personalLink.url)}
                   style={[styles.row, styles.buttonSmallSelected]}
                 >
-                  <Icon name={'link'} size={24} color={colors.primary} />
+                  <Icon
+                    style={styles.icon}
+                    name={'link'}
+                    color={colors.secondary}
+                  />
                   <Text style={[styles.textSmall, { paddingLeft: 3 }]}>
                     {truncateText(personalLink.url, 30)}
                   </Text>

@@ -32,6 +32,7 @@ const DropDownMenu = ({
               'Select'}
           </Text>
           <Icon
+            style={styles.icon}
             name={isOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
             size={24}
             color={colors.textAlt}
@@ -43,6 +44,7 @@ const DropDownMenu = ({
           onPress={() => setIsOpen(!isOpen)}
         >
           <Icon
+            style={styles.icon}
             name={isOpen ? 'close' : hasIconButton}
             size={24}
             color={colors.primary}
@@ -67,7 +69,7 @@ const DropDownMenu = ({
                 <View style={styles.row}>
                   {item.icon ? (
                     <Icon
-                      style={{ paddingRight: 10 }}
+                      style={[styles.iconSmall, { paddingRight: 5 }]}
                       name={item.icon}
                       size={18}
                       color={

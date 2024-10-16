@@ -40,7 +40,11 @@ const CommentScreen = ({ route }) => {
           <Post post={post} hideCommentButton={true} />
         </View>
       </ScrollView>
-      <SendInputBar onSend={handleComment} placeholder="Add your comment..." />
+      <SendInputBar
+        onSend={handleComment}
+        placeholder="Add your comment..."
+        placeholderTextColor={colors.text}
+      />
     </>
   )
 }

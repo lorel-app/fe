@@ -1,9 +1,11 @@
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { useTheme } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const NestedTabNavigator = ({ screens }) => {
   const { colors } = useTheme()
+  const styles = useGlobalStyles()
   const Tab = createMaterialTopTabNavigator()
 
   return (
@@ -15,7 +17,12 @@ const NestedTabNavigator = ({ screens }) => {
             Content: 'interests'
           }
           return (
-            <MaterialIcons name={icons[route.name]} size={20} color={color} />
+            <MaterialIcons
+              style={styles.icon}
+              name={icons[route.name]}
+              size={20}
+              color={color}
+            />
           )
         },
         tabBarActiveTintColor: colors.secondary,

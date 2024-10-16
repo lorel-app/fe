@@ -20,9 +20,17 @@ export const AlertProvider = ({ children }) => {
     (type, title) => {
       const icon =
         type === 'error' ? (
-          <Icon name="error" size={38} color={colors.accent} />
+          <Icon
+            style={[styles.icon, { fontSize: 38 }]}
+            name="error"
+            color={colors.accent}
+          />
         ) : (
-          <Icon name="check-circle" size={38} color={colors.primary} />
+          <Icon
+            style={[styles.icon, { fontSize: 38 }]}
+            name="check-circle"
+            color={colors.primary}
+          />
         )
 
       setAlert({

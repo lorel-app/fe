@@ -80,7 +80,11 @@ const EditProfileScreen = ({ route }) => {
         <View style={styles.card}>
           <View style={styles.rowSpan}>
             <View style={styles.row}>
-              <Icon name={'notes'} size={18} color={colors.primary} />
+              <Icon
+                name={'notes'}
+                style={styles.icon}
+                color={colors.secondary}
+              />
               <Text style={[styles.textBold, { paddingLeft: 5 }]}>Bio</Text>
             </View>
             <Text style={styles.textLight}>(Max 255)</Text>
@@ -99,25 +103,23 @@ const EditProfileScreen = ({ route }) => {
             }}
           />
           <View style={[styles.row, { padding: 10 }]}>
-            <Icon name={'hail'} size={18} color={colors.primary} />
+            <Icon name={'hail'} style={styles.icon} color={colors.secondary} />
             <Text style={[styles.textBold, { paddingLeft: 5 }]}>Location</Text>
           </View>
           <TextInput
             style={styles.input}
-            // double check
             maxLength={50}
             value={generalInfo.location}
             onChangeText={value => handleGeneralChange('location', value)}
           />
           <View style={[styles.row, { padding: 10 }]}>
-            <Icon name={'place'} size={18} color={colors.primary} />
+            <Icon name={'place'} style={styles.icon} color={colors.secondary} />
             <Text style={[styles.textBold, { paddingLeft: 5 }]}>
               Occupation
             </Text>
           </View>
           <TextInput
             style={styles.input}
-            // double check
             maxLength={50}
             value={generalInfo.occupation}
             onChangeText={value => handleGeneralChange('occupation', value)}

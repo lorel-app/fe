@@ -24,11 +24,10 @@ const SendInputBar = ({ onSend, placeholder }) => {
         placeholder={placeholder}
         placeholderTextColor={colors.text}
         style={styles.barInput}
-        maxLength={5}
         multiline={true}
       />
       <TouchableOpacity style={{ paddingLeft: 8 }} onPress={handleSend}>
-        <Icon name="send" size={24} color={colors.primary} />
+        <Icon style={styles.icon} name="send" color={colors.primary} />
       </TouchableOpacity>
     </View>
   )

@@ -32,16 +32,12 @@ const BuyScreen = ({ route }) => {
           onPress={() => navigation.navigate('User', { user })}
           style={styles.rowEnd}
         >
-          {user ? <Text style={styles.text}>{user.username}</Text> : null}
-          {user.displayPictureThumb ? (
-            <Image
-              source={{ uri: user.displayPictureThumb }}
-              resizeMode="cover"
-              style={styles.profilePic}
-            />
-          ) : (
-            <Icon name="circle" size={100} style={styles.profilePicLarge} />
-          )}
+          <Text style={styles.text}>{user.username}</Text>
+          <Image
+            source={{ uri: user.displayPictureThumb }}
+            resizeMode="cover"
+            style={styles.profilePic}
+          />
         </TouchableOpacity>
         <View style={styles.container}>
           {post.media.map((item, index) => (

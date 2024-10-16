@@ -13,7 +13,11 @@ import AuthContext from '@/utils/authContext'
 import { useMediaPicker } from '@/hooks/useMediaPicker'
 import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import {
+  useTheme,
+  useNavigation,
+  useFocusEffect
+} from '@react-navigation/native'
 import UnauthenticatedView from '@/components/UnauthenticatedView'
 import Spacer from '@/components/Spacer'
 import ButtonIcon from '@/components/ButtonIcon'
@@ -24,6 +28,7 @@ import Loader from '@/components/Loader'
 const AddScreen = () => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
+  const { colors } = useTheme()
   const { isAuthenticated } = useContext(AuthContext)
   const navigation = useNavigation()
 
@@ -186,6 +191,7 @@ const AddScreen = () => {
             <TextInput
               style={styles.inputLight}
               placeholder="Title"
+              placeholderTextColor={colors.text}
               value={form.title}
               onChangeText={text => handleChange('title', text)}
               maxLength={50}
@@ -199,6 +205,7 @@ const AddScreen = () => {
               <TextInput
                 style={styles.inputLight}
                 placeholder="00.00"
+                placeholderTextColor={colors.text}
                 value={form.price}
                 onChangeText={text => handleChange('price', text)}
                 keyboardType="numeric"
@@ -209,6 +216,7 @@ const AddScreen = () => {
           <TextInput
             style={[styles.inputLight, { height: captionHeight }]}
             placeholder="Caption"
+            placeholderTextColor={colors.text}
             value={form.caption}
             onChangeText={text => handleChange('caption', text)}
             onContentSizeChange={event =>
@@ -221,6 +229,7 @@ const AddScreen = () => {
             <TextInput
               style={[styles.inputLight, { height: descriptionHeight }]}
               placeholder="Description"
+              placeholderTextColor={colors.text}
               value={form.description}
               onChangeText={text => handleChange('description', text)}
               onContentSizeChange={event =>

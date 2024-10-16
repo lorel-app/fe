@@ -217,6 +217,16 @@ export const useGlobalStyles = () => {
       fontWeight: '500',
       textAlign: 'center'
     },
+    icon: {
+      // required for Android
+      fontSize: 26,
+      margin: 3
+    },
+    iconSmall: {
+      // required for Android
+      fontSize: 18,
+      margin: 3
+    },
     input: {
       fontSize: 16,
       backgroundColor: colors.background,
@@ -467,7 +477,7 @@ export const useGlobalStyles = () => {
       top: 15,
       right: 15,
       alignSelf: 'center',
-      padding: 10,
+      padding: 2,
       borderRadius: 500,
       // make primaryTint lighter for light mode
       //backgroundColor: 'rgba(255, 255, 255, 0.2)',

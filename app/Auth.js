@@ -58,6 +58,15 @@ export default function SignUpLogInModal({ visible, onClose }) {
       )
       return
     }
+    const passwordRegex =
+      /^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\$%\^&\*]).{8,64}$/
+    if (!passwordRegex.test(password)) {
+      showAlert(
+        'error',
+        'Passwords must be at least 8 characters long and contain at least 1 uppercase letter, lowercase letter, and number'
+      )
+      return
+    }
     if (password !== confirmPassword) {
       showAlert('error', 'Passwords do not match')
       return
@@ -157,6 +166,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               value={form.username}
               onChangeText={text => handleChange('username', text)}
               maxLength={30}
+              multiline={false}
             />
           ) : null}
 
@@ -168,6 +178,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             onChangeText={text =>
               handleChange(isSignUp ? 'email' : 'identity', text)
             }
+            multiline={false}
           />
 
           {isSignUp ? (
@@ -186,12 +197,12 @@ export default function SignUpLogInModal({ visible, onClose }) {
               value={form.password}
               onChangeText={text => handleChange('password', text)}
               secureTextEntry={!passwordVisible}
+              maxLength={64}
             />
             <ButtonIcon
               onPress={() => setPasswordVisible(!passwordVisible)}
               iconName={passwordVisible ? 'visibility-off' : 'visibility'}
               iconSize={24}
-              //style={{ fontSize: 24 }}
             />
           </View>
 
@@ -204,12 +215,12 @@ export default function SignUpLogInModal({ visible, onClose }) {
                 value={form.confirmPassword}
                 onChangeText={text => handleChange('confirmPassword', text)}
                 secureTextEntry={!passwordVisible}
+                maxLength={64}
               />
               <ButtonIcon
                 onPress={() => setPasswordVisible(!passwordVisible)}
                 iconName={passwordVisible ? 'visibility-off' : 'visibility'}
                 iconSize={24}
-                //style={{ fontSize: 24 }}
               />
             </View>
           ) : null}
@@ -298,6 +309,7 @@ export function VerifyModal({
           placeholderTextColor={colors.text}
           value={code}
           onChangeText={setCode}
+          multiline={false}
         />
         <TouchableOpacity style={styles.button} onPress={verifyCode}>
           <Text style={styles.buttonText}>Verify</Text>

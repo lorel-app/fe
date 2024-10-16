@@ -122,7 +122,11 @@ const SelectTags = ({ onTagsChange }) => {
       {isExpanded && (
         <>
           <View style={styles.inputWithIcon}>
-            <TextInput style={styles.inputLight} placeholder="Search tags" />
+            <TextInput
+              style={styles.inputLight}
+              placeholder="Search tags"
+              placeholderTextColor={colors.text}
+            />
             <ButtonIcon onPress={toggleExpanded} iconName="search" />
           </View>
           <View style={styles.rowSpan}>

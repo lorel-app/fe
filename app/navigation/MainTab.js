@@ -6,6 +6,7 @@ import SearchScreen from '@/app/screens/Search'
 import AddScreen from '@/app/screens/Add'
 import ProfileScreen from '@/app/screens/Profile'
 import { useTheme } from '@react-navigation/native'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 
 const Tab = createBottomTabNavigator()
 const tabIcons = {
@@ -17,12 +18,14 @@ const tabIcons = {
 
 function Tabs() {
   const { colors } = useTheme()
+  const styles = useGlobalStyles()
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
           return (
             <MaterialIcons
+              style={styles.icon}
               name={tabIcons[route.name]}
               size={32}
               color={color}

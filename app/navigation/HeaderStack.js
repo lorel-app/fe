@@ -26,7 +26,11 @@ const HeaderStack = ({
           onPress={() => navigation.goBack()}
           style={styles.row}
         >
-          <Icon name="keyboard-arrow-left" size={30} color={colors.primary} />
+          <Icon
+            name="keyboard-arrow-left"
+            color={colors.primary}
+            style={styles.icon}
+          />
           <Text
             style={[styles.textBold, { paddingLeft: 5 }, { paddingBottom: 2 }]}
           >
@@ -43,7 +47,7 @@ const HeaderStack = ({
             <ButtonFollow user={user} />
           ))}
         <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
-          <Icon name="more-vert" size={24} />
+          <Icon name="more-vert" color={colors.primary} style={styles.icon} />
         </TouchableOpacity>
       </View>
     </View>

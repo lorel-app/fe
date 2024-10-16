@@ -6,7 +6,7 @@ import { useTheme } from '@react-navigation/native'
 const ButtonIcon = ({ onPress, iconName, iconSize, iconColor, style }) => {
   const { colors } = useTheme()
   const effectiveIconColor = iconColor || colors.secondaryTint
-  const effectiveIconSize = iconSize || 24
+  const effectiveIconSize = iconSize || 26
   const effectiveStyle = [{ margin: 15 }, style]
 
   return (
@@ -15,8 +15,8 @@ const ButtonIcon = ({ onPress, iconName, iconSize, iconColor, style }) => {
         name={iconName}
         size={effectiveIconSize}
         color={effectiveIconColor}
-        // android needs fontSize - doesn't work dynamically
-        style={{ fontSize: 24 }}
+        // android needs fontSize
+        style={{ fontSize: 26 }}
       />
     </TouchableOpacity>
   )
