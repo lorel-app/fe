@@ -48,50 +48,52 @@ const ProfileHeader = ({ user }) => {
         </View>
       </View>
 
-      <View style={[styles.post, { borderRadius: 10 }]}>
-        {user.bio ? (
-          <View style={{ padding: 5 }}>
-            <Text style={styles.text}>{user.bio}</Text>
+      {!user.bio || !user.location || !user.occupation ? null : (
+        <View style={[styles.post, { borderRadius: 10 }]}>
+          {user.bio ? (
+            <View style={{ padding: 5 }}>
+              <Text style={styles.text}>{user.bio}</Text>
+            </View>
+          ) : null}
+
+          <View
+            style={[
+              styles.rowWrap,
+              { alignSelf: 'center' },
+              { padding: 5 },
+              { marginTop: 5 }
+            ]}
+          >
+            {user.location ? (
+              <View style={styles.row}>
+                <Icon
+                  style={styles.iconSmall}
+                  name={'place'}
+                  color={colors.secondaryTint}
+                />
+                <Text style={styles.textSmall}>{user.location}</Text>
+              </View>
+            ) : null}
+
+            {user.location && user.occupation ? (
+              <Text style={[styles.textSmall, { paddingHorizontal: 10 }]}>
+                |
+              </Text>
+            ) : null}
+
+            {user.occupation ? (
+              <View style={styles.row}>
+                <Icon
+                  style={styles.iconSmall}
+                  name={'hail'}
+                  color={colors.secondaryTint}
+                />
+                <Text style={styles.textSmall}>{user.occupation}</Text>
+              </View>
+            ) : null}
           </View>
-        ) : null}
-
-        <View
-          style={[
-            styles.rowWrap,
-            { alignSelf: 'center' },
-            { padding: 5 },
-            { marginTop: 5 }
-          ]}
-        >
-          {user.location ? (
-            <View style={styles.row}>
-              <Icon
-                style={styles.icon}
-                name={'place'}
-                size={18}
-                color={colors.secondaryTint}
-              />
-              <Text style={styles.textSmall}>{user.location}</Text>
-            </View>
-          ) : null}
-
-          {user.location && user.occupation ? (
-            <Text style={[styles.textSmall, { paddingHorizontal: 10 }]}>|</Text>
-          ) : null}
-
-          {user.occupation ? (
-            <View style={styles.row}>
-              <Icon
-                style={styles.icon}
-                name={'hail'}
-                size={18}
-                color={colors.secondaryTint}
-              />
-              <Text style={styles.textSmall}>{user.occupation}</Text>
-            </View>
-          ) : null}
         </View>
-      </View>
+      )}
 
       <View
         style={[
