@@ -40,15 +40,21 @@ export default function Header() {
       <View style={[styles.headerItems]}>
         <ButtonSwitch />
         {isAuthenticated ? (
-          <ButtonIcon iconName="logout" onPress={handleLogout} />
+          <ButtonIcon
+            testID={'logout-button'}
+            iconName="logout"
+            onPress={handleLogout}
+          />
         ) : (
           <ButtonIcon
+            testID={'login-button'}
             iconName="account-circle"
             onPress={() => setModalVisible(true)}
           />
         )}
       </View>
       <SignUpLogInModal
+        testID={'auth-modal'}
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
       />

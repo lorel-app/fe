@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { View, FlatList } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
 import Post from '@/components/Post'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { useFocusEffect } from '@react-navigation/native'
@@ -12,7 +11,6 @@ import Loader from '@/components/Loader'
 const HomeScreen = () => {
   const { loading: authLoading } = useContext(AuthContext)
   const styles = useGlobalStyles()
-  const { colors } = useTheme()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
@@ -60,6 +58,7 @@ const HomeScreen = () => {
 
   return (
     <FlatList
+      testID={'scrollable-feed'}
       data={posts}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
