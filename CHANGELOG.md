@@ -1,3 +1,10 @@
+# [1.2.0-dev.24](https://github.com/lorel-app/fe/compare/v1.2.0-dev.23...v1.2.0-dev.24) (2024-10-19)
+
+
+### Features
+
+* 🫡 test setup ([532c9cf](https://github.com/lorel-app/fe/commit/532c9cf9587c0aa5804f5965d2fe5bf1d5bb7059))
+
 # [1.2.0-dev.23](https://github.com/lorel-app/fe/compare/v1.2.0-dev.22...v1.2.0-dev.23) (2024-10-16)
 
 
