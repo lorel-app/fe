@@ -246,6 +246,23 @@ const unlikePost = async postId => {
   return response
 }
 
+const getComments = async (postId, limit = 20, offset = 0) => {
+  const response = await apiInstance.get(`comment/${postId}`, {
+    params: { limit, offset }
+  })
+  return response
+}
+
+const addComment = async (postId, body) => {
+  const response = await apiInstance.post(`comment/${postId}`, body)
+  return response
+}
+
+const deleteComment = async commentId => {
+  const response = await apiInstance.delete(`comment/${commentId}`)
+  return response
+}
+
 const followUser = async userId => {
   const response = await apiInstance.post(`follower/${userId}`)
   return response
@@ -315,6 +332,9 @@ export default {
   userPosts,
   likePost,
   unlikePost,
+  getComments,
+  addComment,
+  deleteComment,
   followUser,
   unfollowUser,
   addPost,

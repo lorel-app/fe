@@ -21,6 +21,7 @@ const Post = ({ post, hideCommentButton = false }) => {
   const {
     id,
     user = {},
+    commentCount,
     likeCount: initialLikeCount,
     liked: initialLikedStatus,
     caption,
@@ -174,7 +175,7 @@ const Post = ({ post, hideCommentButton = false }) => {
                 onPress={() => navigation.navigate('Comment', { post })}
                 style={{ margin: 3 }}
               />
-              <Text style={styles.textLight}>999</Text>
+              <Text style={styles.textLight}>{commentCount}</Text>
             </View>
           ) : null}
           <View style={{ alignItems: 'center' }}>
