@@ -7,6 +7,8 @@ import { useTheme, useNavigation } from '@react-navigation/native'
 import api from '@/utils/api'
 import HeaderStack from '../navigation/HeaderStack'
 import { useAlertModal } from '@/hooks/useAlertModal'
+import SocialIcon from '@/assets/images/SocialIcons'
+import ButtonIcon from '@/components/ButtonIcon'
 
 const EditProfileScreen = ({ route }) => {
   const styles = useGlobalStyles()
@@ -21,6 +23,10 @@ const EditProfileScreen = ({ route }) => {
     location: '',
     occupation: ''
   })
+  const [generalInfoChanged, setGeneralInfoChanged] = useState(false)
+  const [linkInfo, setLinkInfo] = useState([])
+  const [linksToPatch, setLinksToPatch] = useState([])
+  const [linksToDelete, setLinksToDelete] = useState([])
 
   const [inputHeight, setInputHeight] = useState(0)
 
@@ -50,22 +56,87 @@ const EditProfileScreen = ({ route }) => {
     }
   }, [myInfo])
 
+  useEffect(() => {
+    if (myInfo) {
+      const links = myInfo.links || []
+      const updatedLinks = links.map(link => {
+        const urlParts = link.url.split('/')
+        const value = urlParts[urlParts.length - 1]
+        return {
+          type: link.type,
+          value: value
+        }
+      })
+      setLinkInfo(updatedLinks)
+    }
+  }, [myInfo])
+
   const handleGeneralChange = (field, value) => {
     setGeneralInfo({
       ...generalInfo,
       [field]: value
     })
+    setGeneralInfoChanged(true)
+  }
+
+  const handleLinkPatch = (value, index) => {
+    const updatedLinks = [...linkInfo]
+    updatedLinks[index].value = value
+    setLinkInfo(updatedLinks)
+
+    const existingPatch = linksToPatch.find(
+      link => link.type === updatedLinks[index].type
+    )
+    if (existingPatch) {
+      setLinksToPatch(prevLinks =>
+        prevLinks.map(link =>
+          link.type === updatedLinks[index].type ? updatedLinks[index] : link
+        )
+      )
+    } else {
+      setLinksToPatch(prevLinks => [...prevLinks, updatedLinks[index]])
+    }
+    console.log(linksToPatch, '-links to patch')
+  }
+
+  const handleLinkDelete = index => {
+    const linksToDelete = linkInfo[index]
+    setLinksToDelete(prevLinks => [...prevLinks, linksToDelete])
+
+    const updatedLinks = linkInfo.filter((_, i) => i !== index)
+    setLinkInfo(updatedLinks)
   }
 
   const handleSubmitChanges = async () => {
-    const response = await api.editProfile(generalInfo)
-    if (response.success) {
-      navigation.reset({
-        routes: [{ name: 'Profile' }]
-      })
+    try {
+      if (generalInfoChanged) {
+        const response = await api.editProfile(generalInfo)
+        if (!response.success) throw new Error(response.data.message)
+        console.log(response)
+      }
+
+      if (linksToPatch.length > 0) {
+        for (const link of linksToPatch) {
+          console.log(link, '-link')
+          const response = await api.addProfileLink({
+            type: link.type,
+            value: link.value
+          })
+          if (!response.success) throw new Error(response.data.message)
+        }
+      }
+
+      if (linksToDelete.length > 0) {
+        for (const link of linksToDelete) {
+          const response = await api.deleteProfileLink({ type: link.type })
+          if (!response.success) throw new Error(response.data.message)
+        }
+      }
+
+      navigation.reset({ routes: [{ name: 'Profile' }] })
       navigation.goBack()
-    } else {
-      showAlert('error', response.data.message)
+    } catch (error) {
+      showAlert('error', error.message)
     }
   }
 
@@ -125,7 +196,45 @@ const EditProfileScreen = ({ route }) => {
             onChangeText={value => handleGeneralChange('occupation', value)}
           />
         </View>
+
         <View style={styles.divider}></View>
+
+        <Text style={styles.title}>Links</Text>
+
+        <View>
+          {linkInfo && linkInfo.length > 0
+            ? linkInfo.map((link, index) => (
+                <View style={styles.row} key={index}>
+                  {link.type.toLowerCase() === 'personal' ? (
+                    <Icon
+                      style={styles.icon}
+                      name={'link'}
+                      color={colors.secondary}
+                    />
+                  ) : (
+                    <View>
+                      <SocialIcon
+                        icon={link.type.toLowerCase()}
+                        key={`${index}-editscreen`}
+                      />
+                    </View>
+                  )}
+                  <TextInput
+                    style={styles.inputLight}
+                    value={link.value}
+                    onChangeText={text => handleLinkPatch(text, index)}
+                  />
+                  <ButtonIcon
+                    iconName="remove"
+                    iconColor={colors.accent}
+                    onPress={() => handleLinkDelete(index)}
+                  />
+                </View>
+              ))
+            : null}
+        </View>
+        <View>{/* ADD add link input */}</View>
+        <View style={[styles.divider, { marginBottom: 80 }]}></View>
       </ScrollView>
       <TouchableOpacity
         style={styles.buttonAbsolute}

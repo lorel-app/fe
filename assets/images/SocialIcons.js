@@ -49,7 +49,6 @@ export default function SocialIcon({ icon, width = 28, height = 28 }) {
         } else if (element.type === 'circle') {
           return <Circle key={index} {...element.props} />
         } else if (element.type === 'polygon') {
-          // Add handling for polygon
           return <Polygon key={index} {...element.props} />
         }
         return null

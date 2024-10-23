@@ -12,21 +12,15 @@ const UserPostsScreen = ({ route }) => {
 
   const { posts, fetchPosts, loading } = useFetchUserPosts(user.id, postsType)
   const [initialIndex, setInitialIndex] = useState(null)
-  const [isFetching, setIsFetching] = useState(true)
 
   const checkForPostId = useCallback(() => {
-    if (posts.length > 0 && postId) {
+    if (postId && posts.length > 0) {
       const index = posts.findIndex(post => post.id === postId)
       if (index !== -1) {
         setInitialIndex(index)
-        setIsFetching(false)
-      } else {
-        fetchPosts()
       }
-    } else {
-      fetchPosts()
     }
-  }, [posts, postId, fetchPosts])
+  }, [posts, postId])
 
   useEffect(() => {
     fetchPosts()
@@ -36,13 +30,15 @@ const UserPostsScreen = ({ route }) => {
     checkForPostId()
   }, [posts, checkForPostId])
 
-  const renderItem = ({ item: post }) => {
-    return (
-      <View style={styles.post} key={post.id}>
-        <Post post={{ ...post, user }} />
-      </View>
-    )
+  if (loading || initialIndex === null) {
+    return <Loader />
   }
+
+  const renderItem = ({ item: post }) => (
+    <View style={styles.post} key={post.id}>
+      <Post post={{ ...post, user }} />
+    </View>
+  )
 
   return (
     <>
@@ -53,22 +49,25 @@ const UserPostsScreen = ({ route }) => {
           hideFollowButton={true}
         />
       )}
-      {isFetching || loading ? (
-        <Loader />
-      ) : (
-        <FlatList
-          data={posts}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-          contentContainerStyle={styles.container}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-          onEndReached={fetchPosts}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={loading && <Loader />}
-          initialScrollIndex={initialIndex}
-        />
-      )}
+      <FlatList
+        data={posts}
+        renderItem={renderItem}
+        initialNumToRender={6}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+        onEndReached={fetchPosts}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={loading && <Loader />}
+        initialScrollIndex={initialIndex}
+        scrollEventThrottle={100}
+        getItemLayout={(data, index) => ({
+          length: 100,
+          offset: 100 * index,
+          index
+        })}
+      />
     </>
   )
 }

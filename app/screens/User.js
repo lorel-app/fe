@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { View, FlatList, Image, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -50,6 +50,10 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
       onEndReached={fetchPosts}
       onEndReachedThreshold={0.5}
       ListFooterComponent={loading && <Loader />}
+      // to be completed - only show if not loading
+      ListEmptyComponent={
+        <Text style={styles.textBold}>Nothing posted yet</Text>
+      }
       nestedScrollEnabled={true}
     />
   )

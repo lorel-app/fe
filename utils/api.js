@@ -200,6 +200,16 @@ const editProfile = async body => {
   return response
 }
 
+const addProfileLink = async body => {
+  const response = await apiInstance.patch('/profile/link', body)
+  return response
+}
+
+const deleteProfileLink = async body => {
+  const response = await apiInstance.delete('/profile/link', { data: body })
+  return response
+}
+
 const updateProfilePic = async file => {
   const formData = new FormData()
   formData.append('file', {
@@ -327,6 +337,8 @@ export default {
   getMe,
   getUser,
   editProfile,
+  addProfileLink,
+  deleteProfileLink,
   updateProfilePic,
   allPosts,
   userPosts,

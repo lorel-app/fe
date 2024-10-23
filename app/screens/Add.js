@@ -98,7 +98,6 @@ const AddScreen = () => {
 
   const handlePost = async () => {
     const { type, media, title, price, caption, description } = form
-    console.log(form)
     if (media.length === 0) {
       showAlert(
         'error',

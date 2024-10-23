@@ -111,7 +111,10 @@ const ProfileHeader = ({ user }) => {
                   key={index}
                   onPress={() => openLink(link.url)}
                 >
-                  <SocialIcon icon={link.type.toLowerCase()} />
+                  <SocialIcon
+                    icon={link.type.toLowerCase()}
+                    key={`${index}-profilescreen`}
+                  />
                 </TouchableOpacity>
               ))
           : null}
