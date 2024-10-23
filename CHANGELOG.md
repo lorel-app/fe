@@ -1,3 +1,10 @@
+# [1.2.0-dev.26](https://github.com/lorel-app/fe/compare/v1.2.0-dev.25...v1.2.0-dev.26) (2024-10-23)
+
+
+### Features
+
+* 🫡 Patch/Delete profile links ([1713df3](https://github.com/lorel-app/fe/commit/1713df305e9011a6d6b5f0d7d6b0667d5fde12ca))
+
 # [1.2.0-dev.25](https://github.com/lorel-app/fe/compare/v1.2.0-dev.24...v1.2.0-dev.25) (2024-10-21)
 
 
