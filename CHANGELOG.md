@@ -1,3 +1,10 @@
+# [1.2.0-dev.27](https://github.com/lorel-app/fe/compare/v1.2.0-dev.26...v1.2.0-dev.27) (2024-10-24)
+
+
+### Features
+
+* 🫡 Handle edit links and username ([703e23f](https://github.com/lorel-app/fe/commit/703e23f5fd588182070e201c0c8882d663411e83))
+
 # [1.2.0-dev.26](https://github.com/lorel-app/fe/compare/v1.2.0-dev.25...v1.2.0-dev.26) (2024-10-23)
 
 
