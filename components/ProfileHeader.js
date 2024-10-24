@@ -2,12 +2,13 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
-import SocialIcon from '@/assets/images/SocialIcons'
+import getAllSocialIcons from '@/assets/images/SocialIcons'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const ProfileHeader = ({ user }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
+  const socialIcons = getAllSocialIcons(28, 28)
 
   const openLink = url => {
     Linking.openURL(url).catch(err =>
@@ -102,21 +103,21 @@ const ProfileHeader = ({ user }) => {
           { paddingBottom: 15 }
         ]}
       >
-        {user.links && user.links.length > 0
+        {user.links?.length > 0
           ? user.links
               .filter(link => link.type.toLowerCase() !== 'personal')
-              .map((link, index) => (
-                <TouchableOpacity
-                  style={{ padding: 3 }}
-                  key={index}
-                  onPress={() => openLink(link.url)}
-                >
-                  <SocialIcon
-                    icon={link.type.toLowerCase()}
-                    key={`${index}-profilescreen`}
-                  />
-                </TouchableOpacity>
-              ))
+              .map((link, index) => {
+                const iconName = link.type.toLowerCase()
+                return (
+                  <TouchableOpacity
+                    style={{ padding: 3 }}
+                    key={index}
+                    onPress={() => openLink(link.url)}
+                  >
+                    {socialIcons[iconName]}
+                  </TouchableOpacity>
+                )
+              })
           : null}
       </View>
 

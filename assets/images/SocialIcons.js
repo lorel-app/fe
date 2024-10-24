@@ -10,13 +10,8 @@ import Svg, {
 } from 'react-native-svg'
 import icons from './icons'
 
-export default function SocialIcon({ icon, width = 28, height = 28 }) {
-  const iconData = icons[icon]
-
-  if (!iconData) {
-    console.warn(`Icon ${icon} not found.`)
-    return null
-  }
+function renderIcon(iconData, width = 28, height = 28) {
+  if (!iconData) return null
 
   return (
     <Svg width={width} height={height} viewBox="0 0 48 48">
@@ -55,4 +50,15 @@ export default function SocialIcon({ icon, width = 28, height = 28 }) {
       })}
     </Svg>
   )
+}
+
+export default function getAllSocialIcons(width, height) {
+  const renderedIcons = {}
+
+  Object.keys(icons).forEach(iconName => {
+    const iconData = icons[iconName]
+    renderedIcons[iconName] = renderIcon(iconData, width, height)
+  })
+
+  return renderedIcons
 }

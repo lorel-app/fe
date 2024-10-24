@@ -226,6 +226,16 @@ const updateProfilePic = async file => {
   return response
 }
 
+const deleteProfilePic = async () => {
+  const response = await apiInstance.delete('/me/display-picture')
+  return response
+}
+
+const deleteCoverPic = async () => {
+  const response = await apiInstance.delete('/me/cover-picture')
+  return response
+}
+
 const allPosts = async (limit = 10, offset = 0) => {
   const response = await apiInstance.get('/', {
     params: { limit, offset }
@@ -340,6 +350,8 @@ export default {
   addProfileLink,
   deleteProfileLink,
   updateProfilePic,
+  deleteProfilePic,
+  deleteCoverPic,
   allPosts,
   userPosts,
   likePost,
