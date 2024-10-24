@@ -30,15 +30,20 @@ const UserPostsScreen = ({ route }) => {
     checkForPostId()
   }, [posts, checkForPostId])
 
+  const renderItem = useCallback(
+    ({ item: post }) => {
+      return (
+        <View style={styles.post} key={post.id}>
+          <Post post={{ ...post, user }} />
+        </View>
+      )
+    },
+    [user]
+  )
+
   if (loading || initialIndex === null) {
     return <Loader />
   }
-
-  const renderItem = ({ item: post }) => (
-    <View style={styles.post} key={post.id}>
-      <Post post={{ ...post, user }} />
-    </View>
-  )
 
   return (
     <>

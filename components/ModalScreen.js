@@ -30,7 +30,6 @@ export default function ModalScreen({ visible, onClose, children }) {
             <ButtonIcon
               style={styles.closeButton}
               iconName="close"
-              iconSize="15"
               iconColor={colors.text}
               onPress={onClose}
             />

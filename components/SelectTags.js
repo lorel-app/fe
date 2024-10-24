@@ -121,7 +121,7 @@ const SelectTags = ({ onTagsChange }) => {
 
       {isExpanded && (
         <>
-          <View style={styles.inputWithIcon}>
+          <View style={styles.input}>
             <TextInput
               style={styles.inputLight}
               placeholder="Search tags"

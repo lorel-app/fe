@@ -189,7 +189,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             />
           ) : null}
 
-          <View style={styles.inputWithIcon}>
+          <View style={styles.row}>
             <TextInput
               style={styles.input}
               placeholder="Password"
@@ -208,7 +208,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
           </View>
 
           {isSignUp ? (
-            <View style={styles.inputWithIcon}>
+            <View style={styles.row}>
               <TextInput
                 style={styles.input}
                 placeholder="Confirm Password"
@@ -232,9 +232,8 @@ export default function SignUpLogInModal({ visible, onClose }) {
               {isSignUp ? 'Sign Up' : 'Log In'}
             </Text>
           </TouchableOpacity>
-          <Spacer />
           <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
-            <Text style={styles.link}>
+            <Text style={[styles.link, { marginTop: 10 }]}>
               {isSignUp ? 'I already have an account' : 'Create an account'}
             </Text>
           </TouchableOpacity>

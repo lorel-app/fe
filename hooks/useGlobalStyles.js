@@ -235,8 +235,7 @@ export const useGlobalStyles = () => {
       borderRadius: 10,
       marginVertical: 10,
       outlineStyle: 'none',
-      width: '100%',
-      minWidth: '100%'
+      width: '100%'
     },
     /// think about it
     inputFocused: {
@@ -260,17 +259,6 @@ export const useGlobalStyles = () => {
       width: '100%',
       outlineStyle: 'none',
       flexGrow: 1
-    },
-    inputWithIcon: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      //backgroundColor: colors.background
-      borderRadius: 10,
-      // can remoe this on Android
-      width: '100%'
-      //paddingVertical: 8,
-      // paddingHorizontal: 10
     },
     button: {
       backgroundColor: colors.primary,
@@ -317,11 +305,10 @@ export const useGlobalStyles = () => {
     },
     modalView: {
       backgroundColor: colors.card,
-      margin: 20,
       borderRadius: 20,
-      padding: 25,
+      padding: 10,
       alignItems: 'center',
-      width: '80%',
+      width: width * 0.9,
       maxWidth: 500,
       ...shadowStyle
     },

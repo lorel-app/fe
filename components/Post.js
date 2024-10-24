@@ -1,5 +1,5 @@
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme, useNavigation } from '@react-navigation/native'
@@ -17,7 +17,7 @@ const formatDate = isoString => {
   const month = date.toLocaleString('default', { month: 'short' })
   return `${day} ${month}`
 }
-const Post = ({ post, hideCommentButton = false }) => {
+const Post = React.memo(({ post, hideCommentButton = false }) => {
   const {
     id,
     user = {},
@@ -42,7 +42,7 @@ const Post = ({ post, hideCommentButton = false }) => {
   const [likeCount, setLikeCount] = useState(initialLikeCount)
   const [liked, setLiked] = useState(initialLikedStatus)
 
-  const handleLike = async () => {
+  const handleLike = useCallback(async () => {
     try {
       let response
       if (!liked) {
@@ -65,7 +65,7 @@ const Post = ({ post, hideCommentButton = false }) => {
     } catch (error) {
       console.log('Failed to like/unlike post:', error.message)
     }
-  }
+  }, [liked, id])
 
   const mediaUrls = media.map(m => ({
     uri: m.url,
@@ -192,6 +192,6 @@ const Post = ({ post, hideCommentButton = false }) => {
       </View>
     </>
   )
-}
+})
 
 export default Post

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState, useCallback } from 'react'
+import { View, FlatList, Image, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -19,8 +19,8 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
     fetchPosts()
   }, [fetchPosts])
 
-  const renderItems = ({ item }) => {
-    return (
+  const renderItems = useCallback(
+    ({ item }) => (
       <TouchableOpacity
         style={styles.containerGrid}
         onPress={() =>
@@ -36,8 +36,9 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
           style={[styles.imageFit, { resizeMode: 'cover' }]}
         />
       </TouchableOpacity>
-    )
-  }
+    ),
+    [navigation, user, styles.containerGrid, styles.imageFit]
+  )
 
   return (
     <FlatList
@@ -51,9 +52,9 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
       onEndReachedThreshold={0.5}
       ListFooterComponent={loading && <Loader />}
       // to be completed - only show if not loading
-      ListEmptyComponent={
-        <Text style={styles.textBold}>Nothing posted yet</Text>
-      }
+      // ListEmptyComponent={
+      //   <Text style={styles.textBold}>Nothing posted yet</Text>
+      // }
       nestedScrollEnabled={true}
     />
   )
