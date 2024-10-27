@@ -33,6 +33,7 @@ const Post = React.memo(({ post, hideCommentButton = false }) => {
     type
   } = post
 
+  console.log(post)
   const navigation = useNavigation()
   const { user: me } = useContext(AuthContext)
   const styles = useGlobalStyles()
@@ -122,7 +123,7 @@ const Post = React.memo(({ post, hideCommentButton = false }) => {
           </Text>
           <View style={styles.row}>
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-              <Text style={styles.textAccent}>€ {price.split('.')[0]}</Text>
+              <Text style={styles.textAccent}>{price.split('.')[0]}</Text>
               <Text style={[styles.textAccent, { fontSize: 14 }]}>
                 .{price.split('.')[1]}
               </Text>

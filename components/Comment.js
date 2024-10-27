@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme, useNavigation } from '@react-navigation/native'
+import { useAlertModal } from '@/hooks/useAlertModal'
 import AuthContext from '@/utils/authContext'
 import api from '@/utils/api'
 
@@ -11,20 +12,17 @@ const formatDate = isoString => {
   const month = date.toLocaleString('default', { month: 'short' })
   return `${day} ${month}`
 }
-
-const truncateText = content => {
-  return content.length > 20 ? `${content.substring(0, 120)}...` : content
-}
-
 const Comment = ({ comment, isMyPost = false, onDelete }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const navigation = useNavigation()
+  const showAlert = useAlertModal()
   const { user: me } = useContext(AuthContext)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const handleReportOrDelete = async () => {
     if (!me) {
-      console.log('log in')
+      showAlert('error', 'Please log in first')
       return
     }
     if (isMyPost || comment.user.id === me.id) {
@@ -39,6 +37,11 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
       console.log('Report comment')
     }
   }
+
+  const truncatedContent =
+    comment.content.length > 120
+      ? `${comment.content.substring(0, 120)}...`
+      : comment.content
 
   return (
     <View style={[styles.containerLeft, { maxWidth: 500 }]}>
@@ -84,7 +87,19 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
       </View>
 
       <View style={{ marginHorizontal: 20 }}>
-        <Text style={styles.textBold}>{truncateText(comment.content)}</Text>
+        <Text style={styles.textBold}>
+          {isExpanded ? comment.content : truncatedContent}
+        </Text>
+        {comment.content.length > 120 && !isExpanded && (
+          <TouchableOpacity
+            style={[{ alignSelf: 'end' }, { marginRight: 5 }]}
+            onPress={() => setIsExpanded(true)}
+          >
+            <Text style={[styles.textSmall, { color: colors.primary }]}>
+              Read more
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.divider}></View>
     </View>

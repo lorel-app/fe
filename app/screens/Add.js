@@ -29,7 +29,7 @@ const AddScreen = () => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
   const { colors } = useTheme()
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated, user: me } = useContext(AuthContext)
   const navigation = useNavigation()
 
   const [selectedOption, setSelectedOption] = useState('CONTENT')
@@ -199,8 +199,9 @@ const AddScreen = () => {
           ) : null}
           {selectedOption === 'SHOP' ? (
             <View style={[styles.rowSpan, { padding: 0 }]}>
-              {/* Handle validation later */}
-              <Text style={[styles.textAccent, { marginRight: 10 }]}>EUR</Text>
+              <Text style={[styles.textAccent, { marginRight: 10 }]}>
+                {me.preferences.currency}
+              </Text>
               <TextInput
                 style={styles.inputLight}
                 placeholder="00.00"

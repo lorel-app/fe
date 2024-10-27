@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useState, useContext } from 'react'
-import { useFocusEffect } from '@react-navigation/native'
-import { FlatList } from 'react-native'
+import React, { useEffect, useRef, useState, useContext } from 'react'
+import { useTheme, useFocusEffect } from '@react-navigation/native'
+import { FlatList, Text } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import api from '@/utils/api'
 import HeaderStack from '../navigation/HeaderStack'
@@ -23,14 +22,6 @@ const CommentScreen = ({ route }) => {
   const showAlert = useAlertModal()
   const { user: me } = useContext(AuthContext)
 
-  const scrollViewRef = useRef(null)
-
-  useEffect(() => {
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollToEnd({ animated: true })
-    }
-  }, [])
-
   const fetchComments = async () => {
     if (loading || !hasMore) return
     setLoading(true)
@@ -43,6 +34,9 @@ const CommentScreen = ({ route }) => {
         ])
         setHasMore(response.data.comments.length > 0)
         setOffset(prevOffset => prevOffset + response.data.comments.length)
+        // setTimeout(() => {
+        //   flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
+        // }, 100)
       } else {
         showAlert(
           'error',
@@ -58,11 +52,19 @@ const CommentScreen = ({ route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setComments([])
       fetchComments()
-      console.log(post.id)
     }, [post.id])
   )
+
+  const flatListRef = useRef(null)
+  const [hasScrolled, setHasScrolled] = useState(false)
+
+  useEffect(() => {
+    if (comments.length > 0 && comments.length <= 5 && !hasScrolled) {
+      flatListRef.current?.scrollToEnd({ animated: true })
+      setHasScrolled(true)
+    }
+  }, [comments])
 
   const handleComment = async myComment => {
     if (!me) {
@@ -71,9 +73,9 @@ const CommentScreen = ({ route }) => {
     } else {
       const response = await api.addComment(post.id, { content: myComment })
       if (response.success) {
-        console.log(response)
-        //const newComment = response.data.comment
-        //setComments(prevComments => [...prevComments, newComment])
+        const newComment = response.data.comment
+        setComments(prevComments => [newComment, ...prevComments]) // Prepend new comment to the list
+        setOffset(prevOffset => prevOffset + 1)
       } else {
         showAlert('error', response.data.message)
       }
@@ -103,17 +105,29 @@ const CommentScreen = ({ route }) => {
       )}
       <FlatList
         testID={'scrollable-feed'}
+        ref={flatListRef}
         data={comments}
         renderItem={renderItem}
+        maxToRenderPerBatch={5}
         keyExtractor={item => item.id.toString()}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={[styles.container, { flexGrow: 1 }]}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}
         onEndReached={fetchComments}
         onEndReachedThreshold={0.5}
         ListHeaderComponent={<Post post={post} hideCommentButton={true} />}
         ListHeaderComponentStyle={styles.post}
+        ListEmptyComponent={
+          <Text style={[styles.textCenter, { marginVertical: 30 }]}>
+            No comments yet
+          </Text>
+        }
         ListFooterComponent={loading && <Loader />}
+        getItemLayout={(data, index) => ({
+          length: index === 0 ? 700 : 40,
+          offset: (index === 0 ? 0 : 700) + 40 * index,
+          index
+        })}
       />
       <SendInputBar
         onSend={handleComment}
