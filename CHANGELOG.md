@@ -1,3 +1,10 @@
+# [1.2.0-dev.28](https://github.com/lorel-app/fe/compare/v1.2.0-dev.27...v1.2.0-dev.28) (2024-10-27)
+
+
+### Bug Fixes
+
+* 🐛 Update currency and comment changes ([38f97b1](https://github.com/lorel-app/fe/commit/38f97b1ef4b2661d24ff6dcfa458a4b13ce57a61))
+
 # [1.2.0-dev.27](https://github.com/lorel-app/fe/compare/v1.2.0-dev.26...v1.2.0-dev.27) (2024-10-24)
 
 
