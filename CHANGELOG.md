@@ -1,3 +1,10 @@
+# [1.2.0-dev.29](https://github.com/lorel-app/fe/compare/v1.2.0-dev.28...v1.2.0-dev.29) (2024-10-28)
+
+
+### Features
+
+* 🫡 Welcome and User Agreements screen ([e4d1b8b](https://github.com/lorel-app/fe/commit/e4d1b8bde07cf8a68aad79628e06458949b69923))
+
 # [1.2.0-dev.28](https://github.com/lorel-app/fe/compare/v1.2.0-dev.27...v1.2.0-dev.28) (2024-10-27)
 
 
