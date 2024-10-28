@@ -1,3 +1,10 @@
+# [1.2.0-dev.30](https://github.com/lorel-app/fe/compare/v1.2.0-dev.29...v1.2.0-dev.30) (2024-10-28)
+
+
+### Features
+
+* 🫡 Settings Screen with patch currency ([4749d39](https://github.com/lorel-app/fe/commit/4749d39c5fc1afa20998abc5da20b0d4902f5a67))
+
 # [1.2.0-dev.29](https://github.com/lorel-app/fe/compare/v1.2.0-dev.28...v1.2.0-dev.29) (2024-10-28)
 
 
