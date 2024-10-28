@@ -6,7 +6,7 @@ import LogoMain from '@/assets/images/LogoMain'
 
 import ButtonSwitch from '@/components/ButtonSwitch'
 import ButtonIcon from '@/components/ButtonIcon'
-import SignUpLogInModal from '@/app/Auth'
+import SignUpLogInModal from '@/app/screens/Auth'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import AuthContext from '@/utils/authContext'
 import { useAlertModal } from '@/hooks/useAlertModal'
@@ -36,6 +36,13 @@ export default function Header() {
     <View style={styles.header}>
       <View style={{ flex: 1 }}>
         <LogoMain fill={colors.secondary} width={250 / 2.5} height={61 / 2.5} />
+      </View>
+      <View style={[styles.headerItems]}>
+        <ButtonIcon
+          testID={'login-button'}
+          iconName="circle"
+          onPress={() => navigation.navigate('User Agreements')}
+        />
       </View>
       <View style={[styles.headerItems]}>
         <ButtonSwitch />

@@ -14,7 +14,9 @@ const NestedTabNavigator = ({ screens }) => {
         tabBarIcon: ({ color }) => {
           const icons = {
             Shop: 'local-mall',
-            Content: 'interests'
+            Content: 'interests',
+            PrivacyPolicy: 'circle',
+            TermsConditions: 'circle'
           }
           return (
             <MaterialIcons
