@@ -195,6 +195,12 @@ const getUser = async userId => {
   return response
 }
 
+const editPreferences = async body => {
+  console.log(body, 'bodyyyy')
+  const response = await apiInstance.patch('/preferences', body)
+  return response
+}
+
 const editProfile = async body => {
   const response = await apiInstance.patch('/profile', body)
   return response
@@ -346,6 +352,7 @@ export default {
   verifyPhone,
   getMe,
   getUser,
+  editPreferences,
   editProfile,
   addProfileLink,
   deleteProfileLink,

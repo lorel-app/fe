@@ -33,7 +33,6 @@ const Post = React.memo(({ post, hideCommentButton = false }) => {
     type
   } = post
 
-  console.log(post)
   const navigation = useNavigation()
   const { user: me } = useContext(AuthContext)
   const styles = useGlobalStyles()

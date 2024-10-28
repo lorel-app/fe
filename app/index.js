@@ -100,6 +100,7 @@ import CommentScreen from '@/app/screens/Comment'
 import UserScreen from '@/app/screens/User'
 import UserPostsScreen from '@/app/screens/UserPosts'
 import EditProfileScreen from '@/app/screens/EditProfile'
+import SettingsScreen from '@/app/screens/Settings'
 import UserAgreementsScreen from './screens_static/UserAgreements'
 
 const Stack = createStackNavigator()
@@ -147,6 +148,11 @@ export default function Index() {
                   name="EditProfile"
                   component={EditProfileScreen}
                   options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="User Settings"
+                  component={SettingsScreen}
+                  options={{ headerShown: true }}
                 />
                 <Stack.Screen
                   name="User Agreements"
