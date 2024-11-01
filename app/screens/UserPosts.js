@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { View, FlatList } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useNavigation } from '@react-navigation/native'
 import Post from '@/components/Post'
 import Loader from '@/components/Loader'
 import HeaderStack from '@/app/navigation/HeaderStack'
 import useFetchUserPosts from '@/hooks/useFetchUserPosts'
+import api from '@/utils/api'
 
 const UserPostsScreen = ({ route }) => {
   const { postsType, postId, user = {}, showHeader = true } = route.params || {}
   const styles = useGlobalStyles()
+  const navigation = useNavigation()
 
   const { posts, fetchPosts, loading } = useFetchUserPosts(user.id, postsType)
   const [initialIndex, setInitialIndex] = useState(null)
@@ -30,11 +33,22 @@ const UserPostsScreen = ({ route }) => {
     checkForPostId()
   }, [posts, checkForPostId])
 
+  const handleDeletePost = async postId => {
+    const response = await api.deletePost(postId)
+    if (response.success) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Profile' }]
+      })
+      navigation.goBack()
+    }
+  }
+
   const renderItem = useCallback(
     ({ item: post }) => {
       return (
         <View style={styles.post} key={post.id}>
-          <Post post={{ ...post, user }} />
+          <Post post={{ ...post, user }} onDeletePost={handleDeletePost} />
         </View>
       )
     },

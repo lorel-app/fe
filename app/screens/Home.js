@@ -48,10 +48,17 @@ const HomeScreen = () => {
     }, [authLoading])
   )
 
+  const handleDeletePost = async postId => {
+    const response = await api.deletePost(postId)
+    if (response.success) {
+      setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
+    }
+  }
+
   const renderItem = ({ item: post }) => {
     return (
       <View style={styles.post} key={post.id}>
-        <Post post={post} />
+        <Post post={post} onDeletePost={handleDeletePost} />
       </View>
     )
   }

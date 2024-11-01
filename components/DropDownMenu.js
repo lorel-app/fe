@@ -56,14 +56,13 @@ const DropDownMenu = ({
         <View style={styles.dropdown}>
           <FlatList
             data={options}
+            ItemSeparatorComponent={() => (
+              <View style={{ backgroundColor: colors.tint, height: 1 }} />
+            )}
             keyExtractor={item => item.value}
             renderItem={({ item }) => (
               <TouchableOpacity
-                style={[
-                  { padding: 15 },
-                  { borderBottomWidth: 1 },
-                  { borderBottomColor: colors.tint }
-                ]}
+                style={[{ padding: 15 }]}
                 onPress={() => handleSelect(item.value)}
               >
                 <View style={styles.row}>

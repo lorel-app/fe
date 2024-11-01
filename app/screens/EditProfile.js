@@ -396,7 +396,15 @@ const EditProfileScreen = ({ route }) => {
                       { alignSelf: 'center' }
                     ]}
                   >
-                    <View style={{ padding: 5 }}>{socialIcons[iconName]}</View>
+                    <View
+                      style={[
+                        { margin: 8 },
+                        { backgroundColor: colors.primaryTint },
+                        { borderRadius: 50 }
+                      ]}
+                    >
+                      {socialIcons[iconName]}
+                    </View>
 
                     <TextInput
                       style={styles.inputLight}

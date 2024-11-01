@@ -79,7 +79,7 @@ export default function Header() {
         {isAuthenticated ? (
           <ButtonIcon
             testID={'options-button'}
-            iconName="account-circle"
+            iconName="menu"
             onPress={openOptions}
           />
         ) : (

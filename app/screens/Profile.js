@@ -4,6 +4,7 @@ import { useTheme, useNavigation } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useImagePicker } from '@/hooks/useImagePicker'
 import ModalScreen from '@/components/ModalScreen'
+import { useConfirmModal } from '@/hooks/useConfirmModal'
 import api from '@/utils/api'
 import AuthContext from '@/utils/authContext'
 import UnauthenticatedView from '@/components/UnauthenticatedView'
@@ -15,6 +16,7 @@ import { useAlertModal } from '@/hooks/useAlertModal'
 const ProfileScreen = () => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
+  const showConfirm = useConfirmModal()
   const { isAuthenticated, user } = useContext(AuthContext)
   const navigation = useNavigation()
   const [isUsernameModalVisible, setIsUsernameModalVisible] = useState(false)
@@ -34,19 +36,29 @@ const ProfileScreen = () => {
       edit_username: () => setIsUsernameModalVisible(true),
       edit_pp: () => navigation.navigate('EditProfilePicture', { user }),
       edit_cp: () => navigation.navigate('EditCoverPicture', { user }),
-      delete_pp: async () => {
-        const response = await api.deleteProfilePic()
-        navigation.reset({ routes: [{ name: 'Profile' }] })
-        if (!response.success) {
-          showAlert('error', response.data.message)
-        }
+      delete_pp: () => {
+        showConfirm(
+          'Are you sure you want to delete your profile picture?',
+          async () => {
+            const response = await api.deleteProfilePic()
+            navigation.reset({ routes: [{ name: 'Profile' }] })
+            if (!response.success) {
+              showAlert('error', response.data.message)
+            }
+          }
+        )
       },
-      delete_cp: async () => {
-        const response = await api.deleteCoverPic()
-        navigation.reset({ routes: [{ name: 'Profile' }] })
-        if (!response.success) {
-          showAlert('error', response.data.message)
-        }
+      delete_cp: () => {
+        showConfirm(
+          'Are you sure you want to delete your cover picture?',
+          async () => {
+            const response = await api.deleteCoverPic()
+            navigation.reset({ routes: [{ name: 'Profile' }] })
+            if (!response.success) {
+              showAlert('error', response.data.message)
+            }
+          }
+        )
       }
     }
 

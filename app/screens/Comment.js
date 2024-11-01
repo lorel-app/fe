@@ -3,6 +3,7 @@ import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { FlatList, Text } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
+import { useNavigation } from '@react-navigation/native'
 import api from '@/utils/api'
 import HeaderStack from '../navigation/HeaderStack'
 import Post from '@/components/Post'
@@ -21,6 +22,7 @@ const CommentScreen = ({ route }) => {
   const [hasMore, setHasMore] = useState(true)
   const showAlert = useAlertModal()
   const { user: me } = useContext(AuthContext)
+  const navigation = useNavigation()
 
   const fetchComments = async () => {
     if (loading || !hasMore) return
@@ -88,6 +90,17 @@ const CommentScreen = ({ route }) => {
     )
   }
 
+  const handleDeletePost = async postId => {
+    const response = await api.deletePost(postId)
+    if (response.success) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Profile' }]
+      })
+      navigation.goBack()
+    }
+  }
+
   const renderItem = ({ item: comment }) => {
     return (
       <Comment
@@ -115,7 +128,13 @@ const CommentScreen = ({ route }) => {
         removeClippedSubviews={true}
         onEndReached={fetchComments}
         onEndReachedThreshold={0.5}
-        ListHeaderComponent={<Post post={post} hideCommentButton={true} />}
+        ListHeaderComponent={
+          <Post
+            post={post}
+            hideCommentButton={true}
+            onDeletePost={handleDeletePost}
+          />
+        }
         ListHeaderComponentStyle={styles.post}
         ListEmptyComponent={
           <Text style={[styles.textCenter, { marginVertical: 30 }]}>

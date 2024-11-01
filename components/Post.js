@@ -5,6 +5,7 @@ import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme, useNavigation } from '@react-navigation/native'
 import ButtonIcon from './ButtonIcon'
 import ButtonFollow from './ButtonFollow'
+import ButtonPostOptions from './ButtonPostOptions'
 import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { SwiperFlatListWithGestureHandler } from 'react-native-swiper-flatlist/WithGestureHandler'
@@ -17,7 +18,7 @@ const formatDate = isoString => {
   const month = date.toLocaleString('default', { month: 'short' })
   return `${day} ${month}`
 }
-const Post = React.memo(({ post, hideCommentButton = false }) => {
+const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
   const {
     id,
     user = {},
@@ -74,7 +75,7 @@ const Post = React.memo(({ post, hideCommentButton = false }) => {
 
   return (
     <>
-      <View style={styles.rowSpan}>
+      <View style={[styles.rowSpan, { zIndex: 999 }]}>
         <TouchableOpacity
           style={styles.row}
           onPress={() => {
@@ -92,7 +93,16 @@ const Post = React.memo(({ post, hideCommentButton = false }) => {
           />
           <Text style={styles.text}>{user.username}</Text>
         </TouchableOpacity>
-        <ButtonFollow user={user} />
+        <View style={styles.row}>
+          <ButtonFollow user={user} />
+          {me && (
+            <ButtonPostOptions
+              postId={post.id}
+              userId={post.user.id}
+              onDeletePost={onDeletePost}
+            />
+          )}
+        </View>
       </View>
 
       <View style={styles.carouselContainer}>
@@ -122,9 +132,13 @@ const Post = React.memo(({ post, hideCommentButton = false }) => {
           </Text>
           <View style={styles.row}>
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-              <Text style={styles.textAccent}>{price.split('.')[0]}</Text>
+              <Text style={styles.textAccent}>
+                {price ? price.split('.')[0] : '00'}
+              </Text>
               <Text style={[styles.textAccent, { fontSize: 14 }]}>
-                .{price.split('.')[1]}
+                {price && price.split('.')[1]
+                  ? `.${price.split('.')[1]}`
+                  : '.00'}
               </Text>
             </View>
             <Icon
