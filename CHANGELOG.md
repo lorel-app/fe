@@ -1,3 +1,10 @@
+# [1.2.0-dev.31](https://github.com/lorel-app/fe/compare/v1.2.0-dev.30...v1.2.0-dev.31) (2024-11-01)
+
+
+### Bug Fixes
+
+* 🐛 user state in settings + clean ([89daf07](https://github.com/lorel-app/fe/commit/89daf07e6a26e6dc1d86499757b4ccac021a150c))
+
 # [1.2.0-dev.30](https://github.com/lorel-app/fe/compare/v1.2.0-dev.29...v1.2.0-dev.30) (2024-10-28)
 
 
