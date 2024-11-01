@@ -196,7 +196,6 @@ const getUser = async userId => {
 }
 
 const editPreferences = async body => {
-  console.log(body, 'bodyyyy')
   const response = await apiInstance.patch('/preferences', body)
   return response
 }

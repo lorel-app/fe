@@ -16,7 +16,7 @@ export default function Header() {
   const { colors } = useTheme()
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
-  const { isAuthenticated, logout, user } = useContext(AuthContext)
+  const { isAuthenticated, logout } = useContext(AuthContext)
   const [modalVisible, setModalVisible] = useState(false)
   const [optionsVisible, setOptionsVisible] = useState(false)
   const [actionOptions, setActionOptions] = useState([])
@@ -37,14 +37,14 @@ export default function Header() {
 
   const handleOptionSelect = value => {
     const actionsMap = {
-      settings: () => navigation.navigate('User Settings', { user }),
+      settings: () => navigation.navigate('User Settings'),
       user_agreements: () => navigation.navigate('User Agreements'),
       // temp
       help: () => navigation.navigate('User Agreements'),
       logout: async () => {
         const response = await logout()
         if (response.success) {
-          showAlert('success', 'Successfully logged out')
+          showAlert('success', 'Logged out')
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }]

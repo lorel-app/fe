@@ -99,7 +99,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
       })
       response.success
         ? (onClose(),
-          showAlert('success', response.data.message),
+          showAlert('success', 'Logged in'),
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }]

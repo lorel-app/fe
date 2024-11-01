@@ -1,36 +1,55 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
+import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import api from '@/utils/api'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import ModalScreen from '@/components/ModalScreen'
+import Loader from '@/components/Loader'
 
-const SettingsScreen = ({ route }) => {
+const SettingsScreen = () => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
-  const { user = {} } = route.params || {}
-  const [currency, setCurrency] = useState(user.preferences.currency)
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [currency, setCurrency] = useState('')
   const [optionsVisible, setOptionsVisible] = useState(false)
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUserData = async () => {
+        setLoading(true)
+        const response = await api.getMe()
+        if (response.success) {
+          setUser(response.data)
+          setCurrency(response.data.preferences.currency)
+        } else {
+          showAlert('error', 'Failed to fetch user data')
+        }
+        setLoading(false)
+      }
+      fetchUserData()
+    }, [showAlert])
+  )
 
   const unImplemented = () => {
     showAlert('error', 'This will be available in a future release')
   }
 
   const options = [
-    { label: '$ (AUD)', value: 'AUD' },
+    { label: 'AU$ (AUD)', value: 'AUD' },
     { label: 'R$ (BRL)', value: 'BRL' },
-    { label: '$ (CAD)', value: 'CAD' },
+    { label: 'CA$ (CAD)', value: 'CAD' },
     { label: '₣ (CHF)', value: 'CHF' },
-    { label: '¥ (CNY)', value: 'CNY' },
+    { label: 'CN¥ (CNY)', value: 'CNY' },
     { label: '€ (EUR)', value: 'EUR' },
     { label: '£ (GBP)', value: 'GBP' },
     { label: '₹ (INR)', value: 'INR' },
     { label: '¥ (JPY)', value: 'JPY' },
-    { label: '$ (MXN)', value: 'MXN' },
+    { label: 'MX$ (MXN)', value: 'MXN' },
     { label: '$ (USD)', value: 'USD' },
     { label: 'R (ZAR)', value: 'ZAR' }
   ]
@@ -44,6 +63,10 @@ const SettingsScreen = ({ route }) => {
       setOptionsVisible(false)
       showAlert('error', 'Something went wrong, please try again later')
     }
+  }
+
+  if (loading) {
+    return <Loader />
   }
 
   return (
@@ -112,7 +135,7 @@ const SettingsScreen = ({ route }) => {
 
           <TouchableOpacity onPress={unImplemented}>
             <Text style={[styles.link, { paddingBottom: 10 }]}>
-              change password
+              reset password
             </Text>
           </TouchableOpacity>
 
