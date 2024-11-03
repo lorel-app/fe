@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import ModalScreen from '@/components/ModalScreen'
 import InputPhoneNumber from '@/components/InputPhoneNumber'
@@ -20,6 +21,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
   const [isSignUp, setIsSignUp] = useState(false)
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const [acceptTerms, setAcceptTerms] = useState(false)
   const [isVerifyModalVisible, setIsVerifyModalVisible] = useState(false)
   const [isVerifyEmail, setIsVerifyEmail] = useState(true)
   const [verificationToken, setVerificationToken] = useState('')
@@ -50,6 +52,10 @@ export default function SignUpLogInModal({ visible, onClose }) {
       showAlert('error', 'Please fill in all fields')
       return
     }
+    if (!acceptTerms) {
+      showAlert('error', 'You have to accept our user agreement to sign up')
+      return
+    }
     const usernameRegex = /^[a-zA-Z0-9._]{3,30}$/
     if (!usernameRegex.test(username)) {
       showAlert(
@@ -59,7 +65,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
       return
     }
     const passwordRegex =
-      /^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\$%\^&\*]).{8,64}$/
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,64}$/
     if (!passwordRegex.test(password)) {
       showAlert(
         'error',
@@ -151,70 +157,59 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
   return (
     <>
-      <ModalScreen visible={visible} onClose={onClose}>
+      <ModalScreen
+        visible={visible}
+        onClose={onClose}
+        style={{ maxLength: 400 }}
+      >
         <View style={styles.modalChildren}>
           <Text style={styles.title}>
             {isSignUp ? 'Sign Up (Step 1/3)' : 'Log In'}
           </Text>
           <Spacer />
 
-          {isSignUp ? (
+          <ScrollView
+            contentContainerStyle={{ maxHeight: 220 }}
+            showsVerticalScrollIndicator={false}
+          >
+            {isSignUp ? (
+              <TextInput
+                style={styles.input}
+                placeholder="Username"
+                placeholderTextColor={colors.text}
+                value={form.username}
+                onChangeText={text => handleChange('username', text)}
+                maxLength={30}
+                multiline={false}
+              />
+            ) : null}
+
             <TextInput
               style={styles.input}
-              placeholder="Username"
+              placeholder={isSignUp ? 'Email' : 'Username or Email'}
               placeholderTextColor={colors.text}
-              value={form.username}
-              onChangeText={text => handleChange('username', text)}
-              maxLength={30}
+              value={isSignUp ? form.email : form.identity}
+              onChangeText={text =>
+                handleChange(isSignUp ? 'email' : 'identity', text)
+              }
               multiline={false}
             />
-          ) : null}
 
-          <TextInput
-            style={styles.input}
-            placeholder={isSignUp ? 'Email' : 'Username or Email'}
-            placeholderTextColor={colors.text}
-            value={isSignUp ? form.email : form.identity}
-            onChangeText={text =>
-              handleChange(isSignUp ? 'email' : 'identity', text)
-            }
-            multiline={false}
-          />
+            {isSignUp ? (
+              <InputPhoneNumber
+                phoneNumber={form.phone}
+                setPhoneNumber={text => handleChange('phone', text)}
+                setCountryCode={code => handleChange('phoneCountryCode', code)}
+              />
+            ) : null}
 
-          {isSignUp ? (
-            <InputPhoneNumber
-              phoneNumber={form.phone}
-              setPhoneNumber={text => handleChange('phone', text)}
-              setCountryCode={code => handleChange('phoneCountryCode', code)}
-            />
-          ) : null}
-
-          <View style={styles.row}>
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor={colors.text}
-              value={form.password}
-              onChangeText={text => handleChange('password', text)}
-              secureTextEntry={!passwordVisible}
-              maxLength={64}
-              multiline={false}
-            />
-            <ButtonIcon
-              onPress={() => setPasswordVisible(!passwordVisible)}
-              iconName={passwordVisible ? 'visibility-off' : 'visibility'}
-              iconSize={24}
-            />
-          </View>
-
-          {isSignUp ? (
             <View style={styles.row}>
               <TextInput
                 style={styles.input}
-                placeholder="Confirm Password"
+                placeholder="Password"
                 placeholderTextColor={colors.text}
-                value={form.confirmPassword}
-                onChangeText={text => handleChange('confirmPassword', text)}
+                value={form.password}
+                onChangeText={text => handleChange('password', text)}
                 secureTextEntry={!passwordVisible}
                 maxLength={64}
                 multiline={false}
@@ -225,8 +220,60 @@ export default function SignUpLogInModal({ visible, onClose }) {
                 iconSize={24}
               />
             </View>
-          ) : null}
-          <Spacer />
+
+            {isSignUp ? (
+              <View style={styles.row}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Confirm Password"
+                  placeholderTextColor={colors.text}
+                  value={form.confirmPassword}
+                  onChangeText={text => handleChange('confirmPassword', text)}
+                  secureTextEntry={!passwordVisible}
+                  maxLength={64}
+                  multiline={false}
+                />
+                <ButtonIcon
+                  onPress={() => setPasswordVisible(!passwordVisible)}
+                  iconName={passwordVisible ? 'visibility-off' : 'visibility'}
+                  iconSize={24}
+                />
+              </View>
+            ) : null}
+
+            {isSignUp ? (
+              <View style={{ maxWidth: 250 }}>
+                <View style={[styles.row, { paddingVertical: 5 }]}>
+                  <ButtonIcon
+                    onPress={() => setAcceptTerms(!acceptTerms)}
+                    iconName={
+                      acceptTerms ? 'check-box' : 'check-box-outline-blank'
+                    }
+                    iconSize={24}
+                    iconColor={colors.primary}
+                    style={[{ paddingRight: 5 }, { margin: 0 }]}
+                  />
+                  <Text style={styles.textSmall}>
+                    I acknowledge and accept the User Agreements:
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    onClose()
+                    navigation.navigate('User Agreements')
+                  }}
+                >
+                  <Text style={[styles.link, { fontSize: 12 }]}>
+                    Privacy Policy, Terms and Conditions
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
+          </ScrollView>
+
+          <View
+            style={[styles.divider, { width: '100%' }, { marginBottom: 20 }]}
+          ></View>
           <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
             <Text style={styles.buttonText}>
               {isSignUp ? 'Sign Up' : 'Log In'}

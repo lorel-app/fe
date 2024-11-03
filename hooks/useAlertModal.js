@@ -54,7 +54,11 @@ export const AlertProvider = ({ children }) => {
   return (
     <AlertContext.Provider value={showAlert}>
       {children}
-      <ModalScreen visible={alert.visible} onClose={hideAlert}>
+      <ModalScreen
+        style={{ zIndex: 999 }}
+        visible={alert.visible}
+        onClose={hideAlert}
+      >
         {alert.children}
       </ModalScreen>
     </AlertContext.Provider>
