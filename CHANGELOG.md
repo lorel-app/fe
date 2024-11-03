@@ -1,3 +1,10 @@
+# [1.2.0-dev.33](https://github.com/lorel-app/fe/compare/v1.2.0-dev.32...v1.2.0-dev.33) (2024-11-03)
+
+
+### Features
+
+* 🫡 Finished Profile Screen ([74934eb](https://github.com/lorel-app/fe/commit/74934eb788efd1b04e0f88e715725e407361dae1))
+
 # [1.2.0-dev.32](https://github.com/lorel-app/fe/compare/v1.2.0-dev.31...v1.2.0-dev.32) (2024-11-01)
 
 
