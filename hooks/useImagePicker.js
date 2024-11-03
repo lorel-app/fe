@@ -1,3 +1,5 @@
+// HAS NOT BEEN TESTED ON PHONE
+
 import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -20,7 +22,7 @@ export function useImagePicker() {
       const file = {
         uri,
         type: blob.type || type,
-        name: 'profile-picture.jpg'
+        name: 'display-or-cover.jpg'
       }
 
       setImage(file)

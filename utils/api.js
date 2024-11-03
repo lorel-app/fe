@@ -215,15 +215,19 @@ const deleteProfileLink = async body => {
   return response
 }
 
+// Not platform specific yet - just works for web
 const updateProfilePic = async file => {
-  const formData = new FormData()
-  formData.append('file', {
-    uri: file.uri,
-    type: file.type,
-    name: file.name
+  const response = await apiInstance.put('me/display-picture', file, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   })
-  // not implemented on web - waiting for profile route
-  const response = await apiInstance.put('me/display-picture', formData, {
+  return response
+}
+
+// Not platform specific yet - just works for web
+const updateCoverPic = async file => {
+  const response = await apiInstance.put('me/cover-picture', file, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -362,6 +366,7 @@ export default {
   deleteProfileLink,
   updateProfilePic,
   deleteProfilePic,
+  updateCoverPic,
   deleteCoverPic,
   allPosts,
   userPosts,

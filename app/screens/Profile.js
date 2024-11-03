@@ -11,6 +11,7 @@ import UnauthenticatedView from '@/components/UnauthenticatedView'
 import UserScreen from '@/app/screens/User'
 import DropDownMenu from '@/components/DropDownMenu'
 import Spacer from '@/components/Spacer'
+import Loader from '@/components/Loader'
 import { useAlertModal } from '@/hooks/useAlertModal'
 
 const ProfileScreen = () => {
@@ -19,7 +20,9 @@ const ProfileScreen = () => {
   const showConfirm = useConfirmModal()
   const { isAuthenticated, user } = useContext(AuthContext)
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(false)
   const [isUsernameModalVisible, setIsUsernameModalVisible] = useState(false)
+  const { pickImage } = useImagePicker()
 
   const options = [
     { label: 'Edit profile', value: 'edit_profile' },
@@ -30,61 +33,70 @@ const ProfileScreen = () => {
     { label: 'Clear cover picture', value: 'delete_cp', icon: 'delete' }
   ]
 
-  const handleOptionSelect = value => {
-    const actionsMap = {
+  const handleOptionSelect = async value => {
+    const actionMap = {
       edit_profile: () => navigation.navigate('EditProfile', { user }),
       edit_username: () => setIsUsernameModalVisible(true),
-      edit_pp: () => navigation.navigate('EditProfilePicture', { user }),
-      edit_cp: () => navigation.navigate('EditCoverPicture', { user }),
-      delete_pp: () => {
-        showConfirm(
-          'Are you sure you want to delete your profile picture?',
-          async () => {
-            const response = await api.deleteProfilePic()
-            navigation.reset({ routes: [{ name: 'Profile' }] })
-            if (!response.success) {
-              showAlert('error', response.data.message)
-            }
-          }
-        )
-      },
-      delete_cp: () => {
-        showConfirm(
-          'Are you sure you want to delete your cover picture?',
-          async () => {
-            const response = await api.deleteCoverPic()
-            navigation.reset({ routes: [{ name: 'Profile' }] })
-            if (!response.success) {
-              showAlert('error', response.data.message)
-            }
-          }
-        )
-      }
+      edit_pp: () => handleImageUpdate(api.updateProfilePic),
+      edit_cp: () => handleImageUpdate(api.updateCoverPic),
+      delete_pp: () =>
+        handleImageDelete(api.deleteProfilePic, 'profile picture'),
+      delete_cp: () => handleImageDelete(api.deleteCoverPic, 'cover picture')
     }
 
-    const action = actionsMap[value]
+    const action = actionMap[value]
     if (action) {
-      action()
+      await action()
     } else {
       showAlert('error', 'Something went wrong, please try again later')
     }
   }
 
-  const routeParams = {
-    user: user,
-    showHeader: false
+  const handleImageUpdate = async updateApi => {
+    const selectedImage = await pickImage()
+    setLoading(true)
+    if (selectedImage) {
+      const response = await updateApi({ file: selectedImage })
+      setLoading(false)
+      handleResponse(response)
+    } else {
+      showAlert('error', 'Please try again')
+    }
+  }
+
+  const handleImageDelete = async (deleteApi, type) => {
+    showConfirm(`Are you sure you want to delete your ${type}?`, async () => {
+      const response = await deleteApi()
+      navigation.reset({ routes: [{ name: 'Profile' }] })
+      if (!response.success) {
+        showAlert('error', response.data.message)
+      }
+    })
+  }
+
+  const handleResponse = response => {
+    if (response.status === 413) {
+      showAlert(
+        'error',
+        'Upload failed. Please ensure the total size of your photos and videos does not exceed 20MB'
+      )
+    } else if (!response.success) {
+      showAlert('error', response.data.message)
+    }
   }
 
   if (!isAuthenticated || !user) {
     return <UnauthenticatedView />
   }
 
+  if (loading) {
+    return <Loader />
+  }
+
   return (
     <>
       <UserScreen
-        route={{
-          params: routeParams
-        }}
+        route={{ params: { user, showHeader: false } }}
         navigation={navigation}
       />
       <View style={styles.editButton}>
@@ -102,7 +114,7 @@ const ProfileScreen = () => {
   )
 }
 
-export function UsernameModal({ visible, onClose }) {
+const UsernameModal = ({ visible, onClose }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
