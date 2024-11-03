@@ -1,3 +1,10 @@
+# [1.2.0-dev.32](https://github.com/lorel-app/fe/compare/v1.2.0-dev.31...v1.2.0-dev.32) (2024-11-01)
+
+
+### Features
+
+* 🫡 Post Options, Delete Post + Small fixes ([e851a8e](https://github.com/lorel-app/fe/commit/e851a8ea82270f233fcd595c0820cdaacf3f45fb))
+
 # [1.2.0-dev.31](https://github.com/lorel-app/fe/compare/v1.2.0-dev.30...v1.2.0-dev.31) (2024-11-01)
 
 
