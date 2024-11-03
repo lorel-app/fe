@@ -1,3 +1,10 @@
+# [1.2.0-dev.34](https://github.com/lorel-app/fe/compare/v1.2.0-dev.33...v1.2.0-dev.34) (2024-11-03)
+
+
+### Features
+
+* 🫡 Accept terms to sign up ([274ad0e](https://github.com/lorel-app/fe/commit/274ad0eb95650ca8c6cb7976dd82e58a069d87d2))
+
 # [1.2.0-dev.33](https://github.com/lorel-app/fe/compare/v1.2.0-dev.32...v1.2.0-dev.33) (2024-11-03)
 
 
