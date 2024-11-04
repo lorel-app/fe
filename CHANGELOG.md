@@ -1,3 +1,10 @@
+# [1.2.0-dev.36](https://github.com/lorel-app/fe/compare/v1.2.0-dev.35...v1.2.0-dev.36) (2024-11-04)
+
+
+### Features
+
+* 🫡 Edit Post Screen ([ee9d1ba](https://github.com/lorel-app/fe/commit/ee9d1ba018f8463dba2e89df7234b5b82c06a49c))
+
 # [1.2.0-dev.35](https://github.com/lorel-app/fe/compare/v1.2.0-dev.34...v1.2.0-dev.35) (2024-11-04)
 
 
