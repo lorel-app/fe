@@ -111,7 +111,7 @@ const AddScreen = () => {
         type,
         media,
         title,
-        price,
+        price: price.replace(/[^0-9.]/g, ''),
         caption,
         tags: selectedTags,
         description
@@ -206,7 +206,7 @@ const AddScreen = () => {
                 style={styles.inputLight}
                 placeholder="00.00"
                 placeholderTextColor={colors.text}
-                value={form.price}
+                value={form.price.replace(/[^0-9.]/g, '')}
                 onChangeText={text => handleChange('price', text)}
                 keyboardType="numeric"
                 maxLength={50}

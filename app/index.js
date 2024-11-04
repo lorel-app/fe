@@ -17,6 +17,7 @@ import CommentScreen from '@/app/screens/Comment'
 import UserScreen from '@/app/screens/User'
 import UserPostsScreen from '@/app/screens/UserPosts'
 import EditProfileScreen from '@/app/screens/EditProfile'
+import EditPostScreen from '@/app/screens/EditPost'
 import SettingsScreen from '@/app/screens/Settings'
 import UserAgreementsScreen from './screens_static/UserAgreements'
 
@@ -65,6 +66,11 @@ export default function Index() {
                   <Stack.Screen
                     name="EditProfile"
                     component={EditProfileScreen}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="EditPost"
+                    component={EditPostScreen}
                     options={{ headerShown: false }}
                   />
                   <Stack.Screen

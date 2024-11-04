@@ -99,6 +99,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
           {me && (
             <ButtonPostOptions
               postId={post.id}
+              post={post}
               userId={post.user.id}
               onDeletePost={onDeletePost}
             />

@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 import { View } from 'react-native'
-// import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 // import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { useConfirmModal } from '@/hooks/useConfirmModal'
 import AuthContext from '@/utils/authContext'
 import DropDownMenu from '@/components/DropDownMenu'
 
-const ButtonPostOptions = ({ postId, userId, onDeletePost }) => {
+const ButtonPostOptions = ({ postId, post, userId, onDeletePost }) => {
   const showAlert = useAlertModal()
   const showConfirm = useConfirmModal()
   const { user: me } = useContext(AuthContext)
-  //   const navigation = useNavigation()
+  const navigation = useNavigation()
   const isPostOwner = userId === me.id
 
   const options = isPostOwner
@@ -28,7 +28,7 @@ const ButtonPostOptions = ({ postId, userId, onDeletePost }) => {
     const actionsMap = {
       message: () => unImplemented(),
       report: () => unImplemented(),
-      edit_post: () => unImplemented(),
+      edit_post: () => navigation.navigate('EditPost', { post }),
       delete_post: () => {
         showConfirm('Are you sure you want to delete this post?', async () => {
           await onDeletePost(postId)

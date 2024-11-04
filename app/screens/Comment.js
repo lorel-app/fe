@@ -113,9 +113,7 @@ const CommentScreen = ({ route }) => {
 
   return (
     <>
-      {showHeader && (
-        <HeaderStack title={'comments'} user={user} hideFollowButton={true} />
-      )}
+      {showHeader && <HeaderStack title={'comments'} hideFollowButton={true} />}
       <FlatList
         testID={'scrollable-feed'}
         ref={flatListRef}

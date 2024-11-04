@@ -7,7 +7,7 @@ import ButtonFollow from '@/components/ButtonFollow'
 
 const HeaderStack = ({
   title,
-  user,
+  user = null,
   onFollowToggle,
   hideFollowButton = false
 }) => {
