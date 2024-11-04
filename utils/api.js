@@ -343,6 +343,11 @@ const addPost = async body => {
   return response
 }
 
+const editPost = async (postId, body) => {
+  const response = await apiInstance.patch(`post/${postId}`, body)
+  return response
+}
+
 const allTags = async () => {
   const response = await apiInstance.get('/tag')
   return response
@@ -379,6 +384,7 @@ export default {
   followUser,
   unfollowUser,
   addPost,
+  editPost,
   allTags,
   loadTokens,
   setOnTokenChangeCallback

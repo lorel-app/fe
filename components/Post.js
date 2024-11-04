@@ -31,6 +31,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
     media,
     title,
     price,
+    sold,
     type
   } = post
 
@@ -132,10 +133,24 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
           </Text>
           <View style={styles.row}>
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-              <Text style={styles.textAccent}>
+              <Text
+                style={[
+                  styles.textAccent,
+                  sold && [
+                    { textDecorationLine: 'line-through' },
+                    { opacity: 0.5 }
+                  ]
+                ]}
+              >
                 {price ? price.split('.')[0] : '00'}
               </Text>
-              <Text style={[styles.textAccent, { fontSize: 14 }]}>
+              <Text
+                style={[
+                  styles.textAccent,
+                  { fontSize: 14 },
+                  sold && { opacity: 0.5 }
+                ]}
+              >
                 {price && price.split('.')[1]
                   ? `.${price.split('.')[1]}`
                   : '.00'}

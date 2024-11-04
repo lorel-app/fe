@@ -384,7 +384,8 @@ export const useGlobalStyles = () => {
       backgroundColor: colors.primaryTint,
       width: width * 0.9,
       maxWidth: 700,
-      margin: 10
+      margin: 10,
+      alignSelf: 'center'
     },
 
     profilePic: {
