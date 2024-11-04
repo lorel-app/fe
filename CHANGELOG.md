@@ -1,3 +1,10 @@
+# [1.2.0-dev.35](https://github.com/lorel-app/fe/compare/v1.2.0-dev.34...v1.2.0-dev.35) (2024-11-04)
+
+
+### Features
+
+* 🫡 Finished Buy screen + mark as sold ([986ad80](https://github.com/lorel-app/fe/commit/986ad8092a9cb08cd77a8c5ce5ab94916a90e0f1))
+
 # [1.2.0-dev.34](https://github.com/lorel-app/fe/compare/v1.2.0-dev.33...v1.2.0-dev.34) (2024-11-03)
 
 
