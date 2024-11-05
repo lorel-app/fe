@@ -1,3 +1,10 @@
+# [1.2.0-dev.37](https://github.com/lorel-app/fe/compare/v1.2.0-dev.36...v1.2.0-dev.37) (2024-11-05)
+
+
+### Features
+
+* 🫡 View following/followers ([14cee74](https://github.com/lorel-app/fe/commit/14cee74ad7e98cbd194051bfd1a37ccf3394c2a6))
+
 # [1.2.0-dev.36](https://github.com/lorel-app/fe/compare/v1.2.0-dev.35...v1.2.0-dev.36) (2024-11-04)
 
 
