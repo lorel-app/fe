@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { View, FlatList, Image, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import api from '@/utils/api'
@@ -77,21 +77,19 @@ const UserScreen = ({ route }) => {
     loading: loadingContent
   } = useFetchUserPosts(user.id, 'CONTENT')
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUserInfo = async () => {
         const response = await api.getUser(user.id)
         if (response.success) {
           setUserInfo(response.data.user)
         } else {
           showAlert('error', `${response.data.message}: Please try again later`)
         }
-      } catch (err) {
-        console.log('Error fetching user data:', err.message)
       }
-    }
-    fetchUserInfo()
-  }, [user.id])
+      fetchUserInfo()
+    }, [user.id, showAlert])
+  )
 
   const handleFollowToggle = isFollowing => {
     setUserInfo(prevUserInfo => ({

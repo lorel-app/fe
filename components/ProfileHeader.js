@@ -1,13 +1,14 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import getAllSocialIcons from '@/assets/images/SocialIcons'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const ProfileHeader = ({ user }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
+  const navigation = useNavigation()
   const socialIcons = getAllSocialIcons(28, 28)
 
   const openLink = url => {
@@ -35,11 +36,27 @@ const ProfileHeader = ({ user }) => {
       <View
         style={[styles.rowSpan, { maxWidth: 600 }, { paddingHorizontal: 25 }]}
       >
-        <TouchableOpacity style={styles.profileButtons}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('UserFollowers', {
+              userId: user.id,
+              relationship: 'following'
+            })
+          }
+          style={styles.profileButtons}
+        >
           <Text style={styles.textSmall}>Following</Text>
           <Text style={styles.textBold}>{user.followingCount}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.profileButtons}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('UserFollowers', {
+              userId: user.id,
+              relationship: 'followers'
+            })
+          }
+          style={styles.profileButtons}
+        >
           <Text style={styles.textSmall}>Followers</Text>
           <Text style={styles.textBold}>{user.followersCount}</Text>
         </TouchableOpacity>

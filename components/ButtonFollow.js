@@ -22,6 +22,7 @@ const ButtonFollow = ({ user, onFollowToggle }) => {
       const response = await unfollowUser(user.id)
       if (response.success) {
         onFollowToggle && onFollowToggle(false)
+        const updatedUser = response.data
       } else {
         showAlert('error', 'Please log in first')
       }

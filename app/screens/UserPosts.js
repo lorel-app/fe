@@ -34,14 +34,8 @@ const UserPostsScreen = ({ route }) => {
   }, [posts, checkForPostId])
 
   const handleDeletePost = async postId => {
-    const response = await api.deletePost(postId)
-    if (response.success) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Profile' }]
-      })
-      navigation.goBack()
-    }
+    await api.deletePost(postId)
+    navigation.goBack()
   }
 
   const renderItem = useCallback(
@@ -64,7 +58,6 @@ const UserPostsScreen = ({ route }) => {
       {showHeader && (
         <HeaderStack
           title={`${user.username}'s ${postsType.toLowerCase()}`}
-          user={user}
           hideFollowButton={true}
         />
       )}

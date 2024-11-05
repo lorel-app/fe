@@ -297,6 +297,19 @@ const deleteComment = async commentId => {
   return response
 }
 
+const getFollowers = async (userId, options) => {
+  const defaults = {
+    limit: 12,
+    offset: 0,
+    relationship: 'following'
+  }
+  const opts = { ...defaults, ...options }
+  const response = await apiInstance.get(`follower/${userId}`, {
+    params: opts
+  })
+  return response
+}
+
 const followUser = async userId => {
   const response = await apiInstance.post(`follower/${userId}`)
   return response
@@ -381,6 +394,7 @@ export default {
   getComments,
   addComment,
   deleteComment,
+  getFollowers,
   followUser,
   unfollowUser,
   addPost,
