@@ -110,7 +110,6 @@ export const useGlobalStyles = () => {
       margin: 15,
       padding: 10,
       flex: 1,
-      maxWidth: 500,
       ...shadowStyle
     },
 

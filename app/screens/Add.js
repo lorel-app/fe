@@ -148,7 +148,7 @@ const AddScreen = () => {
     <>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
+        contentContainerStyle={{ paddingHorizontal: 20 }}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
           <Text style={[styles.title, { textAlign: 'left' }]}>
@@ -193,7 +193,9 @@ const AddScreen = () => {
           </ScrollView>
         </View>
 
-        <View style={styles.container}>
+        <View
+          style={[styles.container, { maxWidth: 500 }, { alignSelf: 'center' }]}
+        >
           {selectedOption === 'SHOP' ? (
             <TextInput
               style={styles.inputLight}

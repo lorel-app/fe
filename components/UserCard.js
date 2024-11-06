@@ -19,7 +19,7 @@ const UserCard = ({ user }) => {
       : username
 
   return (
-    <View style={styles.post}>
+    <View style={[styles.post, { maxWidth: 500 }]}>
       <View style={styles.rowSpan}>
         <TouchableOpacity
           style={styles.row}

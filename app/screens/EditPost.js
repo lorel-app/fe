@@ -38,7 +38,7 @@ const EditPostScreen = ({ route }) => {
 
   const handleSubmitChanges = async () => {
     const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/
-    if (!pricePattern.test(form.price.replace(/[^0-9.]/g, ''))) {
+    if (form.price && !pricePattern.test(form.price.replace(/[^0-9.]/g, ''))) {
       showAlert(
         'error',
         'Incorrect price format: Please use up to 2 decimal places and only one full stop'
@@ -77,7 +77,12 @@ const EditPostScreen = ({ route }) => {
       )}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.container, { paddingHorizontal: 20 }]}
+        contentContainerStyle={[
+          styles.container,
+          { maxWidth: 500 },
+          { alignSelf: 'center' },
+          { paddingHorizontal: 20 }
+        ]}
       >
         {post.type === 'SHOP' && (
           <>
