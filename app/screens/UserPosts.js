@@ -36,6 +36,10 @@ const UserPostsScreen = ({ route }) => {
   const handleDeletePost = async postId => {
     await api.deletePost(postId)
     navigation.goBack()
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Profile' }]
+    })
   }
 
   const renderItem = useCallback(

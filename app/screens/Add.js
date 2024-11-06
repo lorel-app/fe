@@ -105,6 +105,14 @@ const AddScreen = () => {
       )
       return
     }
+    const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/
+    if (price && !pricePattern.test(price)) {
+      showAlert(
+        'error',
+        'Incorrect price format: Please use up to 2 decimal places and only one full stop'
+      )
+      return
+    }
     setLoading(true)
     try {
       const response = await api.addPost({

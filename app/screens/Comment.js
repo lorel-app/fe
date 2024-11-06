@@ -93,11 +93,7 @@ const CommentScreen = ({ route }) => {
   const handleDeletePost = async postId => {
     const response = await api.deletePost(postId)
     if (response.success) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Profile' }]
-      })
-      navigation.goBack()
+      navigation.navigate('Profile')
     }
   }
 

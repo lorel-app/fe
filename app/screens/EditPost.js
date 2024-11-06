@@ -37,6 +37,14 @@ const EditPostScreen = ({ route }) => {
   }
 
   const handleSubmitChanges = async () => {
+    const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/
+    if (!pricePattern.test(form.price.replace(/[^0-9.]/g, ''))) {
+      showAlert(
+        'error',
+        'Incorrect price format: Please use up to 2 decimal places and only one full stop'
+      )
+      return
+    }
     const response = await api.editPost(post.id, {
       title: form.title.trim() || 'Untitled',
       price: form.price.replace(/[^0-9.]/g, '') || null,
@@ -45,16 +53,20 @@ const EditPostScreen = ({ route }) => {
       description: form.description.trim() || null
     })
     if (response.success) {
-      navigation.goBack()
+      navigation.navigate('Profile')
     } else {
       showAlert('error', 'Failed to save changes')
     }
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     showConfirm('Are you sure you want to delete this post?', async () => {
       await api.deletePost(post.id)
-      navigation.goBack()
+      navigation.navigate('Profile')
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Profile' }]
+      })
     })
   }
 
