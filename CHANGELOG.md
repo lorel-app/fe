@@ -1,3 +1,10 @@
+# [1.2.0-dev.38](https://github.com/lorel-app/fe/compare/v1.2.0-dev.37...v1.2.0-dev.38) (2024-11-06)
+
+
+### Bug Fixes
+
+* 🐛 post delete routes / price formatting ([f08e40c](https://github.com/lorel-app/fe/commit/f08e40c5ad71480c8c96e75d9893d51d46d64211))
+
 # [1.2.0-dev.37](https://github.com/lorel-app/fe/compare/v1.2.0-dev.36...v1.2.0-dev.37) (2024-11-05)
 
 
