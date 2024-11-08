@@ -1,3 +1,10 @@
+# [1.2.0-dev.40](https://github.com/lorel-app/fe/compare/v1.2.0-dev.39...v1.2.0-dev.40) (2024-11-08)
+
+
+### Features
+
+* 🫡 websocket base - pre upgraded refresh token handle ([9e1f404](https://github.com/lorel-app/fe/commit/9e1f4045ce6b3cf5e09c39e6bfb9d3cadd5ac232))
+
 # [1.2.0-dev.39](https://github.com/lorel-app/fe/compare/v1.2.0-dev.38...v1.2.0-dev.39) (2024-11-07)
 
 
