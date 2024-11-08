@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import HomeScreen from '@/app/screens/Home'
 import SearchScreen from '@/app/screens/Search'
+import ChatScreen from '@/app/screens/Chat'
 import AddScreen from '@/app/screens/Add'
 import ProfileScreen from '@/app/screens/Profile'
 import { useTheme } from '@react-navigation/native'
@@ -11,6 +12,7 @@ import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 const Tab = createBottomTabNavigator()
 const tabIcons = {
   Home: 'home',
+  Chat: 'mode-comment',
   Search: 'search',
   Add: 'add',
   Profile: 'person'
@@ -45,6 +47,7 @@ function Tabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Add" component={AddScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />

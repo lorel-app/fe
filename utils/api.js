@@ -58,6 +58,8 @@ apiInstance.interceptors.response.use(
       }
       const newAccessToken = response.data.accessToken
       await setTokens(newAccessToken, refreshToken)
+      // WIP - refresh before !200
+      onTokenChange()
       client.defaults.headers['Authorization'] = `Bearer ${newAccessToken}`
       try {
         const retryResponse = await client({
