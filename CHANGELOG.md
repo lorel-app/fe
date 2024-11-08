@@ -1,3 +1,10 @@
+# [1.2.0-dev.39](https://github.com/lorel-app/fe/compare/v1.2.0-dev.38...v1.2.0-dev.39) (2024-11-07)
+
+
+### Bug Fixes
+
+* 🐛 maxWidth fix ([bbcce4b](https://github.com/lorel-app/fe/commit/bbcce4bc7b140eba0bd1f42e6ae2ce4b553b665f))
+
 # [1.2.0-dev.38](https://github.com/lorel-app/fe/compare/v1.2.0-dev.37...v1.2.0-dev.38) (2024-11-06)
 
 
