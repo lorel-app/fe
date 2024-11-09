@@ -15,10 +15,10 @@ const clearWebSocketResources = () => {
     clearInterval(heartBeat)
     heartBeat = null
   }
-  if (ws) {
+  if (ws && ws.readyState === WebSocket.OPEN) {
     ws.close()
-    ws = null
   }
+  ws = null
 }
 
 export const WebSocketProvider = ({ children }) => {
@@ -26,31 +26,38 @@ export const WebSocketProvider = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext)
 
   useEffect(() => {
+    const ping = () => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        console.log('Sending ping message...')
+        const pingMessage = JSON.stringify({ type: 'ping' })
+        ws.send(pingMessage)
+      } else {
+        console.log('WebSocket is not open. Current state:', ws.readyState)
+      }
+    }
+
     const setupWebSocketListeners = () => {
       if (!ws) return
 
-      ws.addEventListener('open', () => {
+      ws.onopen = () => {
         console.log('WebSocket opened')
-        heartBeat = setInterval(() => {
-          console.log('Sending ping...')
-          ws.send('ping')
-        }, PING_INTERVAL)
-      })
+        heartBeat = setInterval(ping, PING_INTERVAL)
+      }
 
-      ws.addEventListener('message', event => {
+      ws.onmessage = event => {
         console.log('Message from server:', event.data)
         setMessages(prevMessages => [...prevMessages, event.data])
-      })
+      }
 
-      ws.addEventListener('close', () => {
+      ws.onclose = () => {
         console.log('WebSocket connection closed')
         clearWebSocketResources()
-      })
+      }
 
-      ws.addEventListener('error', error => {
+      ws.onerror = error => {
         console.error('WebSocket error:', error)
         clearWebSocketResources()
-      })
+      }
     }
 
     const createWebSocketConnection = wsUrl => {
@@ -58,7 +65,6 @@ export const WebSocketProvider = ({ children }) => {
         console.log('WebSocket already exists')
         return
       }
-
       ws = new WebSocket(wsUrl)
       setupWebSocketListeners()
     }
