@@ -4,12 +4,17 @@ import { Platform } from 'react-native'
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL
 
-let onTokenChange = null
+let onTokenChange = () => {}
 let accessToken = null
 let refreshToken = null
+let refreshTimeout = null
 
 const setOnTokenChangeCallback = callback => {
-  onTokenChange = callback
+  if (typeof callback === 'function') {
+    onTokenChange = callback
+  } else {
+    console.warn('onTokenChange callback provided is not a function')
+  }
 }
 
 const apiInstance = axios.create({
@@ -18,6 +23,135 @@ const apiInstance = axios.create({
     'Content-Type': 'application/json'
   }
 })
+
+const decodeJWT = token => {
+  try {
+    return JSON.parse(atob(token.split('.')[1]))
+  } catch (error) {
+    console.error('Failed to decode JWT', error)
+    return null
+  }
+}
+
+const scheduleTokenRefresh = expirationTime => {
+  clearTimeout(refreshTimeout)
+  const currentTime = Math.floor(Date.now() / 1000)
+  const refreshIn = expirationTime - currentTime - 120
+
+  if (refreshIn > 0) {
+    refreshTimeout = setTimeout(async () => {
+      const refreshed = await refreshAccessToken()
+      if (refreshed) {
+        scheduleTokenRefresh(refreshed.expirationTime)
+      }
+    }, refreshIn * 1000)
+  }
+}
+
+const refreshAccessToken = async () => {
+  if (!accessToken) {
+    return null
+  }
+  try {
+    const client = axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const decoded = decodeJWT(accessToken)
+    const userId = decoded ? decoded.id : null
+    const response = await client.post('/auth/refresh', {
+      userId,
+      refreshToken
+    })
+
+    if (response.status === 200) {
+      const newAccessToken = response.data.accessToken
+      const newDecoded = decodeJWT(newAccessToken)
+      if (newDecoded && newDecoded.exp) {
+        await setTokens(newAccessToken, refreshToken)
+        onTokenChange()
+        return { expirationTime: decoded.exp }
+      }
+    } else {
+      console.error('Failed to refresh access token', response)
+      return null
+    }
+  } catch (error) {
+    console.error('Error refreshing access token', error)
+    return null
+  }
+}
+
+// prev SetTokens..
+//       apiInstance.defaults.headers['Authorization'] = `Bearer ${accessToken}`
+//     } else {
+//       await AsyncStorage.removeItem('accessToken')
+//       delete apiInstance.defaults.headers['Authorization']
+//     }
+//     if (refreshToken) {
+//       await AsyncStorage.setItem('refreshToken', refreshToken)
+//     } else {
+//       await AsyncStorage.removeItem('refreshToken')
+//     }
+//   } catch (e) {
+//     console.error('Failed to save tokens to storage', e)
+//   }
+// }
+
+const setTokens = async (access, refresh) => {
+  accessToken = access
+  refreshToken = refresh
+
+  try {
+    if (accessToken) {
+      await AsyncStorage.setItem('accessToken', accessToken)
+      apiInstance.defaults.headers['Authorization'] = `Bearer ${accessToken}`
+      const decoded = decodeJWT(accessToken)
+      if (decoded && decoded.exp) {
+        scheduleTokenRefresh(decoded.exp)
+      }
+    } else {
+      await AsyncStorage.removeItem('accessToken')
+      delete apiInstance.defaults.headers['Authorization']
+    }
+    if (refreshToken) {
+      await AsyncStorage.setItem('refreshToken', refreshToken)
+    } else {
+      await AsyncStorage.removeItem('refreshToken')
+    }
+  } catch (e) {
+    console.error('Failed to save tokens to storage', e)
+  }
+}
+
+const loadTokens = async () => {
+  try {
+    if (typeof window === 'undefined') return null
+    const storedAccessToken = await AsyncStorage.getItem('accessToken')
+    const storedRefreshToken = await AsyncStorage.getItem('refreshToken')
+
+    if (storedAccessToken && storedRefreshToken) {
+      await setTokens(storedAccessToken, storedRefreshToken)
+      return {
+        accessToken: storedAccessToken,
+        refreshToken: storedRefreshToken
+      }
+    } else {
+      return null
+    }
+  } catch (error) {
+    console.error('Failed to load tokens from storage', error)
+  }
+}
+
+// Extract user ID from access token
+const getUserIdFromAccessToken = () => {
+  if (!accessToken) return null
+  const payload = decodeJWT(accessToken)
+  return payload ? payload.id : null
+}
 
 apiInstance.interceptors.response.use(
   function (response) {
@@ -89,54 +223,6 @@ apiInstance.interceptors.response.use(
     }
   }
 )
-
-const setTokens = async (access, refresh) => {
-  accessToken = access
-  refreshToken = refresh
-
-  try {
-    if (accessToken) {
-      await AsyncStorage.setItem('accessToken', accessToken)
-      apiInstance.defaults.headers['Authorization'] = `Bearer ${accessToken}`
-    } else {
-      await AsyncStorage.removeItem('accessToken')
-      delete apiInstance.defaults.headers['Authorization']
-    }
-    if (refreshToken) {
-      await AsyncStorage.setItem('refreshToken', refreshToken)
-    } else {
-      await AsyncStorage.removeItem('refreshToken')
-    }
-  } catch (e) {
-    console.error('Failed to save tokens to storage', e)
-  }
-}
-
-const loadTokens = async () => {
-  try {
-    if (typeof window === 'undefined') return null
-    const storedAccessToken = await AsyncStorage.getItem('accessToken')
-    const storedRefreshToken = await AsyncStorage.getItem('refreshToken')
-
-    if (storedAccessToken && storedRefreshToken) {
-      await setTokens(storedAccessToken, storedRefreshToken)
-      return {
-        accessToken: storedAccessToken,
-        refreshToken: storedRefreshToken
-      }
-    } else {
-      return null
-    }
-  } catch (e) {
-    console.error('Failed to load tokens from storage', e)
-  }
-}
-
-const getUserIdFromAccessToken = () => {
-  if (!accessToken) return null
-  const payload = JSON.parse(atob(accessToken.split('.')[1]))
-  return payload.id
-}
 
 const signUp = async body => {
   const response = await apiInstance.post('/auth/signup', body)

@@ -28,13 +28,13 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
     if (isMyPost || comment.user.id === me.id) {
       const response = await api.deleteComment(comment.id)
       if (response.success) {
-        console.log('post deleted')
         onDelete(comment.id)
       } else {
-        console.log(response)
+        // clean/fix
+        console.log('Error', response)
       }
     } else {
-      console.log('Report comment')
+      showAlert('error', 'This will be available in a future release')
     }
   }
 

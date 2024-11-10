@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     api.setOnTokenChangeCallback(tokenChangeCallback)
 
     return () => {
-      api.setOnTokenChangeCallback(null)
+      api.setOnTokenChangeCallback(() => {})
     }
   }, [loadUser])
 

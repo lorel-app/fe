@@ -47,7 +47,7 @@ const UserFollowersScreen = ({ route }) => {
   }
 
   const renderItem = useCallback(({ item: follower }) => {
-    return <UserCard user={{ follower }} />
+    return <UserCard user={{ follower }}></UserCard>
   }, [])
 
   if (loading && offset === 0) {

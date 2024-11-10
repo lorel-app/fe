@@ -49,8 +49,8 @@ export const WebSocketProvider = ({ children }) => {
         setMessages(prevMessages => [...prevMessages, event.data])
       }
 
-      ws.onclose = () => {
-        console.log('WebSocket connection closed')
+      ws.onclose = event => {
+        console.warn('WebSocket connection closed', event)
         clearWebSocketResources()
       }
 
@@ -70,11 +70,6 @@ export const WebSocketProvider = ({ children }) => {
     }
 
     const connectWebSocket = async () => {
-      if (!isAuthenticated) {
-        console.log('Unauthenticated, do nothing')
-        return
-      }
-
       try {
         const tokens = await api.loadTokens()
         if (!tokens?.accessToken) {
@@ -89,11 +84,7 @@ export const WebSocketProvider = ({ children }) => {
       }
     }
 
-    // WIP
     const handleTokenChange = async () => {
-      console.log('Token changed, reauthenticating WebSocket...')
-
-      // will work if not closed before unauthenticated = false
       if (ws && ws.readyState === WebSocket.OPEN) {
         const tokens = await api.loadTokens()
         const accessToken = tokens?.accessToken
@@ -105,15 +96,14 @@ export const WebSocketProvider = ({ children }) => {
               auth: accessToken
             })
           )
-          console.log('Reauthenticated WebSocket with new token.')
+          console.log('Reauthenticating with refreshed token')
         }
       } else {
-        console.log('WebSocket closed, reconnecting with new token...')
-        connectWebSocket() // Fallback for now
+        console.log('Authenticating with new access token')
+        connectWebSocket() // Fallback
       }
     }
 
-    // WIP
     api.setOnTokenChangeCallback(handleTokenChange)
 
     if (isAuthenticated) {
@@ -122,7 +112,7 @@ export const WebSocketProvider = ({ children }) => {
 
     return () => {
       clearWebSocketResources()
-      api.setOnTokenChangeCallback(null)
+      api.setOnTokenChangeCallback(() => {})
     }
   }, [isAuthenticated])
 

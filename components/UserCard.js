@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import AuthContext from '@/utils/authContext'
 import ButtonFollow from './ButtonFollow'
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, children }) => {
   const styles = useGlobalStyles()
   const navigation = useNavigation()
   const { user: me } = useContext(AuthContext)
@@ -40,6 +40,7 @@ const UserCard = ({ user }) => {
         </TouchableOpacity>
         <ButtonFollow user={resolvedUser} />
       </View>
+      {children && <View>{children}</View>}
     </View>
   )
 }
