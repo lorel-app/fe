@@ -77,14 +77,9 @@ export default function Header() {
       <View style={[styles.headerItems]}>
         <ButtonSwitch />
         {isAuthenticated ? (
-          <ButtonIcon
-            testID={'options-button'}
-            iconName="menu"
-            onPress={openOptions}
-          />
+          <ButtonIcon iconName="menu" onPress={openOptions} />
         ) : (
           <ButtonIcon
-            testID={'login-button'}
             iconName="account-circle"
             onPress={() => setModalVisible(true)}
           />

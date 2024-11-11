@@ -185,12 +185,10 @@ const EditProfileScreen = ({ route }) => {
       if (generalInfoChanged) {
         const response = await api.editProfile(generalInfo)
         if (!response.success) throw new Error(response.data.message)
-        console.log(response)
       }
 
       if (linksToPatch.length > 0) {
         for (const link of linksToPatch) {
-          console.log(link, '-link')
           const response = await api.addProfileLink({
             type: link.type,
             value: link.value

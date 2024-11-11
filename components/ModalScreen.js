@@ -16,6 +16,7 @@ export default function ModalScreen({ visible, onClose, children }) {
 
   return (
     <Modal
+      testID={'alert_modal'}
       appElement={
         Platform.OS === 'web' ? document.getElementById('root') : undefined
       }

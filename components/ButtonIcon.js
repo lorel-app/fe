@@ -10,7 +10,11 @@ const ButtonIcon = ({ onPress, iconName, iconSize, iconColor, style }) => {
   const effectiveStyle = [{ margin: 15 }, style]
 
   return (
-    <TouchableOpacity style={effectiveStyle} onPress={onPress}>
+    <TouchableOpacity
+      style={effectiveStyle}
+      onPress={onPress}
+      testID={'button_icon'}
+    >
       <Icon
         name={iconName}
         size={effectiveIconSize}

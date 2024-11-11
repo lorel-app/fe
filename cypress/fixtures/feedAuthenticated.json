@@ -13,14 +13,14 @@
       "updatedAt": "2024-09-25T09:28:08.789483",
       "likeCount": 365,
       "commentCount": 353,
-      "liked": false,
+      "liked": true,
       "user": {
         "id": "89c8a9d3-cd97-4e92-8ad5-5323061b2024",
-        "username": "userqq3lguey",
+        "username": "alsje",
         "displayPicture": "https://example.com/dp5pcw5uyp.jpg",
         "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg",
-        "userFollows": true,
-        "followsUser": true
+        "userFollows": false,
+        "followsUser": false
       },
       "media": [
         {
@@ -355,7 +355,7 @@
       "updatedAt": "2024-09-23T09:28:08.789855",
       "likeCount": 58,
       "commentCount": 240,
-      "liked": false,
+      "liked": true,
       "user": {
         "id": "e3124a14-048f-41bb-9ee6-95005cf87ad0",
         "username": "userpnlcyaa3",
@@ -475,7 +475,7 @@
       "updatedAt": "2024-09-25T09:28:08.789981",
       "likeCount": 397,
       "commentCount": 327,
-      "liked": false,
+      "liked": true,
       "user": {
         "id": "8f9415e1-6170-4e02-9f83-bddc0610b1ff",
         "username": "userc6mllqpk",

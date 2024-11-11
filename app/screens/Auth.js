@@ -274,7 +274,11 @@ export default function SignUpLogInModal({ visible, onClose }) {
           <View
             style={[styles.divider, { width: '100%' }, { marginBottom: 20 }]}
           ></View>
-          <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
+          <TouchableOpacity
+            testID={'authenticate_button'}
+            style={styles.button}
+            onPress={handleFormSubmit}
+          >
             <Text style={styles.buttonText}>
               {isSignUp ? 'Sign Up' : 'Log In'}
             </Text>
