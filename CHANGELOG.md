@@ -1,3 +1,10 @@
+# [1.2.0-dev.41](https://github.com/lorel-app/fe/compare/v1.2.0-dev.40...v1.2.0-dev.41) (2024-11-10)
+
+
+### Bug Fixes
+
+* 🐛 Ref webSocket ([b45401d](https://github.com/lorel-app/fe/commit/b45401dd7017ff14b3c70c5507500ec13c66daa1))
+
 # [1.2.0-dev.40](https://github.com/lorel-app/fe/compare/v1.2.0-dev.39...v1.2.0-dev.40) (2024-11-08)
 
 
