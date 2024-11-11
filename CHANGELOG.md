@@ -1,3 +1,10 @@
+# [1.2.0-dev.42](https://github.com/lorel-app/fe/compare/v1.2.0-dev.41...v1.2.0-dev.42) (2024-11-11)
+
+
+### Features
+
+* 🫡 Automated e2e tests script + Test login ([dc829f6](https://github.com/lorel-app/fe/commit/dc829f6bd9080cd32e20abfb0976229a8b590c8b))
+
 # [1.2.0-dev.41](https://github.com/lorel-app/fe/compare/v1.2.0-dev.40...v1.2.0-dev.41) (2024-11-10)
 
 
