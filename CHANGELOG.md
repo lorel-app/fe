@@ -1,3 +1,10 @@
+# [1.2.0-dev.43](https://github.com/lorel-app/fe/compare/v1.2.0-dev.42...v1.2.0-dev.43) (2024-11-12)
+
+
+### Features
+
+* 🫡 Chat Screen, Message Screen pre-routes + refactor ([c14c517](https://github.com/lorel-app/fe/commit/c14c517b744feaeaa1cb942c0c45946c58f6b068))
+
 # [1.2.0-dev.42](https://github.com/lorel-app/fe/compare/v1.2.0-dev.41...v1.2.0-dev.42) (2024-11-11)
 
 
