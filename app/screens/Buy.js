@@ -8,14 +8,7 @@ import { useTheme } from '@react-navigation/native'
 import HeaderStack from '../navigation/HeaderStack'
 import api from '@/utils/api'
 import AuthContext from '@/utils/authContext'
-
-const formatDate = isoString => {
-  const date = new Date(isoString)
-  const day = date.getDate()
-  const month = date.toLocaleString('default', { month: 'short' })
-  const year = date.getFullYear()
-  return `${day} ${month} ${year}`
-}
+import useFormatResponse from '@/hooks/useFormatResponse'
 
 const BuyScreen = ({ route }) => {
   const styles = useGlobalStyles()
@@ -24,6 +17,7 @@ const BuyScreen = ({ route }) => {
   const { post = {}, user = {}, showHeader = true } = route.params || {}
   const { user: me } = useContext(AuthContext)
   const [soldStatus, setSoldStatus] = useState(post.sold)
+  const { formatDate } = useFormatResponse()
 
   const handleMarkAsSold = async () => {
     const updatedSoldStatus = !soldStatus
@@ -110,7 +104,9 @@ const BuyScreen = ({ route }) => {
             />
             <Text style={styles.textBold}>{user.username}</Text>
           </TouchableOpacity>
-          <Text style={styles.textBold}>{formatDate(post.createdAt)}</Text>
+          <Text style={styles.textBold}>
+            {formatDate(post.createdAt, true)}
+          </Text>
         </View>
 
         {me.id === user.id ? (

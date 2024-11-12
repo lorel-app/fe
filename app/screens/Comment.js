@@ -54,6 +54,9 @@ const CommentScreen = ({ route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      setComments([])
+      setOffset(0)
+      setHasMore(true)
       fetchComments()
     }, [post.id])
   )
@@ -111,10 +114,10 @@ const CommentScreen = ({ route }) => {
     <>
       {showHeader && <HeaderStack title={'comments'} hideFollowButton={true} />}
       <FlatList
-        testID={'scrollable-feed'}
         ref={flatListRef}
         data={comments}
         renderItem={renderItem}
+        // ?
         maxToRenderPerBatch={5}
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={[styles.container, { flexGrow: 1 }]}

@@ -5,13 +5,8 @@ import { useTheme, useNavigation } from '@react-navigation/native'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import AuthContext from '@/utils/authContext'
 import api from '@/utils/api'
+import useFormatResponse from '@/hooks/useFormatResponse'
 
-const formatDate = isoString => {
-  const date = new Date(isoString)
-  const day = date.getDate()
-  const month = date.toLocaleString('default', { month: 'short' })
-  return `${day} ${month}`
-}
 const Comment = ({ comment, isMyPost = false, onDelete }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
@@ -19,6 +14,7 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
   const showAlert = useAlertModal()
   const { user: me } = useContext(AuthContext)
   const [isExpanded, setIsExpanded] = useState(false)
+  const { truncate, timeAgo } = useFormatResponse()
 
   const handleReportOrDelete = async () => {
     if (!me) {
@@ -37,11 +33,6 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
       showAlert('error', 'This will be available in a future release')
     }
   }
-
-  const truncatedContent =
-    comment.content.length > 120
-      ? `${comment.content.substring(0, 120)}...`
-      : comment.content
 
   return (
     <View style={[styles.containerLeft, { maxWidth: 500 }]}>
@@ -63,7 +54,7 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
           />
           <Text style={styles.text}>{comment.user.username}</Text>
           <Text style={[styles.textLight, { paddingLeft: 10 }]}>
-            {formatDate(comment.createdAt)}
+            {timeAgo(comment.createdAt)}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleReportOrDelete}>
@@ -88,7 +79,7 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
 
       <View style={{ marginHorizontal: 20 }}>
         <Text style={styles.textBold}>
-          {isExpanded ? comment.content : truncatedContent}
+          {isExpanded ? comment.content : truncate(comment.content, 120)}
         </Text>
         {comment.content.length > 120 && !isExpanded && (
           <TouchableOpacity

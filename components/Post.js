@@ -11,13 +11,8 @@ import { useAlertModal } from '@/hooks/useAlertModal'
 import { SwiperFlatListWithGestureHandler } from 'react-native-swiper-flatlist/WithGestureHandler'
 import { CustomPagination } from './Pagination'
 import AuthContext from '@/utils/authContext'
+import useFormatResponse from '@/hooks/useFormatResponse'
 
-const formatDate = isoString => {
-  const date = new Date(isoString)
-  const day = date.getDate()
-  const month = date.toLocaleString('default', { month: 'short' })
-  return `${day} ${month}`
-}
 const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
   const {
     id,
@@ -40,6 +35,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
+  const { timeAgo } = useFormatResponse()
 
   const [likeCount, setLikeCount] = useState(initialLikeCount)
   const [liked, setLiked] = useState(initialLikedStatus)
@@ -171,7 +167,9 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
             <Text style={[styles.text, { paddingBottom: 10 }]}>
               {caption}
               {createdAt && (
-                <Text style={styles.textLight}> ({formatDate(createdAt)})</Text>
+                <Text style={[styles.textLight, { paddingLeft: 10 }]}>
+                  {timeAgo(createdAt)}
+                </Text>
               )}
             </Text>
           )}

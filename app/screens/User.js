@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { View, FlatList, Image, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import {
+  useNavigation,
+  useFocusEffect,
+  useTheme
+} from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import api from '@/utils/api'
@@ -10,6 +14,7 @@ import Loader from '@/components/Loader'
 import ProfileHeader from '@/components/ProfileHeader'
 import NestedTabNavigator from '@/app/navigation/NestedTab'
 import useFetchUserPosts from '@/hooks/useFetchUserPosts'
+import ButtonIcon from '@/components/ButtonIcon'
 
 const TabContent = ({ posts, fetchPosts, loading, user }) => {
   const styles = useGlobalStyles()
@@ -62,9 +67,11 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
 
 const UserScreen = ({ route }) => {
   const styles = useGlobalStyles()
+  const { colors } = useTheme()
   const { user = {}, showHeader = true } = route.params || {}
   const [userInfo, setUserInfo] = useState({})
   const showAlert = useAlertModal()
+  const navigation = useNavigation()
 
   const {
     posts: shopPosts,
@@ -126,11 +133,22 @@ const UserScreen = ({ route }) => {
   return (
     <>
       {showHeader && (
-        <HeaderStack
-          title={user.username}
-          user={user}
-          onFollowToggle={handleFollowToggle}
-        />
+        <>
+          <HeaderStack
+            title={user.username}
+            user={user}
+            onFollowToggle={handleFollowToggle}
+          />
+          <View style={styles.messageButton}>
+            <ButtonIcon
+              iconName="mode-comment"
+              iconColor={colors.textAlt}
+              onPress={() => {
+                navigation.navigate('Message', { userId: user.id })
+              }}
+            />
+          </View>
+        </>
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>

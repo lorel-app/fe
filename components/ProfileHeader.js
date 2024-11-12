@@ -4,12 +4,14 @@ import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useNavigation, useTheme } from '@react-navigation/native'
 import getAllSocialIcons from '@/assets/images/SocialIcons'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import useFormatResponse from '@/hooks/useFormatResponse'
 
 const ProfileHeader = ({ user }) => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const navigation = useNavigation()
   const socialIcons = getAllSocialIcons(28, 28)
+  const { truncate } = useFormatResponse()
 
   const openLink = url => {
     Linking.openURL(url).catch(err =>
@@ -144,12 +146,6 @@ const ProfileHeader = ({ user }) => {
               link => link.type.toLowerCase() === 'personal'
             )
 
-            const truncateText = (text, maxLength) => {
-              return text.length > maxLength
-                ? text.slice(0, maxLength) + '...'
-                : text
-            }
-
             return personalLink ? (
               <View style={{ paddingBottom: 15 }}>
                 <TouchableOpacity
@@ -162,7 +158,7 @@ const ProfileHeader = ({ user }) => {
                     color={colors.secondary}
                   />
                   <Text style={[styles.textSmall, { paddingLeft: 3 }]}>
-                    {truncateText(personalLink.url, 30)}
+                    {truncate(personalLink.url)}
                   </Text>
                 </TouchableOpacity>
               </View>

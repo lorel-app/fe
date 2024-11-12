@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useNavigation, useTheme } from '@react-navigation/native'
 import ButtonFollow from '@/components/ButtonFollow'
+import useFormatResponse from '@/hooks/useFormatResponse'
 
 const HeaderStack = ({
   title,
@@ -14,10 +15,7 @@ const HeaderStack = ({
   const { colors } = useTheme()
   const styles = useGlobalStyles()
   const navigation = useNavigation()
-
-  const truncateTitle = title => {
-    return title.length > 20 ? `${title.substring(0, 20)}...` : title
-  }
+  const { truncate } = useFormatResponse()
 
   return (
     <View style={styles.header}>
@@ -34,7 +32,7 @@ const HeaderStack = ({
           <Text
             style={[styles.textBold, { paddingLeft: 5 }, { paddingBottom: 2 }]}
           >
-            {title ? truncateTitle(title) : ''}
+            {title ? truncate(title, 20) : ''}
           </Text>
         </TouchableOpacity>
       </View>

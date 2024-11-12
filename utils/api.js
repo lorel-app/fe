@@ -454,6 +454,25 @@ const allTags = async () => {
   return response
 }
 
+const allChats = async (limit = 12, offset = 0) => {
+  const response = await apiInstance.get('/chat', {
+    params: { limit, offset }
+  })
+  return response
+}
+
+// const getChat = async (conversationId, options) => {
+//   const defaults = {
+//     limit: 12,
+//     offset: 0,
+//   }
+//   const opts = { ...defaults, ...options }
+//   const response = await apiInstance.get(`follower/${userId}`, {
+//     params: opts
+//   })
+//   return response
+// }
+
 loadTokens()
 
 export default {
@@ -488,6 +507,8 @@ export default {
   addPost,
   editPost,
   allTags,
+  allChats,
+  // getChat,
   loadTokens,
   setOnTokenChangeCallback
 }

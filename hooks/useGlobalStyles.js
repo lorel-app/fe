@@ -455,7 +455,6 @@ export const useGlobalStyles = () => {
       top: 60,
       width: 200,
       right: 0,
-      // make primaryTint lighter for light mode
       backgroundColor: colors.primaryTint,
       borderRadius: 10,
       ...shadowStyle
@@ -467,9 +466,16 @@ export const useGlobalStyles = () => {
       alignSelf: 'center',
       padding: 2,
       borderRadius: 500,
-      // make primaryTint lighter for light mode
-      //backgroundColor: 'rgba(255, 255, 255, 0.2)',
       backgroundColor: colors.primaryTint,
+      ...shadowStyle
+    },
+    messageButton: {
+      position: 'absolute',
+      zIndex: 999,
+      top: 75,
+      right: 15,
+      borderRadius: 500,
+      backgroundColor: colors.primary,
       ...shadowStyle
     },
 
@@ -489,6 +495,22 @@ export const useGlobalStyles = () => {
       backgroundColor: colors.background,
       color: colors.text,
       outlineStyle: 'none'
+    },
+    bubble: {
+      maxWidth: '70%',
+      padding: 10,
+      borderRadius: 15,
+      marginVertical: 10,
+      alignSelf: 'flex-start'
+    },
+    senderBubble: {
+      backgroundColor: colors.primaryTint,
+      alignSelf: 'flex-end',
+      borderBottomRightRadius: 0
+    },
+    receiverBubble: {
+      backgroundColor: colors.secondaryTint,
+      borderBottomLeftRadius: 0
     }
   })
 }

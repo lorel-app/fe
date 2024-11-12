@@ -4,6 +4,7 @@ import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useNavigation } from '@react-navigation/native'
 import AuthContext from '@/utils/authContext'
 import ButtonFollow from './ButtonFollow'
+import useFormatResponse from '@/hooks/useFormatResponse'
 
 const UserCard = ({ user, children }) => {
   const styles = useGlobalStyles()
@@ -12,14 +13,18 @@ const UserCard = ({ user, children }) => {
 
   const resolvedUser = user.follower || user
   const { id, username, displayPictureThumb, userFollows } = resolvedUser
-
-  const truncatedUsername =
-    username && username.length > 30
-      ? `${username.substring(0, 30)}...`
-      : username
+  const { truncate } = useFormatResponse()
 
   return (
-    <View style={[styles.post, { maxWidth: 500 }]}>
+    <View
+      style={[
+        styles.card,
+        styles.boxShadow,
+        { maxWidth: 500 },
+        { marginVertical: 5 },
+        { padding: 0 }
+      ]}
+    >
       <View style={styles.rowSpan}>
         <TouchableOpacity
           style={styles.row}
@@ -36,11 +41,15 @@ const UserCard = ({ user, children }) => {
             resizeMode="cover"
             style={styles.profilePic}
           />
-          <Text style={styles.text}>{truncatedUsername}</Text>
+          <Text style={styles.text}>{truncate(username)}</Text>
         </TouchableOpacity>
         <ButtonFollow user={resolvedUser} />
       </View>
-      {children && <View>{children}</View>}
+      {children && (
+        <View style={[styles.rowSpan, { padding: 15 }, { paddingTop: 0 }]}>
+          {children}
+        </View>
+      )}
     </View>
   )
 }

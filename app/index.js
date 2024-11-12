@@ -18,6 +18,7 @@ import CommentScreen from '@/app/screens/Comment'
 import UserScreen from '@/app/screens/User'
 import UserPostsScreen from '@/app/screens/UserPosts'
 import UserFollowersScreen from '@/app/screens/UserFollowers'
+import MessageScreen from '@/app/screens/Message'
 import EditProfileScreen from '@/app/screens/EditProfile'
 import EditPostScreen from '@/app/screens/EditPost'
 import SettingsScreen from '@/app/screens/Settings'
@@ -69,6 +70,11 @@ export default function Index() {
                     <Stack.Screen
                       name="UserFollowers"
                       component={UserFollowersScreen}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Message"
+                      component={MessageScreen}
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen

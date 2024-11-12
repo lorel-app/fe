@@ -26,7 +26,7 @@ const ButtonPostOptions = ({ postId, post, userId, onDeletePost }) => {
 
   const handleOptionSelect = value => {
     const actionsMap = {
-      message: () => unImplemented(),
+      message: () => navigation.navigate('Message', { userId }),
       report: () => unImplemented(),
       edit_post: () => navigation.navigate('EditPost', { post }),
       delete_post: () => {
