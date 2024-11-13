@@ -1,3 +1,10 @@
+# [1.2.0-dev.44](https://github.com/lorel-app/fe/compare/v1.2.0-dev.43...v1.2.0-dev.44) (2024-11-13)
+
+
+### Features
+
+* 🫡 Message routes ([1a05e91](https://github.com/lorel-app/fe/commit/1a05e91c477d1ce0e9760919456622a78821abc4))
+
 # [1.2.0-dev.43](https://github.com/lorel-app/fe/compare/v1.2.0-dev.42...v1.2.0-dev.43) (2024-11-12)
 
 
