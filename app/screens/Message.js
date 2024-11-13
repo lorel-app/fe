@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { FlatList, Text, View } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -6,7 +6,6 @@ import { useAlertModal } from '@/hooks/useAlertModal'
 import { useNavigation } from '@react-navigation/native'
 import api from '@/utils/api'
 import HeaderStack from '../navigation/HeaderStack'
-import Post from '@/components/Post'
 import SendInputBar from '@/components/SendInputBar'
 import Loader from '@/components/Loader'
 import AuthContext from '@/utils/authContext'
@@ -17,6 +16,7 @@ const MessageScreen = ({ route }) => {
   const { colors } = useTheme()
   const { userId, showHeader = true } = route.params || {}
   const { user: me } = useContext(AuthContext)
+  const [user, setUser] = useState({})
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
@@ -24,44 +24,58 @@ const MessageScreen = ({ route }) => {
   const showAlert = useAlertModal()
   const navigation = useNavigation()
 
-  //   const fetchMessages = async () => {
-  //     if (loading || !hasMore) return
-  //     setLoading(true)
-  //     try {
-  //       const response = await api.getComments(user.id, 5, offset)
-  //       if (response.success) {
-  //         setComments(prevMessages => [
-  //           ...prevMessages,
-  //           ...response.data.messages
-  //         ])
-  //         setHasMore(response.data.messages.length > 0)
-  //         setOffset(prevOffset => prevOffset + response.data.messages.length)
-  //       } else {
-  //         showAlert(
-  //           'error',
-  //           `${response.data.message}: Please check your internet connection or try again later`
-  //         )
-  //       }
-  //     } catch (error) {
-  //       console.error('Failed to fetch messages', error.message)
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   }
+  const getUser = async () => {
+    const response = await api.getUser(userId)
+    setUser(response.data.user)
+  }
 
-  //   useFocusEffect(
-  //     React.useCallback(() => {
-  //       setMessages([])
-  //       setOffset(0)
-  //       setHasMore(true)
-  //       fetchMessages()
-  //     }, [user.id])
-  //   )
+  getUser()
 
-  //   const renderItem = ({ item: message }) => {
-  //     return (
-  //     )
-  //   }
+  const fetchMessages = async () => {
+    if (loading || !hasMore) return
+    setLoading(true)
+    try {
+      const response = await api.getChat(userId, 12, offset)
+      if (response.success) {
+        setMessages(prevMessages => [
+          ...prevMessages,
+          ...response.data.messages
+        ])
+        setHasMore(response.data.messages.length > 0)
+        setOffset(prevOffset => prevOffset + response.data.messages.length)
+      } else {
+        showAlert(
+          'error',
+          `${response.data.message}: Please check your internet connection or try again later`
+        )
+      }
+    } catch (error) {
+      console.error('Failed to fetch messages', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getUser()
+      setMessages([])
+      setOffset(0)
+      fetchMessages()
+    }, [userId])
+  )
+
+  const renderItem = ({ item: message }) => {
+    const isSender = me.id === message.userId
+    return (
+      <ChatBubble
+        message={message.message}
+        time={message.createdAt}
+        status={message.status}
+        isSender={isSender}
+      />
+    )
+  }
 
   const unimplemented = () => {
     console.log('send')
@@ -70,59 +84,37 @@ const MessageScreen = ({ route }) => {
   return (
     <>
       {showHeader && (
-        <HeaderStack title={me.username} user={me} hideFollowButton={false} />
+        <HeaderStack title={user.username} user={me} hideFollowButton={false} />
       )}
-      <View
-        style={[
-          styles.container,
-          { paddingHorizontal: 20 },
-          { maxWidth: 500 },
-          { flexGrow: 1 },
-          { alignSelf: 'center' }
-        ]}
-      >
-        {/* <ChatBubble
-          message={item.text}
-          time={item.time}
-          isSender={item.isSender}
-        /> */}
-        {userId ? (
-          <Text>Will open conversation with user: {userId}</Text>
-        ) : null}
-        <ChatBubble
-          message={'fsjbfisbfsjk bjggggbfsjkb jkb jkfbsjk bsjfb bsf bjsfb jsb'}
-          time={'1 day ago'}
-          isSender={false}
-        />
-        <ChatBubble
-          message={
-            'nsjkfhsh khfsjk hsjkfh hfj nsfjkn j fsjkh jk ksjksf jks k hsjkfh jksfhsjk hjksfh '
-          }
-          time={'1 day ago'}
-          isSender={true}
-        />
-      </View>
-      <SendInputBar
-        onSend={unimplemented}
-        placeholder="Send a message..."
-        placeholderTextColor={colors.text}
-      />
-      {/* <FlatList
+      {messages.length === 0 && (
+        <View style={[styles.containerFull]}>
+          <Text style={styles.buttonSmall}>
+            Chats are not end-to-end encrypted yet.{'\n'}
+            Do not share any sensitive information.
+          </Text>
+        </View>
+      )}
+      <FlatList
         data={messages}
         renderItem={renderItem}
+        inverted={true}
         keyExtractor={item => item.id.toString()}
-        contentContainerStyle={[styles.container, { flexGrow: 1 }]}
+        contentContainerStyle={[
+          { flexGrow: 1 },
+          { maxWidth: 600 },
+          { alignSelf: 'center' }
+        ]}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}
         onEndReached={fetchMessages}
         onEndReachedThreshold={0.5}
         ListFooterComponent={loading && <Loader />}
-        getItemLayout={(data, index) => ({
-          length: index === 0 ? 700 : 40,
-          offset: (index === 0 ? 0 : 700) + 40 * index,
-          index
-        })}
-      /> */}
+      />
+      <SendInputBar
+        onSend={unimplemented}
+        placeholder="Send a message..."
+        placeholderTextColor={colors.text}
+      />
     </>
   )
 }

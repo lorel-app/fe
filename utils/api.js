@@ -461,17 +461,12 @@ const allChats = async (limit = 12, offset = 0) => {
   return response
 }
 
-// const getChat = async (conversationId, options) => {
-//   const defaults = {
-//     limit: 12,
-//     offset: 0,
-//   }
-//   const opts = { ...defaults, ...options }
-//   const response = await apiInstance.get(`follower/${userId}`, {
-//     params: opts
-//   })
-//   return response
-// }
+const getChat = async (userId, limit = 12, offset = 0) => {
+  const response = await apiInstance.get(`chat/user/${userId}`, {
+    params: { limit, offset }
+  })
+  return response
+}
 
 loadTokens()
 
@@ -508,7 +503,7 @@ export default {
   editPost,
   allTags,
   allChats,
-  // getChat,
+  getChat,
   loadTokens,
   setOnTokenChangeCallback
 }

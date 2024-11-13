@@ -18,6 +18,16 @@ const useFormatResponse = () => {
     }
   }
 
+  const formatTime = isoString => {
+    const date = new Date(isoString)
+    const day = date.getDate()
+    const month = date.toLocaleString('default', { month: 'short' })
+    const hours = date.getHours().toString().padStart(2, '0')
+    const minutes = date.getMinutes().toString().padStart(2, '0')
+
+    return `${day} ${month}, ${hours}:${minutes}`
+  }
+
   // think about it
   // when longer than 1 year use formatDate?
   const timeAgo = dateStr => {
@@ -50,6 +60,7 @@ const useFormatResponse = () => {
     () => ({
       truncate,
       formatDate,
+      formatTime,
       timeAgo
     }),
     []

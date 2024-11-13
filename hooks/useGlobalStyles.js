@@ -497,11 +497,14 @@ export const useGlobalStyles = () => {
       outlineStyle: 'none'
     },
     bubble: {
-      maxWidth: '70%',
+      flexDirection: 'row',
+      flex: 1,
+      maxWidth: '80%',
+      minWidth: '50%',
       padding: 10,
       borderRadius: 15,
       marginVertical: 10,
-      alignSelf: 'flex-start'
+      marginHorizontal: 20
     },
     senderBubble: {
       backgroundColor: colors.primaryTint,
@@ -510,7 +513,12 @@ export const useGlobalStyles = () => {
     },
     receiverBubble: {
       backgroundColor: colors.secondaryTint,
-      borderBottomLeftRadius: 0
+      alignSelf: 'flex-start',
+      borderBottomLeftRadius: 0,
+      ...shadowStyle
+    },
+    bubbleContent: {
+      flexShrink: 1
     }
   })
 }

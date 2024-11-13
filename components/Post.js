@@ -167,7 +167,10 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
             <Text style={[styles.text, { paddingBottom: 10 }]}>
               {caption}
               {createdAt && (
-                <Text style={[styles.textLight, { paddingLeft: 10 }]}>
+                <Text
+                  style={[styles.textLight, { paddingLeft: 10 }]}
+                  numberOfLines={1}
+                >
                   {timeAgo(createdAt)}
                 </Text>
               )}

@@ -56,7 +56,6 @@ const CommentScreen = ({ route }) => {
     React.useCallback(() => {
       setComments([])
       setOffset(0)
-      setHasMore(true)
       fetchComments()
     }, [post.id])
   )

@@ -37,8 +37,6 @@ export default function ChatScreen() {
         setChats(prevChats => [...prevChats, ...response.data.conversations])
         setHasMore(response.data.conversations.length > 0)
         setOffset(prevOffset => prevOffset + response.data.conversations.length)
-        //
-        console.log(chats)
       } else {
         showAlert(
           'error',
