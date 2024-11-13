@@ -1,14 +1,9 @@
 import React, { useContext, useState } from 'react'
-import {
-  useTheme,
-  useFocusEffect,
-  useNavigation
-} from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import AuthContext from '@/utils/authContext'
-import { useWebSocket } from '@/utils/websocket'
 import UnauthenticatedView from '@/components/UnauthenticatedView'
 import UserCard from '@/components/UserCard'
 import api from '@/utils/api'
@@ -18,8 +13,6 @@ import useFormatResponse from '@/hooks/useFormatResponse'
 export default function ChatScreen() {
   const styles = useGlobalStyles()
   const { isAuthenticated, user } = useContext(AuthContext)
-  // remove
-  // const { messages } = useWebSocket()
   const [chats, setChats] = useState([])
   const [loading, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
@@ -96,9 +89,11 @@ export default function ChatScreen() {
       onEndReached={fetchChats}
       ListHeaderComponent={chatHeader}
       ListEmptyComponent={
-        <View style={styles.containerFull}>
-          <Text style={styles.title}>No chats yet</Text>
-        </View>
+        !loading && (
+          <View style={styles.containerFull}>
+            <Text style={styles.title}>No chats yet</Text>
+          </View>
+        )
       }
       ListFooterComponent={loading && <Loader />}
     />

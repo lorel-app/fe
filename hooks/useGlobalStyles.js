@@ -500,7 +500,7 @@ export const useGlobalStyles = () => {
       flexDirection: 'row',
       flex: 1,
       maxWidth: '80%',
-      minWidth: '50%',
+      minWidth: '40%',
       padding: 10,
       borderRadius: 15,
       marginVertical: 10,
@@ -518,7 +518,7 @@ export const useGlobalStyles = () => {
       ...shadowStyle
     },
     bubbleContent: {
-      flexShrink: 1
+      flex: 1
     }
   })
 }

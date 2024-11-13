@@ -1,15 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { FlatList, Text, View } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
-import { useNavigation } from '@react-navigation/native'
 import api from '@/utils/api'
 import HeaderStack from '../navigation/HeaderStack'
 import SendInputBar from '@/components/SendInputBar'
 import Loader from '@/components/Loader'
 import AuthContext from '@/utils/authContext'
 import ChatBubble from '@/components/ChatBubble'
+import { useWebSocket } from '@/utils/websocket'
 
 const MessageScreen = ({ route }) => {
   const styles = useGlobalStyles()
@@ -22,14 +22,38 @@ const MessageScreen = ({ route }) => {
   const [offset, setOffset] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const showAlert = useAlertModal()
-  const navigation = useNavigation()
 
   const getUser = async () => {
     const response = await api.getUser(userId)
     setUser(response.data.user)
   }
 
-  getUser()
+  useEffect(() => {
+    getUser()
+  }, [userId])
+
+  const { sendChatMessage } = useWebSocket()
+
+  // const handleSend = message => {
+  //   if (message.trim()) {
+  //     sendChatMessage(userId, message)
+  //   }
+  // }
+  const handleSend = message => {
+    if (message.trim()) {
+      const newMessage = {
+        id: Date.now(),
+        userId: me.id,
+        message: message,
+        createdAt: new Date().toISOString(),
+        status: 'SENT'
+      }
+
+      setMessages(prevMessages => [newMessage, ...prevMessages])
+
+      sendChatMessage(userId, message)
+    }
+  }
 
   const fetchMessages = async () => {
     if (loading || !hasMore) return
@@ -77,16 +101,12 @@ const MessageScreen = ({ route }) => {
     )
   }
 
-  const unimplemented = () => {
-    console.log('send')
-  }
-
   return (
     <>
       {showHeader && (
         <HeaderStack title={user.username} user={me} hideFollowButton={false} />
       )}
-      {messages.length === 0 && (
+      {!loading && messages.length === 0 && (
         <View style={[styles.containerFull]}>
           <Text style={styles.buttonSmall}>
             Chats are not end-to-end encrypted yet.{'\n'}
@@ -97,6 +117,7 @@ const MessageScreen = ({ route }) => {
       <FlatList
         data={messages}
         renderItem={renderItem}
+        maxToRenderPerBatch={12}
         inverted={true}
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={[
@@ -111,7 +132,7 @@ const MessageScreen = ({ route }) => {
         ListFooterComponent={loading && <Loader />}
       />
       <SendInputBar
-        onSend={unimplemented}
+        onSend={handleSend}
         placeholder="Send a message..."
         placeholderTextColor={colors.text}
       />

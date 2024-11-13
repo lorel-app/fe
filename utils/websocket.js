@@ -7,8 +7,7 @@ let heartBeat = null
 
 const WebSocketContext = createContext()
 
-// 5s for debugging - change to 50s
-const PING_INTERVAL = 5000
+const PING_INTERVAL = 50000
 
 const clearWebSocketResources = () => {
   if (heartBeat) {
@@ -22,8 +21,18 @@ const clearWebSocketResources = () => {
 }
 
 export const WebSocketProvider = ({ children }) => {
-  const [messages, setMessages] = useState([])
   const { isAuthenticated } = useContext(AuthContext)
+
+  const sendChatMessage = (userId, message) => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      const chatMessage = JSON.stringify({
+        type: 'chat',
+        recipient: userId,
+        message
+      })
+      ws.send(chatMessage)
+    }
+  }
 
   useEffect(() => {
     const ping = () => {
@@ -31,8 +40,6 @@ export const WebSocketProvider = ({ children }) => {
         console.log('Sending ping message...')
         const pingMessage = JSON.stringify({ type: 'ping' })
         ws.send(pingMessage)
-      } else {
-        console.log('WebSocket is not open. Current state:', ws.readyState)
       }
     }
 
@@ -40,17 +47,14 @@ export const WebSocketProvider = ({ children }) => {
       if (!ws) return
 
       ws.onopen = () => {
-        console.log('WebSocket opened')
         heartBeat = setInterval(ping, PING_INTERVAL)
       }
 
       ws.onmessage = event => {
-        console.log('Message from server:', event.data)
-        setMessages(prevMessages => [...prevMessages, event.data])
+        console.log('Handle responses', event)
       }
 
-      ws.onclose = event => {
-        console.warn('WebSocket connection closed', event)
+      ws.onclose = () => {
         clearWebSocketResources()
       }
 
@@ -62,7 +66,6 @@ export const WebSocketProvider = ({ children }) => {
 
     const createWebSocketConnection = wsUrl => {
       if (ws) {
-        console.log('WebSocket already exists')
         return
       }
       ws = new WebSocket(wsUrl)
@@ -73,7 +76,6 @@ export const WebSocketProvider = ({ children }) => {
       try {
         const tokens = await api.loadTokens()
         if (!tokens?.accessToken) {
-          console.error('No access token available, cannot open WebSocket')
           return
         }
 
@@ -96,10 +98,8 @@ export const WebSocketProvider = ({ children }) => {
               auth: accessToken
             })
           )
-          console.log('Reauthenticating with refreshed token')
         }
       } else {
-        console.log('Authenticating with new access token')
         connectWebSocket() // Fallback
       }
     }
@@ -117,7 +117,7 @@ export const WebSocketProvider = ({ children }) => {
   }, [isAuthenticated])
 
   return (
-    <WebSocketContext.Provider value={{ messages }}>
+    <WebSocketContext.Provider value={{ sendChatMessage }}>
       {children}
     </WebSocketContext.Provider>
   )
