@@ -1,3 +1,10 @@
+# [1.2.0-dev.45](https://github.com/lorel-app/fe/compare/v1.2.0-dev.44...v1.2.0-dev.45) (2024-11-13)
+
+
+### Features
+
+* 🫡 Sending messages via websocket ([8373bdb](https://github.com/lorel-app/fe/commit/8373bdbc56c8c21ae2b773732e8cf6de4eee95f7))
+
 # [1.2.0-dev.44](https://github.com/lorel-app/fe/compare/v1.2.0-dev.43...v1.2.0-dev.44) (2024-11-13)
 
 
