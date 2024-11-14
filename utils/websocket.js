@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useContext } from 'react'
+import React, { createContext, useEffect, useContext } from 'react'
 import api from '@/utils/api'
 import AuthContext from '@/utils/authContext'
 
@@ -108,7 +108,7 @@ export const WebSocketProvider = ({ children }) => {
 
     if (isAuthenticated) {
       connectWebSocket()
-    }
+    } else return
 
     return () => {
       clearWebSocketResources()

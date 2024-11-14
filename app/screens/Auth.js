@@ -181,6 +181,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
                 onChangeText={text => handleChange('username', text)}
                 maxLength={30}
                 multiline={false}
+                autoFocus={visible}
               />
             ) : null}
 
@@ -193,6 +194,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
                 handleChange(isSignUp ? 'email' : 'identity', text)
               }
               multiline={false}
+              autoFocus={visible}
             />
 
             {isSignUp ? (

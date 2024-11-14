@@ -6,6 +6,7 @@ import { useAlertModal } from '@/hooks/useAlertModal'
 import AuthContext from '@/utils/authContext'
 import api from '@/utils/api'
 import useFormatResponse from '@/hooks/useFormatResponse'
+import ReportModal from '@/components/Report'
 
 const Comment = ({ comment, isMyPost = false, onDelete }) => {
   const styles = useGlobalStyles()
@@ -15,6 +16,7 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
   const { user: me } = useContext(AuthContext)
   const [isExpanded, setIsExpanded] = useState(false)
   const { truncate, timeAgo } = useFormatResponse()
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false)
 
   const handleReportOrDelete = async () => {
     if (!me) {
@@ -26,11 +28,10 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
       if (response.success) {
         onDelete(comment.id)
       } else {
-        // clean/fix
-        console.log('Error', response)
+        showAlert('error', 'Something went wrong, please try again later')
       }
     } else {
-      showAlert('error', 'This will be available in a future release')
+      setIsReportModalVisible(true)
     }
   }
 
@@ -93,6 +94,13 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
         )}
       </View>
       <View style={styles.divider}></View>
+
+      <ReportModal
+        visible={isReportModalVisible}
+        onClose={() => setIsReportModalVisible(false)}
+        id={comment.id}
+        type="COMMENT"
+      />
     </View>
   )
 }

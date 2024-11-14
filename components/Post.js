@@ -39,6 +39,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
 
   const [likeCount, setLikeCount] = useState(initialLikeCount)
   const [liked, setLiked] = useState(initialLikedStatus)
+  const [mediaIndex, setMediaIndex] = useState(0)
 
   const handleLike = useCallback(async () => {
     try {
@@ -96,6 +97,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
             <ButtonPostOptions
               postId={post.id}
               post={post}
+              postIndex={mediaIndex}
               userId={post.user.id}
               onDeletePost={onDeletePost}
             />
@@ -117,6 +119,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
           )}
           showPagination={mediaUrls.length > 1}
           PaginationComponent={CustomPagination}
+          onChangeIndex={({ index }) => setMediaIndex(index)}
         />
       </View>
 

@@ -468,6 +468,11 @@ const getChat = async (userId, limit = 12, offset = 0) => {
   return response
 }
 
+const sendReport = async body => {
+  const response = await apiInstance.post('/report', body)
+  return response
+}
+
 loadTokens()
 
 export default {
@@ -504,6 +509,7 @@ export default {
   allTags,
   allChats,
   getChat,
+  sendReport,
   loadTokens,
   setOnTokenChangeCallback
 }

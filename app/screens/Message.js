@@ -10,6 +10,8 @@ import Loader from '@/components/Loader'
 import AuthContext from '@/utils/authContext'
 import ChatBubble from '@/components/ChatBubble'
 import { useWebSocket } from '@/utils/websocket'
+import ReportModal from '@/components/Report'
+import ButtonIcon from '@/components/ButtonIcon'
 
 const MessageScreen = ({ route }) => {
   const styles = useGlobalStyles()
@@ -17,11 +19,13 @@ const MessageScreen = ({ route }) => {
   const { userId, showHeader = true } = route.params || {}
   const { user: me } = useContext(AuthContext)
   const [user, setUser] = useState({})
+  const [conversationId, setConversationId] = useState('')
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const showAlert = useAlertModal()
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false)
 
   const getUser = async () => {
     const response = await api.getUser(userId)
@@ -34,11 +38,6 @@ const MessageScreen = ({ route }) => {
 
   const { sendChatMessage } = useWebSocket()
 
-  // const handleSend = message => {
-  //   if (message.trim()) {
-  //     sendChatMessage(userId, message)
-  //   }
-  // }
   const handleSend = message => {
     if (message.trim()) {
       const newMessage = {
@@ -50,7 +49,6 @@ const MessageScreen = ({ route }) => {
       }
 
       setMessages(prevMessages => [newMessage, ...prevMessages])
-
       sendChatMessage(userId, message)
     }
   }
@@ -61,6 +59,7 @@ const MessageScreen = ({ route }) => {
     try {
       const response = await api.getChat(userId, 12, offset)
       if (response.success) {
+        setConversationId(response.data.conversationId)
         setMessages(prevMessages => [
           ...prevMessages,
           ...response.data.messages
@@ -92,19 +91,35 @@ const MessageScreen = ({ route }) => {
   const renderItem = ({ item: message }) => {
     const isSender = me.id === message.userId
     return (
-      <ChatBubble
-        message={message.message}
-        time={message.createdAt}
-        status={message.status}
-        isSender={isSender}
-      />
+      <View style={[{ width: '100%' }]}>
+        <ChatBubble
+          message={message.message}
+          time={message.createdAt}
+          status={message.status}
+          isSender={isSender}
+        />
+      </View>
     )
   }
 
   return (
     <>
       {showHeader && (
-        <HeaderStack title={user.username} user={me} hideFollowButton={false} />
+        <>
+          <HeaderStack
+            title={user.username}
+            user={me}
+            hideFollowButton={false}
+          />
+          <View style={styles.reportButton}>
+            <ButtonIcon
+              iconName="priority-high"
+              iconColor={colors.primary}
+              style={styles.iconSmall}
+              onPress={() => setIsReportModalVisible(true)}
+            />
+          </View>
+        </>
       )}
       {!loading && messages.length === 0 && (
         <View style={[styles.containerFull]}>
@@ -123,6 +138,7 @@ const MessageScreen = ({ route }) => {
         contentContainerStyle={[
           { flexGrow: 1 },
           { maxWidth: 600 },
+          { minWidth: 300 },
           { alignSelf: 'center' }
         ]}
         showsVerticalScrollIndicator={false}
@@ -135,6 +151,12 @@ const MessageScreen = ({ route }) => {
         onSend={handleSend}
         placeholder="Send a message..."
         placeholderTextColor={colors.text}
+      />
+      <ReportModal
+        visible={isReportModalVisible}
+        onClose={() => setIsReportModalVisible(false)}
+        id={conversationId}
+        type="CONVERSATION"
       />
     </>
   )

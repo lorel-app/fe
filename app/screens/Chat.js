@@ -22,7 +22,7 @@ export default function ChatScreen() {
   const { truncate, timeAgo } = useFormatResponse()
 
   const fetchChats = async () => {
-    if (loading || !hasMore) return
+    if (loading || !hasMore || !isAuthenticated) return
     setLoading(true)
     try {
       const response = await api.allChats(12, offset)

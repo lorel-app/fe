@@ -147,6 +147,7 @@ const UsernameModal = ({ visible, onClose }) => {
           value={newUsername}
           onChangeText={setNewUsername}
           multiline={false}
+          autoFocus={visible}
         />
         <TouchableOpacity style={styles.button} onPress={editUsername}>
           <Text style={styles.buttonText}>Submit</Text>

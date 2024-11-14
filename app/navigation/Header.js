@@ -25,13 +25,14 @@ export default function Header() {
   const options = [
     {
       label: 'User Settings',
-      value: 'settings'
+      value: 'settings',
+      icon: 'settings'
     },
     {
       label: 'Privacy Policy, T&Cs',
       value: 'user_agreements'
     },
-    { label: 'Get Help', value: 'help' },
+    { label: 'Contact us / About', value: 'help' },
     { label: 'Log Out', value: 'logout', icon: 'logout' }
   ]
 
@@ -39,8 +40,7 @@ export default function Header() {
     const actionsMap = {
       settings: () => navigation.navigate('User Settings'),
       user_agreements: () => navigation.navigate('User Agreements'),
-      // temp
-      help: () => navigation.navigate('User Agreements'),
+      help: () => navigation.navigate('About Lorel'),
       logout: async () => {
         const response = await logout()
         if (response.success) {
@@ -71,9 +71,12 @@ export default function Header() {
 
   return (
     <View style={styles.header}>
-      <View style={{ flex: 1 }}>
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={() => navigation.navigate('About Lorel')}
+      >
         <LogoMain fill={colors.text} width={250 / 2.5} height={61 / 2.5} />
-      </View>
+      </TouchableOpacity>
       <View style={[styles.headerItems]}>
         <ButtonSwitch />
         {isAuthenticated ? (

@@ -96,6 +96,18 @@ export const useGlobalStyles = () => {
       width: '100%',
       ...shadowStyle
     },
+
+    grid: {
+      flexDirection: width < 600 ? 'column' : 'row',
+      alignItems: 'center',
+      alignSelf: 'flex-start'
+    },
+
+    gridItem: {
+      width: width < 600 ? fullWidth : fullWidth / 3,
+      padding: 2
+    },
+
     containerGrid: {
       width: fullWidth / 3,
       height: fullWidth / 3,
@@ -109,7 +121,8 @@ export const useGlobalStyles = () => {
       borderRadius: 25,
       margin: 15,
       padding: 10,
-      flex: 1,
+      // flex: 1
+      flexGrow: 1,
       ...shadowStyle
     },
 
@@ -476,6 +489,15 @@ export const useGlobalStyles = () => {
       right: 15,
       borderRadius: 500,
       backgroundColor: colors.primary,
+      ...shadowStyle
+    },
+    reportButton: {
+      position: 'absolute',
+      zIndex: 999,
+      top: 15,
+      right: 15,
+      borderRadius: 500,
+      backgroundColor: colors.card,
       ...shadowStyle
     },
 

@@ -1,18 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-// import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { useConfirmModal } from '@/hooks/useConfirmModal'
 import AuthContext from '@/utils/authContext'
 import DropDownMenu from '@/components/DropDownMenu'
+import ReportModal from '@/components/Report'
 
-const ButtonPostOptions = ({ postId, post, userId, onDeletePost }) => {
+const ButtonPostOptions = ({
+  postId,
+  post,
+  postIndex,
+  userId,
+  onDeletePost
+}) => {
   const showAlert = useAlertModal()
   const showConfirm = useConfirmModal()
   const { user: me } = useContext(AuthContext)
   const navigation = useNavigation()
   const isPostOwner = userId === me.id
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false)
 
   const options = isPostOwner
     ? [
@@ -27,7 +34,7 @@ const ButtonPostOptions = ({ postId, post, userId, onDeletePost }) => {
   const handleOptionSelect = value => {
     const actionsMap = {
       message: () => navigation.navigate('Message', { userId }),
-      report: () => unImplemented(),
+      report: () => setIsReportModalVisible(true),
       edit_post: () => navigation.navigate('EditPost', { post }),
       delete_post: () => {
         showConfirm('Are you sure you want to delete this post?', async () => {
@@ -44,16 +51,19 @@ const ButtonPostOptions = ({ postId, post, userId, onDeletePost }) => {
     }
   }
 
-  const unImplemented = () => {
-    showAlert('error', 'This will be available in a future release')
-  }
-
   return (
     <View>
       <DropDownMenu
         options={options}
         hasIconButton={'more-vert'}
         onSelect={handleOptionSelect}
+      />
+      <ReportModal
+        visible={isReportModalVisible}
+        onClose={() => setIsReportModalVisible(false)}
+        id={postId}
+        type="POST"
+        postIndex={postIndex}
       />
     </View>
   )

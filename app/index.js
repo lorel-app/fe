@@ -22,6 +22,7 @@ import MessageScreen from '@/app/screens/Message'
 import EditProfileScreen from '@/app/screens/EditProfile'
 import EditPostScreen from '@/app/screens/EditPost'
 import SettingsScreen from '@/app/screens/Settings'
+import AboutScreen from '@/app/screens_static/About'
 import UserAgreementsScreen from './screens_static/UserAgreements'
 
 const Stack = createStackNavigator()
@@ -90,6 +91,11 @@ export default function Index() {
                     <Stack.Screen
                       name="User Settings"
                       component={SettingsScreen}
+                      options={{ headerShown: true }}
+                    />
+                    <Stack.Screen
+                      name="About Lorel"
+                      component={AboutScreen}
                       options={{ headerShown: true }}
                     />
                     <Stack.Screen
