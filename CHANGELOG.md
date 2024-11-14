@@ -1,3 +1,10 @@
+# [1.2.0-dev.46](https://github.com/lorel-app/fe/compare/v1.2.0-dev.45...v1.2.0-dev.46) (2024-11-14)
+
+
+### Features
+
+* 🫡 Report implemented, About is WIP ([4433881](https://github.com/lorel-app/fe/commit/44338818ff59bdb393eb2a80c187548969e9002e))
+
 # [1.2.0-dev.45](https://github.com/lorel-app/fe/compare/v1.2.0-dev.44...v1.2.0-dev.45) (2024-11-13)
 
 
