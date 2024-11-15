@@ -18,7 +18,6 @@ import {
   useNavigation,
   useFocusEffect
 } from '@react-navigation/native'
-import UnauthenticatedView from '@/components/UnauthenticatedView'
 import Spacer from '@/components/Spacer'
 import ButtonIcon from '@/components/ButtonIcon'
 import DropDownMenu from '@/components/DropDownMenu'
@@ -29,7 +28,7 @@ const AddScreen = () => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
   const { colors } = useTheme()
-  const { isAuthenticated, user: me } = useContext(AuthContext)
+  const { user: me } = useContext(AuthContext)
   const navigation = useNavigation()
 
   const [selectedOption, setSelectedOption] = useState('CONTENT')
@@ -144,7 +143,7 @@ const AddScreen = () => {
     }
   }
 
-  return isAuthenticated ? (
+  return (
     <>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -271,8 +270,6 @@ const AddScreen = () => {
         )}
       </View>
     </>
-  ) : (
-    <UnauthenticatedView />
   )
 }
 

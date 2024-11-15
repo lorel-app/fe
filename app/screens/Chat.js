@@ -3,8 +3,6 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
-import AuthContext from '@/utils/authContext'
-import UnauthenticatedView from '@/components/UnauthenticatedView'
 import UserCard from '@/components/UserCard'
 import api from '@/utils/api'
 import Loader from '@/components/Loader'
@@ -12,7 +10,6 @@ import useFormatResponse from '@/hooks/useFormatResponse'
 
 export default function ChatScreen() {
   const styles = useGlobalStyles()
-  const { isAuthenticated, user } = useContext(AuthContext)
   const [chats, setChats] = useState([])
   const [loading, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
@@ -22,7 +19,7 @@ export default function ChatScreen() {
   const { truncate, timeAgo } = useFormatResponse()
 
   const fetchChats = async () => {
-    if (loading || !hasMore || !isAuthenticated) return
+    if (loading || !hasMore) return
     setLoading(true)
     try {
       const response = await api.allChats(12, offset)
@@ -51,10 +48,6 @@ export default function ChatScreen() {
       fetchChats()
     }, [])
   )
-
-  if (!isAuthenticated) {
-    return <UnauthenticatedView />
-  }
 
   const renderItem = ({ item: chat }) => (
     <TouchableOpacity

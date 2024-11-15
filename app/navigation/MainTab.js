@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import HomeScreen from '@/app/screens/Home'
@@ -8,6 +8,7 @@ import AddScreen from '@/app/screens/Add'
 import ProfileScreen from '@/app/screens/Profile'
 import { useTheme } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import AuthContext from '@/utils/authContext'
 
 const Tab = createBottomTabNavigator()
 const tabIcons = {
@@ -21,6 +22,21 @@ const tabIcons = {
 function Tabs() {
   const { colors } = useTheme()
   const styles = useGlobalStyles()
+  const { isAuthenticated } = useContext(AuthContext)
+
+  const tabScreens = [
+    <Tab.Screen key="Home" name="Home" component={HomeScreen} />,
+    <Tab.Screen key="Search" name="Search" component={SearchScreen} />
+  ]
+
+  if (isAuthenticated) {
+    tabScreens.push(
+      <Tab.Screen key="Chat" name="Chat" component={ChatScreen} />,
+      <Tab.Screen key="Add" name="Add" component={AddScreen} />,
+      <Tab.Screen key="Profile" name="Profile" component={ProfileScreen} />
+    )
+  }
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -46,11 +62,7 @@ function Tabs() {
         // tabBarBadge + tabBarBadgeStyle for notifications
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Chat" component={ChatScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Add" component={AddScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      {tabScreens}
     </Tab.Navigator>
   )
 }

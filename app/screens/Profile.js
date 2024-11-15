@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, TouchableOpacity, Text, Image, TextInput } from 'react-native'
+import { View, TouchableOpacity, Text, TextInput } from 'react-native'
 import { useTheme, useNavigation } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useImagePicker } from '@/hooks/useImagePicker'
@@ -7,7 +7,6 @@ import ModalScreen from '@/components/ModalScreen'
 import { useConfirmModal } from '@/hooks/useConfirmModal'
 import api from '@/utils/api'
 import AuthContext from '@/utils/authContext'
-import UnauthenticatedView from '@/components/UnauthenticatedView'
 import UserScreen from '@/app/screens/User'
 import DropDownMenu from '@/components/DropDownMenu'
 import Spacer from '@/components/Spacer'
@@ -18,7 +17,7 @@ const ProfileScreen = () => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
   const showConfirm = useConfirmModal()
-  const { isAuthenticated, user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
   const [isUsernameModalVisible, setIsUsernameModalVisible] = useState(false)
@@ -85,11 +84,7 @@ const ProfileScreen = () => {
     }
   }
 
-  if (!isAuthenticated || !user) {
-    return <UnauthenticatedView />
-  }
-
-  if (loading) {
+  if (loading || !user) {
     return <Loader />
   }
 
