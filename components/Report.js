@@ -10,6 +10,7 @@ const ReportModal = ({ visible, onClose, id, type, postIndex, title }) => {
   const styles = useGlobalStyles()
   const showAlert = useAlertModal()
   const [message, setMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     if (visible) {
@@ -18,19 +19,21 @@ const ReportModal = ({ visible, onClose, id, type, postIndex, title }) => {
   }, [visible])
 
   const handleReport = async () => {
-    if (!message) {
-      return
-    } else {
-      const response = await api.sendReport({
-        ...(type !== 'HELP' && { resourceId: id }),
-        resourceType: type,
-        mediaIndex: postIndex || null,
-        message
-      })
+    setIsSubmitting(true)
+    const response = await api.sendReport({
+      ...(type !== 'HELP' && { resourceId: id }),
+      resourceType: type,
+      mediaIndex: postIndex || null,
+      message
+    })
+    if (response.success) {
+      showAlert('success', 'Thank you, we will look into it')
       onClose()
-      response.success
-        ? showAlert('success', 'Thank you, we will look into it')
-        : showAlert('error', 'Something went wrong, please try again later')
+      setIsSubmitting(false)
+    } else {
+      showAlert('error', 'Something went wrong, please try again later')
+      setIsSubmitting(false)
+      return
     }
   }
 
@@ -52,10 +55,18 @@ const ReportModal = ({ visible, onClose, id, type, postIndex, title }) => {
           autoFocus={visible}
         />
         <TouchableOpacity
-          style={[styles.button, !message && { opacity: 0.5 }]}
+          style={[
+            styles.button,
+            !message || isSubmitting ? { opacity: 0.5 } : null
+          ]}
           onPress={handleReport}
+          disabled={!message | isSubmitting}
         >
-          <Text style={styles.buttonText}>Submit</Text>
+          {isSubmitting ? (
+            <Text style={styles.buttonText}>Submitting...</Text>
+          ) : (
+            <Text style={styles.buttonText}>Submit</Text>
+          )}
         </TouchableOpacity>
       </View>
     </ModalScreen>

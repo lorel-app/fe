@@ -79,10 +79,10 @@ export default function SignUpLogInModal({ visible, onClose }) {
     }
     try {
       const response = await api.signUp({
-        username: username.toLowerCase(),
-        email,
-        phone,
-        password
+        username: username.trim().toLowerCase(),
+        email: email.trim(),
+        phone: phone.trim(),
+        password: password.trim()
       })
       response.success
         ? (handleVerification(response.data, password), onClose())
@@ -100,8 +100,8 @@ export default function SignUpLogInModal({ visible, onClose }) {
     }
     try {
       const response = await login({
-        identity: identity.toLowerCase(),
-        password
+        identity: identity.trim().toLowerCase(),
+        password: password.trim()
       })
       response.success
         ? (onClose(),
@@ -364,18 +364,20 @@ export function VerifyModal({
           value={code}
           onChangeText={setCode}
           multiline={false}
+          keyboardType="numeric"
+          maxLength={6}
         />
         <TouchableOpacity style={styles.button} onPress={verifyCode}>
           <Text style={styles.buttonText}>Verify</Text>
         </TouchableOpacity>
         {/* temp */}
-        <TouchableOpacity onPress={{}}>
+        {/* <TouchableOpacity onPress={{}}>
           <Text style={styles.link}>
             {isVerifyEmail
               ? 'This is the wrong email address'
               : 'This is the wrong phone number'}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </ModalScreen>
   )
