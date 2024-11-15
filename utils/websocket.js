@@ -1,9 +1,11 @@
-import React, { createContext, useEffect, useContext } from 'react'
+import React, { createContext, useEffect, useContext, useState } from 'react'
 import api from '@/utils/api'
 import AuthContext from '@/utils/authContext'
 
 let ws = null
 let heartBeat = null
+// testing; remove after MESSAGE SCREEN implementation
+let messageCount = 0
 
 const WebSocketContext = createContext()
 
@@ -22,6 +24,7 @@ const clearWebSocketResources = () => {
 
 export const WebSocketProvider = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext)
+  const [newChatMessages, setNewChatMessages] = useState([])
 
   const sendChatMessage = (userId, message) => {
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -33,11 +36,24 @@ export const WebSocketProvider = ({ children }) => {
       ws.send(chatMessage)
     }
   }
+  const clearNewChatMessages = () => {
+    setNewChatMessages([])
+  }
+
+  // testing; remove after MESSAGE SCREEN implementation
+  const simulateFakeMessage = () => {
+    const fakeMessage = {
+      type: 'chat',
+      //  sender: `Test message number ${messageCount}`,
+      sender: 'e08864fa-f37f-4092-8995-9b8741b85777',
+      message: `Test message number ${messageCount}`
+    }
+    setNewChatMessages(prevMessages => [...prevMessages, fakeMessage])
+  }
 
   useEffect(() => {
     const ping = () => {
       if (ws && ws.readyState === WebSocket.OPEN) {
-        console.log('Sending ping message...')
         const pingMessage = JSON.stringify({ type: 'ping' })
         ws.send(pingMessage)
       }
@@ -51,7 +67,15 @@ export const WebSocketProvider = ({ children }) => {
       }
 
       ws.onmessage = event => {
-        console.log('Handle responses', event)
+        try {
+          const parsedData = JSON.parse(event.data)
+
+          if (parsedData.type === 'chat') {
+            setNewChatMessages(prevMessages => [...prevMessages, parsedData])
+          }
+        } catch (error) {
+          console.error('Error processing WebSocket message:', error)
+        }
       }
 
       ws.onclose = () => {
@@ -110,14 +134,28 @@ export const WebSocketProvider = ({ children }) => {
       connectWebSocket()
     } else return
 
+    // testing; remove after MESSAGE SCREEN implementation
+    const fakeMessageInterval = setInterval(() => {
+      if (messageCount < 20) {
+        simulateFakeMessage()
+        messageCount += 1
+      } else {
+        clearInterval(fakeMessageInterval)
+      }
+    }, 5000)
+
     return () => {
       clearWebSocketResources()
+      // testing; remove after MESSAGE SCREEN implementation
+      clearInterval(fakeMessageInterval)
       api.setOnTokenChangeCallback(() => {})
     }
   }, [isAuthenticated])
 
   return (
-    <WebSocketContext.Provider value={{ sendChatMessage }}>
+    <WebSocketContext.Provider
+      value={{ newChatMessages, clearNewChatMessages, sendChatMessage }}
+    >
       {children}
     </WebSocketContext.Provider>
   )

@@ -9,6 +9,7 @@ import ProfileScreen from '@/app/screens/Profile'
 import { useTheme } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import AuthContext from '@/utils/authContext'
+import { useWebSocket } from '@/utils/websocket'
 
 const Tab = createBottomTabNavigator()
 const tabIcons = {
@@ -23,6 +24,7 @@ function Tabs() {
   const { colors } = useTheme()
   const styles = useGlobalStyles()
   const { isAuthenticated } = useContext(AuthContext)
+  const { newChatMessages } = useWebSocket()
 
   const tabScreens = [
     <Tab.Screen key="Home" name="Home" component={HomeScreen} />,
@@ -31,7 +33,27 @@ function Tabs() {
 
   if (isAuthenticated) {
     tabScreens.push(
-      <Tab.Screen key="Chat" name="Chat" component={ChatScreen} />,
+      <Tab.Screen
+        key="Chat"
+        name="Chat"
+        component={ChatScreen}
+        options={{
+          tabBarBadge:
+            newChatMessages.length > 0 ? newChatMessages.length : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: colors.tertiary,
+            color: colors.tint,
+            fontWeight: 500,
+            fontSize: 10,
+            height: 20,
+            minWidth: 20,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignContent: 'center',
+            textAlign: 'center'
+          }
+        }}
+      />,
       <Tab.Screen key="Add" name="Add" component={AddScreen} />,
       <Tab.Screen key="Profile" name="Profile" component={ProfileScreen} />
     )
@@ -59,7 +81,6 @@ function Tabs() {
         },
         headerShown: false,
         unmountOnBlur: true
-        // tabBarBadge + tabBarBadgeStyle for notifications
       })}
     >
       {tabScreens}
