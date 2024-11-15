@@ -2,8 +2,13 @@ import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme, useFocusEffect } from '@react-navigation/native'
+import {
+  useTheme,
+  useFocusEffect,
+  useNavigation
+} from '@react-navigation/native'
 import { useAlertModal } from '@/hooks/useAlertModal'
+import { useConfirmModal } from '@/hooks/useConfirmModal'
 import api from '@/utils/api'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import ModalScreen from '@/components/ModalScreen'
@@ -13,6 +18,8 @@ const SettingsScreen = () => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const showAlert = useAlertModal()
+  const showConfirm = useConfirmModal()
+  const navigation = useNavigation()
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [currency, setCurrency] = useState('')
@@ -37,6 +44,25 @@ const SettingsScreen = () => {
 
   const unImplemented = () => {
     showAlert('error', 'This will be available in a future release')
+  }
+
+  const handleAccountDelete = async () => {
+    navigation.navigate('Home')
+    showConfirm(
+      `Are you sure you want to DELETE your account?\nAll of your data will be wiped\nand CANNOT BE RESTORED`,
+      async () => {
+        try {
+          await api.deleteMe()
+          showAlert(
+            'success',
+            'You deleted your Lorel account and have been logged out'
+          )
+        } catch (error) {
+          console.error(error)
+          showAlert('error', 'Failed to delete account, please try again later')
+        }
+      }
+    )
   }
 
   const options = [
@@ -139,7 +165,7 @@ const SettingsScreen = () => {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={unImplemented}>
+          <TouchableOpacity onPress={handleAccountDelete}>
             <Text style={[styles.errorText, { paddingBottom: 10 }]}>
               delete account
             </Text>

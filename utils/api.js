@@ -278,6 +278,15 @@ const getMe = async body => {
   return response
 }
 
+const deleteMe = async () => {
+  const response = await apiInstance.delete('/me')
+  if (response.success) {
+    await setTokens(null, null)
+    onTokenChange()
+    return response
+  }
+}
+
 const getUser = async userId => {
   const response = await apiInstance.get(`user/${userId}`)
   return response
@@ -484,6 +493,7 @@ export default {
   verifyEmail,
   verifyPhone,
   getMe,
+  deleteMe,
   getUser,
   editPreferences,
   editProfile,

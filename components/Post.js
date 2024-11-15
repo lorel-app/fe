@@ -120,6 +120,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
           showPagination={mediaUrls.length > 1}
           PaginationComponent={CustomPagination}
           onChangeIndex={({ index }) => setMediaIndex(index)}
+          currentIndex={mediaIndex}
         />
       </View>
 
