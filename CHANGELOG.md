@@ -1,3 +1,10 @@
+# [1.2.0-dev.49](https://github.com/lorel-app/fe/compare/v1.2.0-dev.48...v1.2.0-dev.49) (2024-11-15)
+
+
+### Features
+
+* 🫡 live chat update ([9d98dfa](https://github.com/lorel-app/fe/commit/9d98dfabf3a39164ee8ff9f099ef127000cb364f))
+
 # [1.2.0-dev.48](https://github.com/lorel-app/fe/compare/v1.2.0-dev.47...v1.2.0-dev.48) (2024-11-15)
 
 
