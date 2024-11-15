@@ -1,3 +1,10 @@
+# [1.2.0-dev.48](https://github.com/lorel-app/fe/compare/v1.2.0-dev.47...v1.2.0-dev.48) (2024-11-15)
+
+
+### Features
+
+* 🫡 Delete account route + fix media slider pagination ([ad6aa27](https://github.com/lorel-app/fe/commit/ad6aa27b2862347b909d5dc878cf7f8cd900febf))
+
 # [1.2.0-dev.47](https://github.com/lorel-app/fe/compare/v1.2.0-dev.46...v1.2.0-dev.47) (2024-11-15)
 
 
