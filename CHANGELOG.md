@@ -1,3 +1,10 @@
+# [1.2.0-dev.50](https://github.com/lorel-app/fe/compare/v1.2.0-dev.49...v1.2.0-dev.50) (2024-11-15)
+
+
+### Bug Fixes
+
+* 🐛 Cannot spam reports, trimming input ([9fd3cef](https://github.com/lorel-app/fe/commit/9fd3cefca302c2a52833e73210cf15842d41afe3))
+
 # [1.2.0-dev.49](https://github.com/lorel-app/fe/compare/v1.2.0-dev.48...v1.2.0-dev.49) (2024-11-15)
 
 
