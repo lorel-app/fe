@@ -1,3 +1,10 @@
+# [1.2.0-dev.47](https://github.com/lorel-app/fe/compare/v1.2.0-dev.46...v1.2.0-dev.47) (2024-11-15)
+
+
+### Features
+
+* 🫡 Handle 404 and 401 Refactor ([5599134](https://github.com/lorel-app/fe/commit/55991342d148568a29fc1324a36ef0abac350c7c))
+
 # [1.2.0-dev.46](https://github.com/lorel-app/fe/compare/v1.2.0-dev.45...v1.2.0-dev.46) (2024-11-14)
 
 
