@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import ThemeContext from '@/components/ThemeContext'
 import AppDarkTheme from '@/constants/AppDarkTheme'
 import AppLightTheme from '@/constants/AppLightTheme'
-import { useColorScheme } from '@/hooks/useColorScheme'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthProvider } from '@/utils/authContext'
 import { WebSocketProvider } from '@/utils/websocket'
 import { AlertProvider } from '@/hooks/useAlertModal'
@@ -28,8 +28,30 @@ import UserAgreementsScreen from './screens_static/UserAgreements'
 const Stack = createStackNavigator()
 
 export default function Index() {
-  const colorScheme = useColorScheme()
-  const [theme, setTheme] = React.useState(colorScheme)
+  const [theme, setTheme] = React.useState('light')
+  const [isReady, setIsReady] = React.useState(false)
+
+  React.useEffect(() => {
+    const loadTheme = async () => {
+      try {
+        const savedTheme = await AsyncStorage.getItem('theme')
+        if (savedTheme) {
+          setTheme(savedTheme)
+        }
+      } catch (error) {
+        console.error('Failed to load theme from AsyncStorage', error)
+      } finally {
+        setIsReady(true)
+      }
+    }
+
+    loadTheme()
+  }, [])
+
+  if (!isReady) {
+    return null
+  }
+
   const themeData = { theme, setTheme }
   return (
     <AuthProvider>
