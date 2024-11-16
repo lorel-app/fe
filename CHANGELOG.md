@@ -1,3 +1,10 @@
+# [1.2.0-dev.52](https://github.com/lorel-app/fe/compare/v1.2.0-dev.51...v1.2.0-dev.52) (2024-11-16)
+
+
+### Features
+
+* 🫡 change password ([b9f2eaa](https://github.com/lorel-app/fe/commit/b9f2eaa9b0d474932845ec18ec9487affaad6222))
+
 # [1.2.0-dev.51](https://github.com/lorel-app/fe/compare/v1.2.0-dev.50...v1.2.0-dev.51) (2024-11-16)
 
 
