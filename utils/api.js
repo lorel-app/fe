@@ -283,6 +283,11 @@ const resetPassword = async body => {
   return response
 }
 
+const changePassword = async body => {
+  const response = await apiInstance.patch('/auth/change-password', body)
+  return response
+}
+
 const getMe = async body => {
   const response = await apiInstance.get('/me', body)
   return response
@@ -504,6 +509,7 @@ export default {
   verifyPhone,
   sendResetPasswordEmail,
   resetPassword,
+  changePassword,
   getMe,
   deleteMe,
   getUser,

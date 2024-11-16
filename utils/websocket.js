@@ -5,7 +5,7 @@ import AuthContext from '@/utils/authContext'
 let ws = null
 let heartBeat = null
 // testing; remove after MESSAGE SCREEN implementation
-let messageCount = 0
+//let messageCount = 0
 
 const WebSocketContext = createContext()
 
@@ -41,15 +41,15 @@ export const WebSocketProvider = ({ children }) => {
   }
 
   // testing; remove after MESSAGE SCREEN implementation
-  const simulateFakeMessage = () => {
-    const fakeMessage = {
-      type: 'chat',
-      //  sender: `Test message number ${messageCount}`,
-      sender: 'e08864fa-f37f-4092-8995-9b8741b85777',
-      message: `Test message number ${messageCount}`
-    }
-    setNewChatMessages(prevMessages => [...prevMessages, fakeMessage])
-  }
+  // const simulateFakeMessage = () => {
+  //   const fakeMessage = {
+  //     type: 'chat',
+  //     sender: `Test message number ${messageCount}`,
+  //     // sender: 'e08864fa-f37f-4092-8995-9b8741b85777',
+  //     message: `Test message number ${messageCount}`
+  //   }
+  //   setNewChatMessages(prevMessages => [...prevMessages, fakeMessage])
+  // }
 
   useEffect(() => {
     const ping = () => {
@@ -135,19 +135,19 @@ export const WebSocketProvider = ({ children }) => {
     } else return
 
     // testing; remove after MESSAGE SCREEN implementation
-    const fakeMessageInterval = setInterval(() => {
-      if (messageCount < 20) {
-        simulateFakeMessage()
-        messageCount += 1
-      } else {
-        clearInterval(fakeMessageInterval)
-      }
-    }, 5000)
+    // const fakeMessageInterval = setInterval(() => {
+    //   if (messageCount < 20) {
+    //     simulateFakeMessage()
+    //     messageCount += 1
+    //   } else {
+    //     clearInterval(fakeMessageInterval)
+    //   }
+    // }, 5000)
 
     return () => {
       clearWebSocketResources()
       // testing; remove after MESSAGE SCREEN implementation
-      clearInterval(fakeMessageInterval)
+      // clearInterval(fakeMessageInterval)
       api.setOnTokenChangeCallback(() => {})
     }
   }, [isAuthenticated])
