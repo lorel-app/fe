@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { FlatList, Text, View } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -36,7 +36,7 @@ const MessageScreen = ({ route }) => {
     getUser()
   }, [userId])
 
-  const { sendChatMessage } = useWebSocket()
+  const { sendChatMessage, newChatMessages } = useWebSocket()
 
   const handleSend = message => {
     if (message.trim()) {
@@ -79,28 +79,54 @@ const MessageScreen = ({ route }) => {
     }
   }
 
+  useEffect(() => {
+    if (newChatMessages && Array.isArray(newChatMessages) && !loading) {
+      setMessages(prevMessages => {
+        return newChatMessages.reduce(
+          (updatedMessages, newMessage) => {
+            const messageExists = prevMessages.some(
+              existingMessage => existingMessage.id === newMessage.id
+            )
+            if (newMessage.sender === userId && !messageExists) {
+              updatedMessages.unshift({
+                id: newMessage.messageId,
+                userId: newMessage.sender,
+                message: newMessage.message,
+                createdAt: new Date().toISOString(),
+                status: 'RECEIVED'
+              })
+            }
+            return updatedMessages
+          },
+          [...prevMessages]
+        )
+      })
+    }
+  }, [newChatMessages, userId])
+
   useFocusEffect(
     React.useCallback(() => {
       getUser()
-      setMessages([])
-      setOffset(0)
       fetchMessages()
     }, [userId])
   )
 
-  const renderItem = ({ item: message }) => {
-    const isSender = me.id === message.userId
-    return (
-      <View style={[{ width: '100%' }]}>
-        <ChatBubble
-          message={message.message}
-          time={message.createdAt}
-          status={message.status}
-          isSender={isSender}
-        />
-      </View>
-    )
-  }
+  const renderItem = useCallback(
+    ({ item: message }) => {
+      const isSender = me.id === message.userId
+      return (
+        <View style={[{ width: '100%' }]}>
+          <ChatBubble
+            message={message.message}
+            time={message.createdAt}
+            status={message.status}
+            isSender={isSender}
+          />
+        </View>
+      )
+    },
+    [navigation]
+  )
 
   return (
     <>
@@ -137,6 +163,7 @@ const MessageScreen = ({ route }) => {
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={[
           { flexGrow: 1 },
+          { width: '100%' },
           { maxWidth: 600 },
           { minWidth: 300 },
           { alignSelf: 'center' }

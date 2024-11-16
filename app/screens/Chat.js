@@ -26,11 +26,8 @@ export default function ChatScreen() {
     try {
       const response = await api.allChats(12, offset)
       if (response.success) {
-        // previous
-        // setChats(prevChats => [...prevChats, ...response.data.conversations])
         setChats(prevChats => {
           const newChats = [...prevChats, ...response.data.conversations]
-          // Remove duplicates based on user.id in the case newMessage is received at same time as fetchPosts
           const uniqueChats = newChats.filter(
             (chat, index, self) =>
               index === self.findIndex(c => c.user.id === chat.user.id)
@@ -84,7 +81,7 @@ export default function ChatScreen() {
             return updatedChatsList
           } else {
             updatedChats.unshift({
-              id: `${newMessage.sender}-${new Date().toISOString()}`,
+              id: newMessage.messageId,
               user: { id: newMessage.sender, username: 'temp' },
               lastMessage: {
                 message: newMessage.message
@@ -103,6 +100,7 @@ export default function ChatScreen() {
       return (
         <TouchableOpacity
           onPress={() => {
+            clearNewChatMessages()
             navigation.navigate('Message', { userId: chat.user.id })
           }}
         >

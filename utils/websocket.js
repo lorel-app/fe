@@ -4,7 +4,7 @@ import AuthContext from '@/utils/authContext'
 
 let ws = null
 let heartBeat = null
-// testing; remove after MESSAGE SCREEN implementation
+// being used for testing; remove later
 //let messageCount = 0
 
 const WebSocketContext = createContext()
@@ -40,12 +40,12 @@ export const WebSocketProvider = ({ children }) => {
     setNewChatMessages([])
   }
 
-  // testing; remove after MESSAGE SCREEN implementation
+  // being used for testing; remove later
   // const simulateFakeMessage = () => {
   //   const fakeMessage = {
+  //     messageId: `${messageCount}1-4e65-4877-852c-3024bcf3fa`,
   //     type: 'chat',
-  //     sender: `Test message number ${messageCount}`,
-  //     // sender: 'e08864fa-f37f-4092-8995-9b8741b85777',
+  //     sender: 'aecfea11-4e65-4877-852c-3024bcf3fa41',
   //     message: `Test message number ${messageCount}`
   //   }
   //   setNewChatMessages(prevMessages => [...prevMessages, fakeMessage])
@@ -134,9 +134,9 @@ export const WebSocketProvider = ({ children }) => {
       connectWebSocket()
     } else return
 
-    // testing; remove after MESSAGE SCREEN implementation
+    // being used for testing; remove later
     // const fakeMessageInterval = setInterval(() => {
-    //   if (messageCount < 20) {
+    //   if (messageCount < 190) {
     //     simulateFakeMessage()
     //     messageCount += 1
     //   } else {
@@ -146,7 +146,7 @@ export const WebSocketProvider = ({ children }) => {
 
     return () => {
       clearWebSocketResources()
-      // testing; remove after MESSAGE SCREEN implementation
+      // being used for testing; remove later
       // clearInterval(fakeMessageInterval)
       api.setOnTokenChangeCallback(() => {})
     }
