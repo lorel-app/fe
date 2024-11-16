@@ -1,3 +1,10 @@
+# [1.2.0-dev.53](https://github.com/lorel-app/fe/compare/v1.2.0-dev.52...v1.2.0-dev.53) (2024-11-16)
+
+
+### Bug Fixes
+
+* 🐛 Override sitemap ([64f41c2](https://github.com/lorel-app/fe/commit/64f41c2f993396b7c93b8eaa773d3ff75df1ca69))
+
 # [1.2.0-dev.52](https://github.com/lorel-app/fe/compare/v1.2.0-dev.51...v1.2.0-dev.52) (2024-11-16)
 
 
