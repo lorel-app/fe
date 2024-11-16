@@ -42,7 +42,7 @@ const CommentScreen = ({ route }) => {
       } else {
         showAlert(
           'error',
-          `${response.data.message}: Please check your internet connection or try again later`
+          `Please check your internet connection or try again later`
         )
       }
     } catch (error) {

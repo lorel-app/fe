@@ -24,6 +24,8 @@ export default function SignUpLogInModal({ visible, onClose }) {
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [isVerifyModalVisible, setIsVerifyModalVisible] = useState(false)
   const [isVerifyEmail, setIsVerifyEmail] = useState(true)
+  const [isResetPasswordModalVisible, setIsResetPasswordModalVisible] =
+    useState(false)
   const [verificationToken, setVerificationToken] = useState('')
   const [user, setUser] = useState('')
   const [savedPassword, setSavedPassword] = useState('')
@@ -153,6 +155,11 @@ export default function SignUpLogInModal({ visible, onClose }) {
     const response = await api.sendVerificationPhone({ verificationToken })
     !response.success &&
       showAlert('error', 'Something went wrong, please try again later')
+  }
+
+  const handleResetPassword = () => {
+    onClose()
+    setIsResetPasswordModalVisible(true)
   }
 
   return (
@@ -290,6 +297,13 @@ export default function SignUpLogInModal({ visible, onClose }) {
               {isSignUp ? 'I already have an account' : 'Create an account'}
             </Text>
           </TouchableOpacity>
+          {!isSignUp && (
+            <TouchableOpacity onPress={handleResetPassword}>
+              <Text style={[styles.errorText, { paddingTop: 10 }]}>
+                I forgot my password
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ModalScreen>
 
@@ -299,6 +313,11 @@ export default function SignUpLogInModal({ visible, onClose }) {
         isVerifyEmail={isVerifyEmail}
         verificationToken={verificationToken}
         user={user}
+      />
+
+      <ResetPasswordModal
+        visible={isResetPasswordModalVisible}
+        onClose={() => setIsResetPasswordModalVisible(false)}
       />
     </>
   )
@@ -378,6 +397,53 @@ export function VerifyModal({
               : 'This is the wrong phone number'}
           </Text>
         </TouchableOpacity> */}
+      </View>
+    </ModalScreen>
+  )
+}
+
+const ResetPasswordModal = ({ visible, onClose }) => {
+  const styles = useGlobalStyles()
+  const showAlert = useAlertModal()
+  const { colors } = useTheme()
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const sendEmail = async () => {
+    setIsSubmitting(true)
+    await api.sendResetPasswordEmail({
+      email: email.trim()
+    })
+    onClose()
+    setIsSubmitting(false)
+    showAlert(
+      'success',
+      'A link to reset your password has been emailed to you if the account exists'
+    )
+  }
+
+  return (
+    <ModalScreen visible={visible} onClose={onClose}>
+      <View style={styles.modalChildren}>
+        <Text style={styles.title}>Reset your password</Text>
+        <Spacer />
+        <Text style={styles.textCenter}>What's your email address?</Text>
+        <TextInput
+          style={styles.input}
+          placeholder=""
+          placeholderTextColor={colors.text}
+          value={email}
+          onChangeText={setEmail}
+          multiline={false}
+          autoFocus={visible}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={sendEmail}
+          disabled={!email || isSubmitting}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </ModalScreen>
   )

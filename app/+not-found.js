@@ -10,7 +10,6 @@ const UnmatchedRoute = () => {
 
   // Not handled for native (use Navigation + webView to open in same tab)
   const openHomeLink = () => {
-    console.log(goToHomeLink)
     Linking.openURL(goToHomeLink).catch(err =>
       console.error('Failed to open link:', err)
     )

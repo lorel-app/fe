@@ -273,6 +273,16 @@ const verifyPhone = async body => {
   return response
 }
 
+const sendResetPasswordEmail = async body => {
+  const response = await apiInstance.post('/auth/reset-password', body)
+  return response
+}
+
+const resetPassword = async body => {
+  const response = await apiInstance.patch('/auth/reset-password', body)
+  return response
+}
+
 const getMe = async body => {
   const response = await apiInstance.get('/me', body)
   return response
@@ -492,6 +502,8 @@ export default {
   sendVerificationPhone,
   verifyEmail,
   verifyPhone,
+  sendResetPasswordEmail,
+  resetPassword,
   getMe,
   deleteMe,
   getUser,

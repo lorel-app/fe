@@ -98,14 +98,25 @@ export const useGlobalStyles = () => {
     },
 
     grid: {
+      width: fullWidth * 0.9,
+      height: 'auto',
       flexDirection: width < 600 ? 'column' : 'row',
       alignItems: 'center',
-      alignSelf: 'flex-start'
+      alignSelf: 'center',
+      justifyContent: 'center',
+      padding: 20
     },
 
     gridItem: {
-      width: width < 600 ? fullWidth : fullWidth / 3,
-      padding: 2
+      width: width < 600 ? fullWidth * 0.9 : fullWidth / 3.5,
+      minHeight: width < 600 ? null : '100%',
+      flexGrow: 1,
+      padding: 15,
+      backgroundColor: colors.tint,
+      alignItems: 'center',
+      borderRadius: 10,
+      margin: 10,
+      ...shadowStyle
     },
 
     containerGrid: {
@@ -216,7 +227,9 @@ export const useGlobalStyles = () => {
       padding: 2
     },
     errorText: {
-      color: colors.accent
+      color: colors.accent,
+      fontWeight: 500,
+      textAlign: 'center'
     },
     buttonText: {
       color: colors.textAlt,

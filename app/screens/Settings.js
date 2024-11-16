@@ -46,6 +46,10 @@ const SettingsScreen = () => {
     showAlert('error', 'This will be available in a future release')
   }
 
+  const handleChangePassword = async () => {
+    console.log('changing password')
+  }
+
   const handleAccountDelete = async () => {
     navigation.navigate('Home')
     showConfirm(
@@ -159,9 +163,9 @@ const SettingsScreen = () => {
 
           <View style={styles.divider}></View>
 
-          <TouchableOpacity onPress={unImplemented}>
+          <TouchableOpacity onPress={handleChangePassword}>
             <Text style={[styles.link, { paddingBottom: 10 }]}>
-              reset password
+              change password
             </Text>
           </TouchableOpacity>
 
