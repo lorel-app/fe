@@ -1,3 +1,10 @@
+# [1.2.0-dev.54](https://github.com/lorel-app/fe/compare/v1.2.0-dev.53...v1.2.0-dev.54) (2024-11-16)
+
+
+### Features
+
+* 🫡 real time  message screen ([a7823c9](https://github.com/lorel-app/fe/commit/a7823c9d0a16b169c65fe5a94a02a95752393644))
+
 # [1.2.0-dev.53](https://github.com/lorel-app/fe/compare/v1.2.0-dev.52...v1.2.0-dev.53) (2024-11-16)
 
 
