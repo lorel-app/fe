@@ -98,10 +98,7 @@ const AddScreen = () => {
   const handlePost = async () => {
     const { type, media, title, price, caption, description } = form
     if (media.length === 0) {
-      showAlert(
-        'error',
-        'At least one image or video is mandatory for all posts'
-      )
+      showAlert('error', 'At least one image is mandatory for all posts')
       return
     }
     const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/
@@ -126,17 +123,21 @@ const AddScreen = () => {
       if (response.status === 413) {
         showAlert(
           'error',
-          'Upload failed. Please ensure the total size of your photos and videos does not exceed 20MB'
+          'Upload failed. Please ensure the total size of your photos does not exceed 20MB'
         )
         return
       }
-      response.status === 400
-        ? showAlert('error', response.data.message)
-        : response.success
-          ? navigation.navigate('Profile')
-          : showAlert('error', response.data.message)
+      if (response.status === 400) {
+        showAlert(
+          'error',
+          'Invalid file type (videos will be supported in a feature release)'
+        )
+        return
+      }
+      if (response.status === 200) {
+        navigation.navigate('Profile')
+      }
     } catch (error) {
-      console.log(error)
       showAlert('error', 'Something went wrong, please try again later')
     } finally {
       setLoading(false)
