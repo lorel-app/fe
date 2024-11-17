@@ -1,3 +1,10 @@
+# [1.2.0-dev.56](https://github.com/lorel-app/fe/compare/v1.2.0-dev.55...v1.2.0-dev.56) (2024-11-17)
+
+
+### Bug Fixes
+
+* 🐛 backoff strat for websocket reconnect ([12dc055](https://github.com/lorel-app/fe/commit/12dc0553eaec87005ecbfd2d071b43b1f2548c61))
+
 # [1.2.0-dev.55](https://github.com/lorel-app/fe/compare/v1.2.0-dev.54...v1.2.0-dev.55) (2024-11-17)
 
 
