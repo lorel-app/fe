@@ -1,4 +1,10 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react'
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+  useRef
+} from 'react'
 import { useTheme, useFocusEffect } from '@react-navigation/native'
 import { FlatList, Text, View } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -39,9 +45,9 @@ const MessageScreen = ({ route }) => {
   }, [userId])
 
   const { sendChatMessage, newChatMessages } = useWebSocket()
+  const flatListRef = useRef()
 
   const handleSend = message => {
-    // scroll to bottom
     const myUUID = uuidv4()
     if (message.trim()) {
       setIsSending(true)
@@ -55,6 +61,10 @@ const MessageScreen = ({ route }) => {
       setMessages(prevMessages => [newMessage, ...prevMessages])
       sendChatMessage(userId, message)
       setIsSending(false)
+
+      setTimeout(() => {
+        flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
+      }, 300)
     }
   }
 
@@ -67,6 +77,9 @@ const MessageScreen = ({ route }) => {
         setConversationId(response.data.conversationId)
         const fetchedMessages = response.data.messages
 
+        setHasMore(fetchedMessages.length > 0)
+        setOffset(prevOffset => prevOffset + fetchedMessages.length)
+
         const filteredFetchedMessages = fetchedMessages.filter(
           fetchedMessage =>
             !messages.some(
@@ -78,8 +91,8 @@ const MessageScreen = ({ route }) => {
           ...prevMessages,
           ...filteredFetchedMessages
         ])
-        setHasMore(filteredFetchedMessages.length > 0)
-        setOffset(prevOffset => prevOffset + filteredFetchedMessages.length)
+        // setHasMore(filteredFetchedMessages.length > 0)
+        //   setOffset(prevOffset => prevOffset + filteredFetchedMessages.length)
       } else {
         showAlert(
           'error',
@@ -94,7 +107,6 @@ const MessageScreen = ({ route }) => {
   }
 
   useEffect(() => {
-    // scroll to bottom
     if (newChatMessages && Array.isArray(newChatMessages) && !loading) {
       setMessages(prevMessages => {
         const filteredMessages = newChatMessages.filter(newMessage => {
@@ -175,6 +187,7 @@ const MessageScreen = ({ route }) => {
       )}
       <FlatList
         data={messages}
+        ref={flatListRef}
         renderItem={renderItem}
         maxToRenderPerBatch={12}
         inverted={true}
