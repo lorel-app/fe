@@ -1,3 +1,10 @@
+# [1.2.0-dev.57](https://github.com/lorel-app/fe/compare/v1.2.0-dev.56...v1.2.0-dev.57) (2024-11-17)
+
+
+### Bug Fixes
+
+* 🐛 Fixed error handle for adding videos ([8d36601](https://github.com/lorel-app/fe/commit/8d3660199b44dc437f2e04b906d2c4337899a0ec))
+
 # [1.2.0-dev.56](https://github.com/lorel-app/fe/compare/v1.2.0-dev.55...v1.2.0-dev.56) (2024-11-17)
 
 
