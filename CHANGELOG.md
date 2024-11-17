@@ -1,3 +1,10 @@
+# [1.2.0-dev.55](https://github.com/lorel-app/fe/compare/v1.2.0-dev.54...v1.2.0-dev.55) (2024-11-17)
+
+
+### Bug Fixes
+
+* 🐛 Dirty fix for duplicate messages ([bd706d2](https://github.com/lorel-app/fe/commit/bd706d2eee2875a6e2786f3104a5f097c20edaa8))
+
 # [1.2.0-dev.54](https://github.com/lorel-app/fe/compare/v1.2.0-dev.53...v1.2.0-dev.54) (2024-11-16)
 
 
