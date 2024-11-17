@@ -18,6 +18,7 @@ const CommentScreen = ({ route }) => {
   const { post = {}, user = {}, showHeader = true } = route.params || {}
   const [comments, setComments] = useState([])
   const [loading, setLoading] = useState(false)
+  const [isSending, setIsSending] = useState(false)
   const [offset, setOffset] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const showAlert = useAlertModal()
@@ -75,13 +76,16 @@ const CommentScreen = ({ route }) => {
       showAlert('error', 'Please log in first')
       return
     } else {
+      setIsSending(true)
       const response = await api.addComment(post.id, { content: myComment })
       if (response.success) {
         const newComment = response.data.comment
         setComments(prevComments => [newComment, ...prevComments]) // Prepend new comment to the list
         setOffset(prevOffset => prevOffset + 1)
+        setIsSending(false)
       } else {
         showAlert('error', response.data.message)
+        setIsSending(false)
       }
     }
   }
@@ -148,6 +152,7 @@ const CommentScreen = ({ route }) => {
         onSend={handleComment}
         placeholder="Add your comment..."
         placeholderTextColor={colors.text}
+        isSending={isSending}
       />
     </>
   )

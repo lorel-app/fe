@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TextInput, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 
-const SendInputBar = ({ onSend, placeholder }) => {
+const SendInputBar = ({ onSend, placeholder, isSending }) => {
   const [inputText, setInputText] = useState('')
   const styles = useGlobalStyles()
   const { colors } = useTheme()
@@ -26,8 +26,16 @@ const SendInputBar = ({ onSend, placeholder }) => {
         style={styles.barInput}
         multiline={true}
       />
-      <TouchableOpacity style={{ paddingLeft: 8 }} onPress={handleSend}>
-        <Icon style={styles.icon} name="send" color={colors.primary} />
+      <TouchableOpacity
+        style={{ paddingLeft: 8 }}
+        onPress={handleSend}
+        disabled={isSending}
+      >
+        <Icon
+          style={styles.icon}
+          name="send"
+          color={isSending ? colors.primaryTint : colors.primary}
+        />
       </TouchableOpacity>
     </View>
   )

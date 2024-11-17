@@ -60,7 +60,8 @@
     "react-native-swiper-flatlist": "^3.2.4",
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "^0.19.13",
-    "uri-scheme": "^1.2.2"
+    "uri-scheme": "^1.2.2",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

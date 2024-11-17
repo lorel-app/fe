@@ -12,6 +12,7 @@ import ChatBubble from '@/components/ChatBubble'
 import { useWebSocket } from '@/utils/websocket'
 import ReportModal from '@/components/Report'
 import ButtonIcon from '@/components/ButtonIcon'
+import { v4 as uuidv4 } from 'uuid'
 
 const MessageScreen = ({ route }) => {
   const styles = useGlobalStyles()
@@ -26,6 +27,7 @@ const MessageScreen = ({ route }) => {
   const [hasMore, setHasMore] = useState(true)
   const showAlert = useAlertModal()
   const [isReportModalVisible, setIsReportModalVisible] = useState(false)
+  const [isSending, setIsSending] = useState(false)
 
   const getUser = async () => {
     const response = await api.getUser(userId)
@@ -39,17 +41,20 @@ const MessageScreen = ({ route }) => {
   const { sendChatMessage, newChatMessages } = useWebSocket()
 
   const handleSend = message => {
+    // scroll to bottom
+    const myUUID = uuidv4()
     if (message.trim()) {
+      setIsSending(true)
       const newMessage = {
-        id: Date.now(),
+        id: myUUID,
         userId: me.id,
         message: message,
         createdAt: new Date().toISOString(),
         status: 'SENT'
       }
-
       setMessages(prevMessages => [newMessage, ...prevMessages])
       sendChatMessage(userId, message)
+      setIsSending(false)
     }
   }
 
@@ -60,16 +65,25 @@ const MessageScreen = ({ route }) => {
       const response = await api.getChat(userId, 12, offset)
       if (response.success) {
         setConversationId(response.data.conversationId)
+        const fetchedMessages = response.data.messages
+
+        const filteredFetchedMessages = fetchedMessages.filter(
+          fetchedMessage =>
+            !messages.some(
+              existingMessage => existingMessage.id === fetchedMessage.id
+            )
+        )
+
         setMessages(prevMessages => [
           ...prevMessages,
-          ...response.data.messages
+          ...filteredFetchedMessages
         ])
-        setHasMore(response.data.messages.length > 0)
-        setOffset(prevOffset => prevOffset + response.data.messages.length)
+        setHasMore(filteredFetchedMessages.length > 0)
+        setOffset(prevOffset => prevOffset + filteredFetchedMessages.length)
       } else {
         showAlert(
           'error',
-          `Please check your internet connection or try again later`
+          'Please check your internet connection or try again later'
         )
       }
     } catch (error) {
@@ -80,29 +94,33 @@ const MessageScreen = ({ route }) => {
   }
 
   useEffect(() => {
+    // scroll to bottom
     if (newChatMessages && Array.isArray(newChatMessages) && !loading) {
       setMessages(prevMessages => {
-        return newChatMessages.reduce(
-          (updatedMessages, newMessage) => {
-            const messageExists = prevMessages.some(
-              existingMessage => existingMessage.id === newMessage.id
-            )
-            if (newMessage.sender === userId && !messageExists) {
-              updatedMessages.unshift({
+        const filteredMessages = newChatMessages.filter(newMessage => {
+          return !prevMessages.some(
+            existingMessage => existingMessage.id === newMessage.messageId
+          )
+        })
+
+        const newMessages = filteredMessages
+          .map(newMessage => {
+            if (newMessage.conversationId === conversationId) {
+              return {
                 id: newMessage.messageId,
                 userId: newMessage.sender,
                 message: newMessage.message,
-                createdAt: new Date().toISOString(),
-                status: 'RECEIVED'
-              })
+                createdAt: new Date().toISOString()
+              }
             }
-            return updatedMessages
-          },
-          [...prevMessages]
-        )
+            return null
+          })
+          .filter(Boolean)
+
+        return [...newMessages, ...prevMessages]
       })
     }
-  }, [newChatMessages, userId])
+  }, [newChatMessages, loading, conversationId])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -115,7 +133,7 @@ const MessageScreen = ({ route }) => {
     ({ item: message }) => {
       const isSender = me.id === message.userId
       return (
-        <View style={[{ width: '100%' }]}>
+        <View style={{ width: '100%' }}>
           <ChatBubble
             message={message.message}
             time={message.createdAt}
@@ -125,7 +143,7 @@ const MessageScreen = ({ route }) => {
         </View>
       )
     },
-    [navigation]
+    [me]
   )
 
   return (
@@ -150,8 +168,8 @@ const MessageScreen = ({ route }) => {
       {!loading && messages.length === 0 && (
         <View style={[styles.containerFull]}>
           <Text style={styles.buttonSmall}>
-            Chats are not end-to-end encrypted yet.{'\n'}
-            Do not share any sensitive information.
+            Chats are not end-to-end encrypted yet.{'\n'} Do not share any
+            sensitive information.
           </Text>
         </View>
       )}
@@ -178,6 +196,7 @@ const MessageScreen = ({ route }) => {
         onSend={handleSend}
         placeholder="Send a message..."
         placeholderTextColor={colors.text}
+        isSending={isSending}
       />
       <ReportModal
         visible={isReportModalVisible}

@@ -4,8 +4,6 @@ import AuthContext from '@/utils/authContext'
 
 let ws = null
 let heartBeat = null
-// being used for testing; remove later
-//let messageCount = 0
 
 const WebSocketContext = createContext()
 
@@ -40,16 +38,9 @@ export const WebSocketProvider = ({ children }) => {
     setNewChatMessages([])
   }
 
-  // being used for testing; remove later
-  // const simulateFakeMessage = () => {
-  //   const fakeMessage = {
-  //     messageId: `${messageCount}1-4e65-4877-852c-3024bcf3fa`,
-  //     type: 'chat',
-  //     sender: 'aecfea11-4e65-4877-852c-3024bcf3fa41',
-  //     message: `Test message number ${messageCount}`
-  //   }
-  //   setNewChatMessages(prevMessages => [...prevMessages, fakeMessage])
-  // }
+  useEffect(() => {
+    console.log(newChatMessages, 'FROM WS')
+  }, [newChatMessages])
 
   useEffect(() => {
     const ping = () => {
@@ -80,6 +71,8 @@ export const WebSocketProvider = ({ children }) => {
 
       ws.onclose = () => {
         clearWebSocketResources()
+        // try again to connect
+        // send front-end a message
       }
 
       ws.onerror = error => {
@@ -134,20 +127,8 @@ export const WebSocketProvider = ({ children }) => {
       connectWebSocket()
     } else return
 
-    // being used for testing; remove later
-    // const fakeMessageInterval = setInterval(() => {
-    //   if (messageCount < 190) {
-    //     simulateFakeMessage()
-    //     messageCount += 1
-    //   } else {
-    //     clearInterval(fakeMessageInterval)
-    //   }
-    // }, 5000)
-
     return () => {
       clearWebSocketResources()
-      // being used for testing; remove later
-      // clearInterval(fakeMessageInterval)
       api.setOnTokenChangeCallback(() => {})
     }
   }, [isAuthenticated])
