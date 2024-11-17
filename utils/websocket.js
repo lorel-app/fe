@@ -8,6 +8,7 @@ let heartBeat = null
 const WebSocketContext = createContext()
 
 const PING_INTERVAL = 50000
+const MAX_RETRY_DELAY = 30000
 
 const clearWebSocketResources = () => {
   if (heartBeat) {
@@ -23,6 +24,7 @@ const clearWebSocketResources = () => {
 export const WebSocketProvider = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext)
   const [newChatMessages, setNewChatMessages] = useState([])
+  const [retryDelay, setRetryDelay] = useState(2000)
 
   const sendChatMessage = (userId, message) => {
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -38,9 +40,9 @@ export const WebSocketProvider = ({ children }) => {
     setNewChatMessages([])
   }
 
-  useEffect(() => {
-    console.log(newChatMessages, 'FROM WS')
-  }, [newChatMessages])
+  // useEffect(() => {
+  //   console.log(newChatMessages, 'FROM WS')
+  // }, [newChatMessages])
 
   useEffect(() => {
     const ping = () => {
@@ -55,6 +57,7 @@ export const WebSocketProvider = ({ children }) => {
 
       ws.onopen = () => {
         heartBeat = setInterval(ping, PING_INTERVAL)
+        setRetryDelay(2000)
       }
 
       ws.onmessage = event => {
@@ -71,13 +74,16 @@ export const WebSocketProvider = ({ children }) => {
 
       ws.onclose = () => {
         clearWebSocketResources()
-        // try again to connect
-        // send front-end a message
+        if (isAuthenticated) {
+          handleReconnect()
+        }
       }
 
-      ws.onerror = error => {
-        console.error('WebSocket error:', error)
+      ws.onerror = () => {
         clearWebSocketResources()
+        if (isAuthenticated) {
+          handleReconnect()
+        }
       }
     }
 
@@ -103,6 +109,14 @@ export const WebSocketProvider = ({ children }) => {
       }
     }
 
+    const handleReconnect = () => {
+      // inform Chat Screen when retrying and handle success/fail
+      setTimeout(() => {
+        connectWebSocket()
+        setRetryDelay(prevDelay => Math.min(prevDelay * 2, MAX_RETRY_DELAY)) // Exponential backoff with max cap
+      }, retryDelay)
+    }
+
     const handleTokenChange = async () => {
       if (ws && ws.readyState === WebSocket.OPEN) {
         const tokens = await api.loadTokens()
@@ -125,7 +139,9 @@ export const WebSocketProvider = ({ children }) => {
 
     if (isAuthenticated) {
       connectWebSocket()
-    } else return
+    } else {
+      clearWebSocketResources()
+    }
 
     return () => {
       clearWebSocketResources()
