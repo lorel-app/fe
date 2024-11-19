@@ -96,7 +96,7 @@ const AddScreen = () => {
   }
 
   const handlePost = async () => {
-    const { type, media, title, price, caption, description } = form
+    const { type, media, title, price, caption, description, tags } = form
     if (media.length === 0) {
       showAlert('error', 'At least one image is mandatory for all posts')
       return
@@ -117,7 +117,7 @@ const AddScreen = () => {
         title,
         price: price.replace(/[^0-9.]/g, ''),
         caption,
-        tags: selectedTags,
+        tags,
         description
       })
       if (response.status === 413) {
@@ -134,7 +134,7 @@ const AddScreen = () => {
         )
         return
       }
-      if (response.status === 200) {
+      if (response.success) {
         navigation.navigate('Profile')
       }
     } catch (error) {

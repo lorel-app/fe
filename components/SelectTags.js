@@ -4,6 +4,7 @@ import ButtonIcon from '@/components/ButtonIcon'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 import api from '@/utils/api'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const SelectTags = ({ onTagsChange }) => {
   const styles = useGlobalStyles()
@@ -47,20 +48,31 @@ const SelectTags = ({ onTagsChange }) => {
     }
   }
 
-  const renderTagButtons = tagArray => {
-    return tagArray.map(tag => (
-      <TouchableOpacity
-        key={tag.id}
-        style={[
-          styles.buttonSmall,
-          selectedTags.includes(tag.id) && styles.buttonSmallSelected
-        ]}
-        onPress={() => handleTagSelect(tag)}
-      >
-        <Text style={{ color: getTagColor(tag.type) }}>{tag.name}</Text>
-      </TouchableOpacity>
-    ))
-  }
+  const renderTagButtons = tagArray => (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        maxHeight: 230
+      }}
+    >
+      {tagArray.map(tag => (
+        <TouchableOpacity
+          key={tag.id}
+          style={[
+            styles.buttonSmall,
+            selectedTags.includes(tag.id) && styles.buttonSmallSelected
+          ]}
+          onPress={() => handleTagSelect(tag)}
+          // for now, posts can only have 6 tags and you can only search for 6 tags
+          disabled={selectedTags.length >= 6 && !selectedTags.includes(tag.id)}
+        >
+          <Text style={{ color: getTagColor(tag.type) }}>{tag.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  )
 
   const handleTagSelect = tag => {
     const updatedTags = selectedTags.includes(tag.id)
@@ -110,7 +122,10 @@ const SelectTags = ({ onTagsChange }) => {
           </TouchableOpacity>
         )}
       </View>
-      <TouchableOpacity onPress={toggleExpanded} style={styles.rowSpan}>
+      <TouchableOpacity
+        onPress={toggleExpanded}
+        style={[styles.rowSpan, { paddingVertical: 0 }]}
+      >
         <Text style={styles.link}>Show all tags</Text>
         <ButtonIcon
           onPress={toggleExpanded}
@@ -121,14 +136,14 @@ const SelectTags = ({ onTagsChange }) => {
 
       {isExpanded && (
         <>
-          <View style={styles.input}>
+          {/* <View style={styles.input}>
             <TextInput
               style={styles.inputLight}
               placeholder="Search tags"
               placeholderTextColor={colors.text}
             />
             <ButtonIcon onPress={toggleExpanded} iconName="search" />
-          </View>
+          </View> */}
           <View style={styles.rowSpan}>
             {filterTypes.map(type => (
               <TouchableOpacity

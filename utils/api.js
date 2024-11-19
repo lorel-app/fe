@@ -497,6 +497,14 @@ const sendReport = async body => {
   return response
 }
 
+// limite = 50 before fetchMore implementation
+const search = async (q, scope, limit = 50, offset = 0) => {
+  const response = await apiInstance.get(`/search`, {
+    params: { q, scope, limit, offset }
+  })
+  return response
+}
+
 loadTokens()
 
 export default {
@@ -538,6 +546,7 @@ export default {
   allChats,
   getChat,
   sendReport,
+  search,
   loadTokens,
   setOnTokenChangeCallback
 }
