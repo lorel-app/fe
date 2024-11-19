@@ -1,3 +1,10 @@
+# [1.2.0-dev.58](https://github.com/lorel-app/fe/compare/v1.2.0-dev.57...v1.2.0-dev.58) (2024-11-17)
+
+
+### Bug Fixes
+
+* 🐛 scroll offset updating for message screen ([00e966b](https://github.com/lorel-app/fe/commit/00e966b6c79ea0f2047d96253d492bd8646420da))
+
 # [1.2.0-dev.57](https://github.com/lorel-app/fe/compare/v1.2.0-dev.56...v1.2.0-dev.57) (2024-11-17)
 
 
