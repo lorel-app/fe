@@ -1,3 +1,10 @@
+# [1.2.0-dev.59](https://github.com/lorel-app/fe/compare/v1.2.0-dev.58...v1.2.0-dev.59) (2024-11-19)
+
+
+### Features
+
+* 🫡 Search Screen - pre fetchMore() with offset ([4360fbb](https://github.com/lorel-app/fe/commit/4360fbbb9e42e196d09b5a5300f28615fcd7b5de))
+
 # [1.2.0-dev.58](https://github.com/lorel-app/fe/compare/v1.2.0-dev.57...v1.2.0-dev.58) (2024-11-17)
 
 
