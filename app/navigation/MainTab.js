@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import HomeScreen from '@/app/screens/Home'
 import SearchScreen from '@/app/screens/Search'
+import ChatScreen from '@/app/screens/Chat'
 import AddScreen from '@/app/screens/Add'
 import ProfileScreen from '@/app/screens/Profile'
 import { useTheme } from '@react-navigation/native'
+import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import AuthContext from '@/utils/authContext'
+import { useWebSocket } from '@/utils/websocket'
 
 const Tab = createBottomTabNavigator()
 const tabIcons = {
   Home: 'home',
+  Chat: 'mode-comment',
   Search: 'search',
   Add: 'add',
   Profile: 'person'
@@ -17,33 +22,68 @@ const tabIcons = {
 
 function Tabs() {
   const { colors } = useTheme()
+  const styles = useGlobalStyles()
+  const { isAuthenticated } = useContext(AuthContext)
+  const { newChatMessages } = useWebSocket()
+
+  const tabScreens = [
+    <Tab.Screen key="Home" name="Home" component={HomeScreen} />,
+    <Tab.Screen key="Search" name="Search" component={SearchScreen} />
+  ]
+
+  if (isAuthenticated) {
+    tabScreens.push(
+      <Tab.Screen
+        key="Chat"
+        name="Chat"
+        component={ChatScreen}
+        options={{
+          tabBarBadge:
+            newChatMessages.length > 0 ? newChatMessages.length : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: colors.tertiary,
+            color: colors.tint,
+            fontWeight: 500,
+            fontSize: 10,
+            height: 20,
+            minWidth: 20,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignContent: 'center',
+            textAlign: 'center'
+          }
+        }}
+      />,
+      <Tab.Screen key="Add" name="Add" component={AddScreen} />,
+      <Tab.Screen key="Profile" name="Profile" component={ProfileScreen} />
+    )
+  }
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color }) => {
           return (
             <MaterialIcons
+              style={styles.icon}
               name={tabIcons[route.name]}
-              size={size}
+              size={32}
               color={color}
             />
           )
         },
 
         tabBarActiveTintColor: colors.secondary,
-        tabBarInactiveTintColor: colors.tint,
+        tabBarInactiveTintColor: colors.secondaryTint,
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: colors.card
         },
-        headerShown: false
-        // tabBarBadge + tabBarBadgeStyle for notifications
+        headerShown: false,
+        unmountOnBlur: true
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Add" component={AddScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      {tabScreens}
     </Tab.Navigator>
   )
 }

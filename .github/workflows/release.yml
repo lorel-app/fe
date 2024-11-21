@@ -28,15 +28,39 @@ jobs:
       - name: Use Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20.16.0
+          node-version: 22.9.0
+      # semantic release writes version to package-lock.json every release.
+      # without this, cache would never hit
+      - name: Strip version off package-lock.json
+        run: |
+          jq 'del(.version, .packages[""].version)' package-lock.json > package-lock-no-version.json
+      - name: Cache node modules
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock-no-version.json') }}
       - name: Install deps
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Modify react-async-hook package.json module field
+        run: |
+          sed -i 's/"module": "[^"]*"/"module": "dist\/react-async-hook.esm.js"/' node_modules/react-native-country-picker-modal/node_modules/react-async-hook/package.json
+        shell: bash
+      - name: Create test env
+        run: |
+          echo "EXPO_PUBLIC_API_URL=http://localhost:3000" > .env
+          echo "EXPO_PUBLIC_WEBSOCKET_URL=ws://localhost:8081" >> .env
+      - name: Build
+        run: npm run build:web
+      - name: Serve & Test
+        run: npm run serve:web -- -L & npm run cypress:run
       - name: Check if release should be published
         shell: bash
         id: semantic
         run: |
-          npx semantic-release |& tee -a semantic-log.txt
-          grep -E "(Published release)" semantic-log.txt || echo norelease
-          echo "::set-output name=SEMANTIC_LOG::$(grep -E "(Published release)" semantic-log.txt || echo norelease)"
+          npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}

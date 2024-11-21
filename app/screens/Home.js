@@ -1,98 +1,81 @@
-import React, { useEffect, useState } from 'react'
-import { View, Dimensions } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import React, { useState, useContext } from 'react'
+import { View, FlatList } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
-import { PostShop, PostContent } from '@/components/PostTypes'
+import Post from '@/components/Post'
+import { useAlertModal } from '@/hooks/useAlertModal'
+import { useFocusEffect } from '@react-navigation/native'
+import AuthContext from '@/utils/authContext'
 import api from '@/utils/api'
+import Loader from '@/components/Loader'
 
 const HomeScreen = () => {
+  const { loading: authLoading } = useContext(AuthContext)
   const styles = useGlobalStyles()
-  const { colors } = useTheme()
   const [posts, setPosts] = useState([])
-  const [isWideScreen, setIsWideScreen] = useState(
-    Dimensions.get('window').width > 700
+  const [loading, setLoading] = useState(false)
+  const [offset, setOffset] = useState(0)
+  const [hasMore, setHasMore] = useState(true)
+  const showAlert = useAlertModal()
+
+  const fetchPosts = async () => {
+    if (loading || !hasMore) return
+    setLoading(true)
+    try {
+      const response = await api.allPosts(10, offset)
+      if (response.success) {
+        setPosts(prevPosts => [...prevPosts, ...response.data.posts])
+        setHasMore(response.data.posts.length > 0)
+        setOffset(prevOffset => prevOffset + response.data.posts.length)
+      } else {
+        showAlert(
+          'error',
+          `Please check your internet connection or try again later`
+        )
+      }
+    } catch (error) {
+      console.error('Failed to fetch posts', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!authLoading) {
+        setPosts([])
+        fetchPosts()
+      }
+    }, [authLoading])
   )
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await api.allPosts()
-        if (response.success) {
-          setPosts(response.data.posts)
-        } else {
-          console.error(response.error)
-        }
-      } catch (error) {
-        console.error('Failed to fetch posts', error)
-      }
+  const handleDeletePost = async postId => {
+    const response = await api.deletePost(postId)
+    if (response.success) {
+      setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
     }
-    fetchPosts()
+  }
 
-    const handleResize = () => {
-      setIsWideScreen(Dimensions.get('window').width > 700)
-    }
-
-    Dimensions.addEventListener('change', handleResize)
-    return () => {
-      Dimensions.removeEventListener('change', handleResize)
-    }
-  }, [])
+  const renderItem = ({ item: post }) => {
+    return (
+      <View style={styles.post} key={post.id}>
+        <Post post={post} onDeletePost={handleDeletePost} />
+      </View>
+    )
+  }
 
   return (
-    <ScrollView vertical showsVerticalScrollIndicator={false}>
-      <View style={isWideScreen ? styles.containerGrid : styles.container}>
-        {posts.map((post, index) => {
-          const mediaUrls = post.media.map(m => ({
-            uri: m.url,
-            type: m.type
-          }))
-
-          if (post.type === 'SHOP') {
-            return (
-              <View
-                style={[
-                  isWideScreen ? styles.gridPost : styles.post,
-                  { backgroundColor: colors.card }
-                ]}
-                key={post.id}
-              >
-                <PostShop
-                  user={post.user}
-                  media={mediaUrls}
-                  title={post.title}
-                  price={post.price}
-                  caption={post.caption}
-                  description={post.description}
-                  tags={post.tags}
-                  dateTime={post.createdAt}
-                />
-              </View>
-            )
-          } else if (post.type === 'CONTENT') {
-            return (
-              <View
-                style={[
-                  isWideScreen ? styles.gridPost : styles.post,
-                  { borderTopColor: colors.card },
-                  { borderTopWidth: 2 }
-                ]}
-                key={post.id}
-              >
-                <PostContent
-                  user={post.user}
-                  media={mediaUrls}
-                  caption={post.caption}
-                  tags={post.tags}
-                  dateTime={post.createdAt}
-                />
-              </View>
-            )
-          }
-          return null
-        })}
-      </View>
-    </ScrollView>
+    <FlatList
+      testID={'scrollable-feed'}
+      data={posts}
+      renderItem={renderItem}
+      keyExtractor={item => item.id.toString()}
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      removeClippedSubviews={true}
+      onEndReached={fetchPosts}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={loading && <Loader />}
+    />
   )
 }
 

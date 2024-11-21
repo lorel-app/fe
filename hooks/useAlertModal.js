@@ -16,25 +16,36 @@ export const AlertProvider = ({ children }) => {
     children: null
   })
 
-  const showAlert = useCallback((type, title) => {
-    const icon =
-      type === 'error' ? (
-        <Icon name="error" size={38} color={colors.accent} />
-      ) : (
-        <Icon name="check-circle" size={38} color={colors.primary} />
-      )
+  const showAlert = useCallback(
+    (type, title) => {
+      const icon =
+        type === 'error' ? (
+          <Icon
+            style={[styles.icon, { fontSize: 38 }]}
+            name="error"
+            color={colors.accent}
+          />
+        ) : (
+          <Icon
+            style={[styles.icon, { fontSize: 38 }]}
+            name="check-circle"
+            color={colors.primary}
+          />
+        )
 
-    setAlert({
-      visible: true,
-      children: (
-        <View style={styles.container}>
-          {icon}
-          <Spacer />
-          <Text style={styles.title}>{title}</Text>
-        </View>
-      )
-    })
-  }, [])
+      setAlert({
+        visible: true,
+        children: (
+          <View style={styles.modalChildren}>
+            {icon}
+            <Spacer />
+            <Text style={styles.title}>{title}</Text>
+          </View>
+        )
+      })
+    },
+    [colors, styles]
+  )
 
   const hideAlert = useCallback(() => {
     setAlert({ visible: false, children: null })
@@ -43,7 +54,11 @@ export const AlertProvider = ({ children }) => {
   return (
     <AlertContext.Provider value={showAlert}>
       {children}
-      <ModalScreen visible={alert.visible} onClose={hideAlert}>
+      <ModalScreen
+        style={{ zIndex: 999 }}
+        visible={alert.visible}
+        onClose={hideAlert}
+      >
         {alert.children}
       </ModalScreen>
     </AlertContext.Provider>

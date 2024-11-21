@@ -7,9 +7,10 @@ export function useMediaPicker() {
   const pickImages = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       quality: 1,
-      allowsMultipleSelection: true
+      allowsMultipleSelection: true,
+      selectionLimit: 5
     })
 
     if (!result.canceled) {
@@ -17,11 +18,15 @@ export function useMediaPicker() {
         result.assets.map(async asset => {
           const response = await fetch(asset.uri)
           const blob = await response.blob()
-          const file = new File([blob], 'image.jpg', { type: blob.type })
-          return { uri: asset.uri, file } // Keep both uri and file
+
+          return {
+            uri: asset.uri,
+            type: blob.type || asset.type,
+            name: asset.uri.split('/').pop() || 'image.jpg'
+          }
         })
       )
-      setImages(newImages)
+      setImages(prevImages => [...prevImages, ...newImages])
     }
   }
 

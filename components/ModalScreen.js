@@ -1,5 +1,11 @@
 import React from 'react'
-import { Modal, View, TouchableWithoutFeedback } from 'react-native'
+import {
+  Text,
+  Modal,
+  View,
+  TouchableWithoutFeedback,
+  Platform
+} from 'react-native'
 import ButtonIcon from '@/components/ButtonIcon'
 import { useTheme } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -10,7 +16,10 @@ export default function ModalScreen({ visible, onClose, children }) {
 
   return (
     <Modal
-      appElement={document.getElementById('root')}
+      testID={'alert_modal'}
+      appElement={
+        Platform.OS === 'web' ? document.getElementById('root') : undefined
+      }
       animationType="fade"
       transparent={true}
       visible={visible}
@@ -22,7 +31,6 @@ export default function ModalScreen({ visible, onClose, children }) {
             <ButtonIcon
               style={styles.closeButton}
               iconName="close"
-              iconSize="15"
               iconColor={colors.text}
               onPress={onClose}
             />

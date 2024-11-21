@@ -1,15 +1,46 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, Platform } from 'react-native'
+import { useState, useEffect } from 'react'
 import { useTheme } from '@react-navigation/native'
 
-const { width } = Dimensions.get('window')
+const windowDimensions = Dimensions.get('window')
+const screenDimensions = Dimensions.get('screen')
 
+// test
 const shadowStyle = {
-  // boxShadow for IOS?
-  boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.3)',
-  elevation: 5
+  ...(Platform.OS === 'web' && {
+    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.3)'
+  }),
+  ...(Platform.OS === 'ios' && {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6
+  }),
+  ...(Platform.OS === 'android' && {
+    elevation: 5
+  })
 }
 
 export const useGlobalStyles = () => {
+  const [dimensions, setDimensions] = useState({
+    window: windowDimensions,
+    screen: screenDimensions
+  })
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener(
+      'change',
+      ({ window, screen }) => {
+        setDimensions({ window, screen })
+      }
+    )
+    return () => subscription?.remove()
+  }, [])
+
+  const width = Math.min(dimensions.window.width, 600)
+  const fullWidth = dimensions.window.width
+  const height = dimensions.window.height
+
   const { colors } = useTheme()
 
   return StyleSheet.create({
@@ -19,19 +50,29 @@ export const useGlobalStyles = () => {
     header: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: 10,
+      paddingHorizontal: 10,
       backgroundColor: colors.background,
-      height: 80
+      height: 60
     },
     headerItems: {
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'flex-end'
+    },
+
+    height: {
+      height: height - 60
+    },
+
+    loader: {
+      width: width,
+      padding: 50
     },
 
     container: {
-      flex: 1,
-      padding: 16,
+      // ANDROID IS NOT A FAN OF FLEX
+      // flex: 1,
+      // paddingHo: 16,
       alignItems: 'center',
       width: '100%'
     },
@@ -39,7 +80,7 @@ export const useGlobalStyles = () => {
       flex: 1,
       paddingLeft: 10,
       paddingBottom: 10,
-      width: width
+      width: '100%'
     },
     containerFull: {
       flex: 1,
@@ -51,51 +92,88 @@ export const useGlobalStyles = () => {
       position: 'absolute',
       zIndex: 1000,
       paddingVertical: 0,
-      width: width,
+      paddingHorizontal: 10,
+      width: '100%',
       ...shadowStyle
     },
-    containerGrid: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      alignItems: 'center'
+
+    grid: {
+      width: fullWidth * 0.9,
+      height: 'auto',
+      flexDirection: width < 600 ? 'column' : 'row',
+      alignItems: 'center',
+      alignSelf: 'center',
+      justifyContent: 'center',
+      padding: 20
     },
 
-    gridPost: {
-      flexBasis: '40%',
-      marginBottom: 20,
+    gridItem: {
+      width: width < 600 ? fullWidth * 0.9 : fullWidth / 3.5,
+      minHeight: width < 600 ? null : '100%',
+      flexGrow: 1,
+      padding: 15,
+      backgroundColor: colors.tint,
       alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 25,
-      margin: 15
+      borderRadius: 10,
+      margin: 10,
+      ...shadowStyle
+    },
+
+    containerGrid: {
+      width: fullWidth / 3,
+      height: fullWidth / 3,
+      padding: 2
     },
 
     post: {
-      width: width * 0.94,
+      width: width * 0.95,
+      backgroundColor: colors.card,
       alignItems: 'center',
       borderRadius: 25,
-      margin: 15
+      margin: 15,
+      padding: 10,
+      // flex: 1
+      flexGrow: 1,
+      ...shadowStyle
+    },
+
+    card: {
+      width: width * 0.95,
+      backgroundColor: colors.card,
+      alignItems: 'center',
+      borderRadius: 10,
+      margin: 15,
+      padding: 10
     },
 
     carouselContainer: {
-      width: 500,
-      //height: width * 0.75,
-      flex: 1
+      width: width,
+      flexGrow: 1
     },
-
     slide: {
-      width: 500,
+      width: width,
       alignItems: 'center'
     },
-
-    // STILL NEEDS WORK :( image component?
     image: {
-      width: '85%',
-      maxWidth: width * 0.85,
-      minHeight: 300,
-      maxHeight: width * 4,
-      resizeMode: 'contain',
-      marginBottom: 8
+      width: width * 0.95,
+      minHeight: width,
+      resizeMode: 'contain'
+    },
+
+    imageGrid: {
+      height: 300,
+      width: 300,
+      marginBottom: 20,
+      borderRadius: 25,
+      margin: 15,
+      padding: 15,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.card
+    },
+    imageFit: {
+      width: '100%',
+      height: '100%'
     },
 
     paginationContainer: {
@@ -126,6 +204,17 @@ export const useGlobalStyles = () => {
       fontSize: 14,
       padding: 2
     },
+    textSmall: {
+      color: colors.text,
+      fontSize: 12,
+      padding: 2
+    },
+    textBold: {
+      color: colors.text,
+      fontSize: 14,
+      fontWeight: '500',
+      padding: 0
+    },
     textCenter: {
       color: colors.text,
       fontSize: 14,
@@ -138,7 +227,9 @@ export const useGlobalStyles = () => {
       padding: 2
     },
     errorText: {
-      color: colors.accent
+      color: colors.accent,
+      fontWeight: 500,
+      textAlign: 'center'
     },
     buttonText: {
       color: colors.textAlt,
@@ -152,8 +243,16 @@ export const useGlobalStyles = () => {
       fontWeight: '500',
       textAlign: 'center'
     },
-    // add states fro additional styling: onFocus, onBlur, onInputError?
-    // https://stackoverflow.com/questions/34087459/focus-style-for-textinput-in-react-native
+    icon: {
+      // required for Android
+      fontSize: 26,
+      margin: 3
+    },
+    iconSmall: {
+      // required for Android
+      fontSize: 18,
+      margin: 3
+    },
     input: {
       fontSize: 16,
       backgroundColor: colors.background,
@@ -186,16 +285,6 @@ export const useGlobalStyles = () => {
       width: '100%',
       outlineStyle: 'none',
       flexGrow: 1
-    },
-    inputWithIcon: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      //backgroundColor: colors.background
-      borderRadius: 10,
-      width: '100%'
-      //paddingVertical: 8,
-      // paddingHorizontal: 10
     },
     button: {
       backgroundColor: colors.primary,
@@ -242,13 +331,17 @@ export const useGlobalStyles = () => {
     },
     modalView: {
       backgroundColor: colors.card,
-      margin: 20,
       borderRadius: 20,
-      padding: 25,
+      padding: 10,
       alignItems: 'center',
-      width: '80%',
+      width: width * 0.9,
       maxWidth: 500,
       ...shadowStyle
+    },
+    modalChildren: {
+      padding: 20,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     overlay: {
       flex: 1,
@@ -292,32 +385,67 @@ export const useGlobalStyles = () => {
     },
 
     rowFlex: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      flexShrink: 1
+      flex: 1,
+      flexShrink: 1,
+      flexDirection: 'column',
+      justifyContent: 'flex-start'
     },
 
-    rowFit: {
+    rowWrap: {
       flexDirection: 'row',
+      flexWrap: 'wrap',
+      margin: 0
+    },
+
+    rowEnd: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
       alignItems: 'center',
-      flexShrink: 0,
-      margin: 2
-      //minWidth: "20%",
+      alignSelf: 'flex-end',
+      marginLeft: 15
+    },
+
+    divider: {
+      height: 1,
+      backgroundColor: colors.primaryTint,
+      width: width * 0.9,
+      maxWidth: 700,
+      margin: 10,
+      alignSelf: 'center'
     },
 
     profilePic: {
       margin: 5,
       width: 24,
       height: 24,
-      borderRadius: 50
+      borderRadius: 50,
+      backgroundColor: colors.tint
     },
-    myProfilePic: {
-      margin: 5,
+
+    profilePicLarge: {
+      position: 'absolute',
       width: 100,
       height: 100,
-      borderRadius: 50
+      borderRadius: 50,
+      top: 150,
+      left: '50%',
+      transform: [{ translateX: -50 }],
+      borderWidth: 3,
+      borderColor: colors.secondaryTint,
+      backgroundColor: colors.tint
+    },
+    coverPic: {
+      width: fullWidth,
+      maxWidth: 900,
+      height: 200,
+      resizeMode: 'cover',
+      marginBottom: 50,
+      backgroundColor: colors.card
+      // borderBottomWidth: 3
+    },
+    profileButtons: {
+      width: width / 6,
+      alignItems: 'center'
     },
 
     switch: {
@@ -351,11 +479,81 @@ export const useGlobalStyles = () => {
     dropdown: {
       position: 'absolute',
       top: 60,
-      left: 0,
+      width: 200,
       right: 0,
-      backgroundColor: colors.secondaryTint,
-      borderRadius: 5,
+      backgroundColor: colors.primaryTint,
+      borderRadius: 10,
       ...shadowStyle
+    },
+    editButton: {
+      position: 'absolute',
+      top: 15,
+      right: 15,
+      alignSelf: 'center',
+      padding: 2,
+      borderRadius: 500,
+      backgroundColor: colors.primaryTint,
+      ...shadowStyle
+    },
+    messageButton: {
+      position: 'absolute',
+      zIndex: 999,
+      top: 75,
+      right: 15,
+      borderRadius: 500,
+      backgroundColor: colors.primary,
+      ...shadowStyle
+    },
+    reportButton: {
+      position: 'absolute',
+      zIndex: 999,
+      top: 15,
+      right: 15,
+      borderRadius: 500,
+      backgroundColor: colors.card,
+      ...shadowStyle
+    },
+
+    sendBarInput: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      backgroundColor: colors.tint
+    },
+    barInput: {
+      flex: 1,
+      borderRadius: 10,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      fontSize: 16,
+      backgroundColor: colors.background,
+      color: colors.text,
+      outlineStyle: 'none'
+    },
+    bubble: {
+      flexDirection: 'row',
+      flex: 1,
+      maxWidth: '80%',
+      minWidth: '40%',
+      padding: 10,
+      borderRadius: 15,
+      marginVertical: 10,
+      marginHorizontal: 20
+    },
+    senderBubble: {
+      backgroundColor: colors.primaryTint,
+      alignSelf: 'flex-end',
+      borderBottomRightRadius: 0
+    },
+    receiverBubble: {
+      backgroundColor: colors.secondaryTint,
+      alignSelf: 'flex-start',
+      borderBottomLeftRadius: 0,
+      ...shadowStyle
+    },
+    bubbleContent: {
+      flex: 1
     }
   })
 }

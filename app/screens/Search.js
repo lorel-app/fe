@@ -1,133 +1,166 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import React, { useEffect, useState, useCallback } from 'react'
+import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import ButtonIcon from '@/components/ButtonIcon'
+import Loader from '@/components/Loader'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useTheme } from '@react-navigation/native'
 import api from '@/utils/api'
+import SelectTags from '@/components/SelectTags'
+import UserCard from '@/components/UserCard'
+import Post from '@/components/Post'
 
 const SearchScreen = () => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
-  const [tags, setTags] = useState([])
-  const [selectedTags, setSelectedTags] = useState([])
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [loading, isLoading] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [searchUser, setSearchUser] = useState('')
+  const [results, setResults] = useState([])
+  const [resultType, setResultType] = useState('user')
+  let selectedTags = []
 
-  useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const response = await api.allTags()
-        if (response.success) {
-          setTags(response.data.tags)
-        }
-      } catch (error) {
-        console.error('Failed to fetch posts', error)
-      }
+  const toggleCollapse = () => setIsCollapsed(!isCollapsed)
+
+  const handleTagsChange = async tags => {
+    selectedTags = tags
+  }
+
+  const searchUsers = async () => {
+    if (searchUser) {
+      isLoading(true)
+      toggleCollapse()
+      const response = await api.search(searchUser, 'user')
+      setResults(response.data.query)
+      setResultType('user')
+      isLoading(false)
     }
-    fetchTags()
-  }, [])
-
-  const mediumTags = tags.filter(tag => tag.type === 'MEDIUM')
-  const subjectTags = tags.filter(tag => tag.type === 'SUBJECT')
-  const styleTags = tags.filter(tag => tag.type === 'STYLE')
-
-  const renderTagButtons = tagArray => {
-    return tagArray.map(tag => (
-      <TouchableOpacity
-        key={tag.id}
-        style={[
-          styles.buttonSmall,
-          selectedTags.includes(tag.name) && styles.buttonSmallSelected
-        ]}
-        onPress={() => handleTagSelect(tag)}
-      >
-        <Text
-          style={{
-            color: (() => {
-              switch (tag.type) {
-                case 'SUBJECT':
-                  return colors.tertiary
-                case 'MEDIUM':
-                  return colors.primary
-                case 'STYLE':
-                  return colors.secondary
-                default:
-                  return colors.text
-              }
-            })()
-          }}
-        >
-          {tag.name}
-        </Text>
-      </TouchableOpacity>
-    ))
   }
 
-  const handleTagSelect = tag => {
-    setSelectedTags(prevSelectedTags =>
-      prevSelectedTags.includes(tag.name)
-        ? prevSelectedTags.filter(t => t !== tag.name)
-        : [...prevSelectedTags, tag.name]
-    )
+  const validateUUID = uuid => {
+    const uuidRegex =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    return uuidRegex.test(uuid)
+  }
+  const searchTags = async () => {
+    if (selectedTags.length > 0) {
+      isLoading(true)
+      toggleCollapse()
+      const validTags = selectedTags.filter(validateUUID)
+      const stringifiedTags = validTags.join(',')
+      const response = await api.search(stringifiedTags, 'tag')
+      setResults(response.data.query)
+      console.log(results)
+      setResultType('tag')
+      isLoading(false)
+    }
   }
 
-  const toggleExpanded = () => setIsExpanded(!isExpanded)
-  const clearSelectedTags = () => setSelectedTags([])
+  const handleDeletePost = async postId => {
+    const response = await api.deletePost(postId)
+    if (response.success) {
+      setResults(prevResults =>
+        prevResults.filter(result => result.id !== postId)
+      )
+    }
+  }
+
+  const renderItem = useCallback(
+    ({ item }) => {
+      if (resultType === 'user') {
+        return <UserCard user={item} />
+      } else if (resultType === 'tag') {
+        return (
+          <View style={styles.post} key={item.id}>
+            <Post post={item} onDeletePost={() => handleDeletePost(item.id)} />
+          </View>
+        )
+      }
+    },
+    [resultType]
+  )
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <>
-      <View style={styles.containerSticky}>
-        <View style={styles.inputWithIcon}>
-          <TextInput
-            style={styles.inputLight}
-            placeholder="Search (coming soon)"
-          ></TextInput>
-          <ButtonIcon onPress={toggleExpanded} iconName="search" />
-        </View>
-        <TouchableOpacity onPress={toggleExpanded} style={styles.inputWithIcon}>
-          <Text style={styles.text}>Select Tags</Text>
-          <ButtonIcon
-            onPress={toggleExpanded}
-            iconName={isExpanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-            iconSize={18}
-          />
-        </TouchableOpacity>
-
-        {isExpanded && (
-          <View style={styles.containerLeft}>
-            <Text style={styles.text}>Subject Matter</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={styles.rowScroll}>
-                {renderTagButtons(subjectTags)}
-              </View>
-            </ScrollView>
-            <Text style={styles.text}>Mediums</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={styles.rowScroll}>
-                {renderTagButtons(mediumTags)}
-              </View>
-            </ScrollView>
-            <Text style={styles.text}>Styles</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={styles.rowScroll}>
-                {renderTagButtons(styleTags)}
-              </View>
-            </ScrollView>
-            <TouchableOpacity onPress={clearSelectedTags}>
-              <Text style={styles.link}>Clear</Text>
+      <View
+        style={[styles.containerSticky, { backgroundColor: colors.background }]}
+      >
+        {isCollapsed && (
+          <View style={styles.container}>
+            <View
+              style={[
+                styles.input,
+                styles.row,
+                { paddingVertical: 0 },
+                { marginTop: 0 }
+              ]}
+            >
+              <TextInput
+                style={styles.inputLight}
+                placeholder="Search users"
+                placeholderTextColor={colors.text}
+                value={searchUser}
+                onChangeText={setSearchUser}
+              />
+              <ButtonIcon onPress={searchUsers} iconName="search" />
+            </View>
+            <TouchableOpacity
+              onPress={searchTags}
+              style={[
+                styles.buttonSmall,
+                styles.row,
+                { backgroundColor: colors.primaryTint },
+                { marginBottom: 10 },
+                { alignSelf: 'center' }
+              ]}
+            >
+              <Text style={[styles.buttonText, { paddingRight: 3 }]}>
+                search by tag
+              </Text>
+              <Icon
+                name="search"
+                color={colors.textAlt}
+                style={styles.iconSmall}
+              />
             </TouchableOpacity>
+            <SelectTags onTagsChange={handleTagsChange} />
           </View>
         )}
-      </View>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.selectedTagsText}>
-            {selectedTags.length > 0
-              ? `You selected: ${selectedTags.join(', ')}`
-              : 'No tags selected'}
+
+        <TouchableOpacity
+          style={[styles.row, { alignSelf: 'center' }, { padding: 5 }]}
+          onPress={toggleCollapse}
+        >
+          <Text style={[styles.link, { paddingBottom: 2 }]}>
+            {isCollapsed ? 'collapse' : 'open search bar'}
           </Text>
-        </View>
-      </ScrollView>
+          <Icon
+            name={isCollapsed ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
+            color={colors.primary}
+            style={styles.iconSmall}
+          />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={results}
+        renderItem={renderItem}
+        initialNumToRender={12}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={[styles.container, { zIndex: 0 }, { top: 50 }]}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+        // onEndReached={handleEndReached}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={loading && <Loader />}
+        ListEmptyComponent={
+          <Text style={[styles.textBold, { top: 100 }]}>no results</Text>
+        }
+        scrollEventThrottle={100}
+      />
     </>
   )
 }

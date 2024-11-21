@@ -1,35 +1,53 @@
 import React from 'react'
-import { useTheme } from '@react-navigation/native'
 import { View, Text, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons' // Import MaterialIcons
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
+import ButtonFollow from '@/components/ButtonFollow'
+import useFormatResponse from '@/hooks/useFormatResponse'
 
-const HeaderStack = ({ title }) => {
+const HeaderStack = ({
+  title,
+  user = null,
+  onFollowToggle,
+  hideFollowButton = false
+}) => {
   const { colors } = useTheme()
-  const globalStyles = useGlobalStyles()
+  const styles = useGlobalStyles()
   const navigation = useNavigation()
+  const { truncate } = useFormatResponse()
 
   return (
-    <View style={globalStyles.header}>
-      <View style={globalStyles.headerItems}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="keyboard-arrow-left" size={24} color={colors.primary} />
-        </TouchableOpacity>
-        <Text
-          style={{
-            color: colors.text,
-            marginLeft: 10,
-            fontSize: 18,
-            fontWeight: 'bold'
-          }}
+    <View style={styles.header}>
+      <View style={[{ flex: 1 }]}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.row}
         >
-          {title ? title : 'Go Back'}
-        </Text>
+          <Icon
+            name="keyboard-arrow-left"
+            color={colors.primary}
+            style={styles.icon}
+          />
+          <Text
+            style={[styles.textBold, { paddingLeft: 5 }, { paddingBottom: 2 }]}
+          >
+            {title ? truncate(title, 20) : ''}
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => console.log('Right icon pressed')}>
-        <Icon name="more-vert" size={24} color={colors.primary} />
-      </TouchableOpacity>
+
+      <View style={styles.headerItems}>
+        {!hideFollowButton &&
+          (onFollowToggle ? (
+            <ButtonFollow user={user} onFollowToggle={onFollowToggle} />
+          ) : (
+            <ButtonFollow user={user} />
+          ))}
+        {/* <TouchableOpacity onPress={() => console.log('Right icon pressed')}> */}
+        {/* <Icon name="more-vert" color={colors.primary} style={styles.icon} />
+        </TouchableOpacity> */}
+      </View>
     </View>
   )
 }

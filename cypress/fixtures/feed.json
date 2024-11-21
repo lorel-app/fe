@@ -1,0 +1,1479 @@
+{
+  "message": "Successfully retrieved feed.",
+  "posts": [
+    {
+      "id": "1",
+      "type": "CONTENT",
+      "caption": "Caption for post 1",
+      "title": "Title 1",
+      "description": "Description for post 1",
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-10T09:28:08.789460",
+      "updatedAt": "2024-09-25T09:28:08.789483",
+      "likeCount": 365,
+      "commentCount": 353,
+      "user": {
+        "id": "89c8a9d3-cd97-4e92-8ad5-5323061b2024",
+        "username": "userqq3lguey",
+        "displayPicture": "https://example.com/dp5pcw5uyp.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediabqrwv9ik.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/media3xxi4wra.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "type": "SHOP",
+      "caption": "Caption for post 2",
+      "title": "Buy my art",
+      "description": null,
+      "price": "80.00",
+      "sold": false,
+      "createdAt": "2024-10-04T09:28:08.789532",
+      "updatedAt": "2024-09-20T09:28:08.789538",
+      "likeCount": 250,
+      "commentCount": 244,
+      "user": {
+        "id": "89c8a9d3-cd97-4e92-8ad5-5323061b2024",
+        "username": "userqq3lguey",
+        "displayPicture": "https://example.com/dp5pcw5uyp.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediakmll0d0t.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediafdvmpz50.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediapcgj1pbc.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "type": "SHOP",
+      "caption": "Caption for post 3",
+      "title": "Title 3",
+      "description": "Description for post 3",
+      "price": "99.99",
+      "sold": true,
+      "createdAt": "2024-10-09T09:28:08.789588",
+      "updatedAt": "2024-09-26T09:28:08.789593",
+      "likeCount": 287,
+      "commentCount": 311,
+      "user": {
+        "id": "8c438822-753a-420a-8f97-8af98bc486b3",
+        "username": "user3sx11tuv",
+        "displayPicture": "https://example.com/dpltzzfw21.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediarn5b7kpx.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediawsyug94e.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediai7nm7aqa.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediam2txmboq.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "type": "CONTENT",
+      "caption": "Caption for post 4",
+      "title": "Title 4",
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-18T09:28:08.789633",
+      "updatedAt": "2024-10-19T09:28:08.789640",
+      "likeCount": 745,
+      "commentCount": 165,
+      "user": {
+        "id": "908aee1d-23e8-4bd4-8943-4df111b02134",
+        "username": "user2r9dq9aw",
+        "displayPicture": "https://example.com/dp8qrw7m89.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaf7nzcioo.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediakya9w7ey.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media2fre44b4.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediadwb7sk9o.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediazqpa0xx9.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "type": "CONTENT",
+      "caption": "Caption for post 5",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-06T09:28:08.789699",
+      "updatedAt": "2024-09-23T09:28:08.789705",
+      "likeCount": 89,
+      "commentCount": 93,
+      "user": {
+        "id": "1edb4593-3625-46ab-b789-4c3587f5d199",
+        "username": "user4kr2chew",
+        "displayPicture": "https://example.com/dp9kzl3wvy.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaiogqquxq.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/medialpprmict.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "type": "CONTENT",
+      "caption": "Caption for post 6",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-24T09:28:08.789749",
+      "updatedAt": "2024-09-28T09:28:08.789755",
+      "likeCount": 646,
+      "commentCount": 446,
+      "user": {
+        "id": "66bb2d88-89b6-47bf-953a-18fe36bf33ee",
+        "username": "userqbhmwv3v",
+        "displayPicture": "https://example.com/dp8impuzx7.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaoef1g8js.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediaipkgahx6.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "type": "CONTENT",
+      "caption": "Caption for post 7",
+      "title": "Title 7",
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-01T09:28:08.789798",
+      "updatedAt": "2024-09-20T09:28:08.789803",
+      "likeCount": 807,
+      "commentCount": 412,
+      "user": {
+        "id": "66bb2d88-89b6-47bf-953a-18fe36bf33ee",
+        "username": "userqbhmwv3v",
+        "displayPicture": "https://example.com/dp8impuzx7.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediazqzniqwi.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediaj3dleo4c.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediai1jjioqa.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "type": "CONTENT",
+      "caption": "Caption for post 8",
+      "title": "Title 8",
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-21T09:28:08.789850",
+      "updatedAt": "2024-09-23T09:28:08.789855",
+      "likeCount": 58,
+      "commentCount": 240,
+      "user": {
+        "id": "e3124a14-048f-41bb-9ee6-95005cf87ad0",
+        "username": "userpnlcyaa3",
+        "displayPicture": "https://example.com/dpa438vejt.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediadtqgxoaa.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/medias3faqsg7.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/media8lc2905y.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediad4xndleq.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediaze6ls8fh.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "type": "SHOP",
+      "caption": "Caption for post 9",
+      "title": "Title for post 9",
+      "description": null,
+      "price": "464.59",
+      "sold": false,
+      "createdAt": "2024-09-27T09:28:08.789921",
+      "updatedAt": "2024-10-04T09:28:08.789927",
+      "likeCount": 696,
+      "commentCount": 253,
+      "user": {
+        "id": "db61f070-09e8-42b1-ad81-b3afdc15b893",
+        "username": "userqts13b9i",
+        "displayPicture": "https://example.com/dprqdzhqoi.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/media178zquzd.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media4dtz0s40.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediafqv0orp4.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "type": "CONTENT",
+      "caption": "Caption for post 10",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-06T09:28:08.789975",
+      "updatedAt": "2024-09-25T09:28:08.789981",
+      "likeCount": 397,
+      "commentCount": 327,
+      "user": {
+        "id": "8f9415e1-6170-4e02-9f83-bddc0610b1ff",
+        "username": "userc6mllqpk",
+        "displayPicture": "https://example.com/dpqscijoza.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediawp7d4r1k.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediaykh8efs9.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediarjfmp40n.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediaqk6dn2q3.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/medias05350kb.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "type": "SHOP",
+      "caption": "Caption for post 11",
+      "title": "Title for post 11",
+      "description": "Description for post 11",
+      "price": "9999.00",
+      "sold": false,
+      "createdAt": "2024-09-21T09:28:08.790037",
+      "updatedAt": "2024-10-07T09:28:08.790055",
+      "likeCount": 803,
+      "commentCount": 186,
+      "user": {
+        "id": "66bb2d88-89b6-47bf-953a-18fe36bf33ee",
+        "username": "userqbhmwv3v",
+        "displayPicture": "https://example.com/dp8impuzx7.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediahb13you1.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media71chv7d3.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediahy0uscpr.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediasnsnnam2.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media557yv464.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "type": "CONTENT",
+      "caption": "Caption for post 12",
+      "title": null,
+      "description": "Description for post 12",
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-10T09:28:08.790115",
+      "updatedAt": "2024-10-17T09:28:08.790121",
+      "likeCount": 129,
+      "commentCount": 188,
+      "user": {
+        "id": "908aee1d-23e8-4bd4-8943-4df111b02134",
+        "username": "user2r9dq9aw",
+        "displayPicture": "https://example.com/dp8qrw7m89.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediavl9zmf3a.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediat22ieh93.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediat8c8wtpz.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "type": "CONTENT",
+      "caption": "Caption for post 13",
+      "title": "Title 13",
+      "description": "Description for post 13",
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-26T09:28:08.790161",
+      "updatedAt": "2024-09-21T09:28:08.790166",
+      "likeCount": 973,
+      "commentCount": 111,
+      "user": {
+        "id": "908aee1d-23e8-4bd4-8943-4df111b02134",
+        "username": "user2r9dq9aw",
+        "displayPicture": "https://example.com/dp8qrw7m89.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/media85drs6z4.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/media9oyag1mw.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediahsxkzi6o.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media149cxu2c.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/media4483not7.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "type": "SHOP",
+      "caption": "Caption for post 14",
+      "title": "Title 14",
+      "description": null,
+      "price": "319.49",
+      "sold": false,
+      "createdAt": "2024-10-06T09:28:08.790220",
+      "updatedAt": "2024-10-13T09:28:08.790227",
+      "likeCount": 941,
+      "commentCount": 265,
+      "user": {
+        "id": "8f9415e1-6170-4e02-9f83-bddc0610b1ff",
+        "username": "userc6mllqpk",
+        "displayPicture": "https://example.com/dpqscijoza.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/media1fyxgi6l.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "type": "CONTENT",
+      "caption": "Caption for post 15",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-21T09:28:08.790256",
+      "updatedAt": "2024-10-19T09:28:08.790261",
+      "likeCount": 699,
+      "commentCount": 130,
+      "user": {
+        "id": "db61f070-09e8-42b1-ad81-b3afdc15b893",
+        "username": "userqts13b9i",
+        "displayPicture": "https://example.com/dprqdzhqoi.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaz5hyambo.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediaqbsmqwxf.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media83cdlxv7.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "type": "CONTENT",
+      "caption": "Caption for post 16",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-13T09:28:08.790303",
+      "updatedAt": "2024-10-17T09:28:08.790309",
+      "likeCount": 235,
+      "commentCount": 347,
+      "user": {
+        "id": "421c8de8-6359-4fe6-8be0-5607a36d4bf0",
+        "username": "user5yypu1to",
+        "displayPicture": "https://example.com/dpsnf170ac.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediavop3dh9m.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediay8thya42.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediawpluwscf.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "type": "SHOP",
+      "caption": "Caption for post 17",
+      "title": "Title 17",
+      "description": "Description for post 17",
+      "price": "8.00",
+      "sold": false,
+      "createdAt": "2024-09-27T09:28:08.790346",
+      "updatedAt": "2024-10-06T09:28:08.790352",
+      "likeCount": 263,
+      "commentCount": 406,
+      "user": {
+        "id": "1edb4593-3625-46ab-b789-4c3587f5d199",
+        "username": "user4kr2chew",
+        "displayPicture": "https://example.com/dp9kzl3wvy.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/media2lpf5io8.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media24xzia2l.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media3njzkf4p.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "type": "CONTENT",
+      "caption": "Caption for post 18",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-29T09:28:08.790383",
+      "updatedAt": "2024-10-01T09:28:08.790386",
+      "likeCount": 49,
+      "commentCount": 190,
+      "user": {
+        "id": "908aee1d-23e8-4bd4-8943-4df111b02134",
+        "username": "user2r9dq9aw",
+        "displayPicture": "https://example.com/dp8qrw7m89.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaxethrowm.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediamly724mr.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media6bmvvvm1.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "type": "CONTENT",
+      "caption": "Caption for post 19",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-24T09:28:08.790413",
+      "updatedAt": "2024-10-14T09:28:08.790416",
+      "likeCount": 640,
+      "commentCount": 382,
+      "user": {
+        "id": "4e15a05b-9a1f-4a69-8fc5-16fac16416ab",
+        "username": "userx8almprt",
+        "displayPicture": "https://example.com/dpb68iztel.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/media2swjwgwb.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media1g3xvokb.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "type": "SHOP",
+      "caption": "Caption for post 20",
+      "title": "Title for post 20",
+      "description": null,
+      "price": "191.82",
+      "sold": true,
+      "createdAt": "2024-10-04T09:28:08.790452",
+      "updatedAt": "2024-10-10T09:28:08.790458",
+      "likeCount": 643,
+      "commentCount": 234,
+      "user": {
+        "id": "66bb2d88-89b6-47bf-953a-18fe36bf33ee",
+        "username": "userqbhmwv3v",
+        "displayPicture": "https://example.com/dp8impuzx7.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediake430iop.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediagc5b5el2.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "type": "CONTENT",
+      "caption": "Caption for post 21",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-15T09:28:08.790482",
+      "updatedAt": "2024-10-08T09:28:08.790485",
+      "likeCount": 31,
+      "commentCount": 320,
+      "user": {
+        "id": "89c8a9d3-cd97-4e92-8ad5-5323061b2024",
+        "username": "userqq3lguey",
+        "displayPicture": "https://example.com/dp5pcw5uyp.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediawdsff97p.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediayffr5ash.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "type": "CONTENT",
+      "caption": "Caption for post 22",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-27T09:28:08.790507",
+      "updatedAt": "2024-10-18T09:28:08.790511",
+      "likeCount": 706,
+      "commentCount": 226,
+      "user": {
+        "id": "66bb2d88-89b6-47bf-953a-18fe36bf33ee",
+        "username": "userqbhmwv3v",
+        "displayPicture": "https://example.com/dp8impuzx7.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaecnptv56.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediaq22dte5w.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "type": "CONTENT",
+      "caption": "Caption for post 23",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-10-02T09:28:08.790533",
+      "updatedAt": "2024-10-08T09:28:08.790536",
+      "likeCount": 825,
+      "commentCount": 350,
+      "user": {
+        "id": "89c8a9d3-cd97-4e92-8ad5-5323061b2024",
+        "username": "userqq3lguey",
+        "displayPicture": "https://example.com/dp5pcw5uyp.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediakj0m9339.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/media5ycee3rb.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "type": "CONTENT",
+      "caption": "Caption for post 24",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-30T09:28:08.790563",
+      "updatedAt": "2024-10-11T09:28:08.790567",
+      "likeCount": 123,
+      "commentCount": 366,
+      "user": {
+        "id": "8c438822-753a-420a-8f97-8af98bc486b3",
+        "username": "user3sx11tuv",
+        "displayPicture": "https://example.com/dpltzzfw21.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediau6is1d35.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/media7skow9yw.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "type": "SHOP",
+      "caption": "Caption for post 25",
+      "title": "Title 25",
+      "description": "Description for post 25",
+      "price": "455.29",
+      "sold": false,
+      "createdAt": "2024-09-28T09:28:08.790586",
+      "updatedAt": "2024-09-27T09:28:08.790589",
+      "likeCount": 736,
+      "commentCount": 168,
+      "user": {
+        "id": "89c8a9d3-cd97-4e92-8ad5-5323061b2024",
+        "username": "userqq3lguey",
+        "displayPicture": "https://example.com/dp5pcw5uyp.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/media5oxlh12y.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediaxoqpm6si.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/media2m8zfnl9.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediaiikxmv2s.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediag735a1yc.jpg",
+          "type": "IMAGE"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "type": "SHOP",
+      "caption": "Caption for post 26",
+      "title": "Title 26",
+      "description": null,
+      "price": "15.86",
+      "sold": false,
+      "createdAt": "2024-09-30T09:28:08.790621",
+      "updatedAt": "2024-10-06T09:28:08.790624",
+      "likeCount": 816,
+      "commentCount": 204,
+      "user": {
+        "id": "66bb2d88-89b6-47bf-953a-18fe36bf33ee",
+        "username": "userqbhmwv3v",
+        "displayPicture": "https://example.com/dp8impuzx7.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediahbjf0zt1.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediavgzwores.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "27",
+      "type": "SHOP",
+      "caption": "Caption for post 27",
+      "title": "Title 27",
+      "description": "Description for post 27",
+      "price": "207.65",
+      "sold": false,
+      "createdAt": "2024-09-25T09:28:08.790646",
+      "updatedAt": "2024-10-19T09:28:08.790649",
+      "likeCount": 476,
+      "commentCount": 286,
+      "user": {
+        "id": "e3124a14-048f-41bb-9ee6-95005cf87ad0",
+        "username": "userpnlcyaa3",
+        "displayPicture": "https://example.com/dpa438vejt.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediahxolwuz7.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediatwfk6mep.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "medium tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        },
+        {
+          "name": "medium tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "type": "SHOP",
+      "caption": "Caption for post 28",
+      "title": "Title 28",
+      "description": null,
+      "price": "464.04",
+      "sold": false,
+      "createdAt": "2024-09-25T09:28:08.790673",
+      "updatedAt": "2024-10-14T09:28:08.790676",
+      "likeCount": 430,
+      "commentCount": 469,
+      "user": {
+        "id": "908aee1d-23e8-4bd4-8943-4df111b02134",
+        "username": "user2r9dq9aw",
+        "displayPicture": "https://example.com/dp8qrw7m89.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediadwowt10e.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediawad2sgxv.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediaexx185dd.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "subject matter tag",
+          "type": "STYLE"
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "type": "SHOP",
+      "caption": "Caption for post 29",
+      "title": "Title 29",
+      "description": null,
+      "price": "0.00",
+      "sold": false,
+      "createdAt": "2024-10-17T09:28:08.790697",
+      "updatedAt": "2024-10-13T09:28:08.790700",
+      "likeCount": 651,
+      "commentCount": 396,
+      "user": {
+        "id": "66bb2d88-89b6-47bf-953a-18fe36bf33ee",
+        "username": "userqbhmwv3v",
+        "displayPicture": "https://example.com/dp8impuzx7.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaq9oge8g6.jpg",
+          "type": "VIDEO"
+        },
+        {
+          "url": "https://example.com/mediayhk9jf4a.jpg",
+          "type": "IMAGE"
+        },
+        {
+          "url": "https://example.com/mediado8lp829.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        },
+        {
+          "name": "style tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "subject matter tag",
+          "type": "MEDIUM"
+        },
+        {
+          "name": "style tag",
+          "type": "SUBJECT"
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "type": "CONTENT",
+      "caption": "Caption for post 30",
+      "title": null,
+      "description": null,
+      "price": null,
+      "sold": false,
+      "createdAt": "2024-09-26T09:28:08.790727",
+      "updatedAt": "2024-10-03T09:28:08.790733",
+      "likeCount": 750,
+      "commentCount": 494,
+      "user": {
+        "id": "4e15a05b-9a1f-4a69-8fc5-16fac16416ab",
+        "username": "userx8almprt",
+        "displayPicture": "https://example.com/dpb68iztel.jpg",
+        "displayPictureThumb": "https://example.com/dpthumbferoa9ct.jpg"
+      },
+      "media": [
+        {
+          "url": "https://example.com/mediaz2dhdopm.jpg",
+          "type": "VIDEO"
+        }
+      ],
+      "tags": [
+        {
+          "name": "style tag",
+          "type": "STYLE"
+        }
+      ]
+    }
+  ]
+}

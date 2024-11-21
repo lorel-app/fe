@@ -40,9 +40,14 @@ export const AuthProvider = ({ children }) => {
 
   const loadUser = useCallback(async () => {
     dispatch({ type: 'SET_LOADING', payload: true })
-    const user = await api.loadTokens()
-    if (user) {
-      dispatch({ type: 'LOGIN', payload: user })
+    const tokens = await api.loadTokens()
+    if (tokens) {
+      const userResponse = await api.getMe()
+      if (userResponse && userResponse.success) {
+        dispatch({ type: 'LOGIN', payload: userResponse.data })
+      } else {
+        dispatch({ type: 'LOGOUT' })
+      }
     } else {
       dispatch({ type: 'LOGOUT' })
     }
@@ -60,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     api.setOnTokenChangeCallback(tokenChangeCallback)
 
     return () => {
-      api.setOnTokenChangeCallback(null)
+      api.setOnTokenChangeCallback(() => {})
     }
   }, [loadUser])
 
@@ -86,5 +91,4 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   )
 }
-
 export default AuthContext

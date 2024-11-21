@@ -1,32 +1,44 @@
-import { View, TouchableOpacity, Text, TextInput, Image } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  TextInput,
+  Image,
+  Platform
+} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import React, { useState, useRef, useContext } from 'react'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
-import { useTheme } from '@react-navigation/native'
 import AuthContext from '@/utils/authContext'
 import { useMediaPicker } from '@/hooks/useMediaPicker'
 import api from '@/utils/api'
 import { useAlertModal } from '@/hooks/useAlertModal'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
-import UnauthenticatedView from '@/components/UnauthenticatedView'
+import {
+  useTheme,
+  useNavigation,
+  useFocusEffect
+} from '@react-navigation/native'
 import Spacer from '@/components/Spacer'
 import ButtonIcon from '@/components/ButtonIcon'
 import DropDownMenu from '@/components/DropDownMenu'
+import SelectTags from '@/components/SelectTags'
+import Loader from '@/components/Loader'
 
-const AddScreen = props => {
+const AddScreen = () => {
   const styles = useGlobalStyles()
-  const { colors } = useTheme()
   const showAlert = useAlertModal()
-  const { isAuthenticated, user, loadUser } = useContext(AuthContext)
+  const { colors } = useTheme()
+  const { user: me } = useContext(AuthContext)
   const navigation = useNavigation()
 
   const [selectedOption, setSelectedOption] = useState('CONTENT')
   const options = [
-    { label: 'Content', value: 'CONTENT' },
-    { label: 'Item for Sale', value: 'SHOP' }
+    { label: 'Content', value: 'CONTENT', icon: 'interests' },
+    { label: 'Item for Sale', value: 'SHOP', icon: 'local-mall' }
   ]
 
   const { images, pickImages } = useMediaPicker()
+  const [loading, setLoading] = useState(false)
 
   const [form, setForm] = useState({
     type: selectedOption,
@@ -34,29 +46,27 @@ const AddScreen = props => {
     title: '',
     price: '',
     caption: '',
-    tags: '',
+    tags: [],
     description: ''
   })
 
   useFocusEffect(
     React.useCallback(() => {
-      setForm({
-        type: selectedOption,
-        media: [],
-        title: '',
-        price: '',
-        caption: '',
-        tags: '',
-        description: ''
-      })
-    }, [selectedOption])
-  )
-
-  useFocusEffect(
-    React.useCallback(() => {
-      setForm(prevForm => ({ ...prevForm, media: images.map(img => img.file) })) // Update with selected images
+      if (Platform.OS === 'web') {
+        setForm(prevForm => ({
+          ...prevForm,
+          media: images.map(img => img.file)
+        }))
+      } else {
+        setForm(prevForm => ({ ...prevForm, media: images.map(img => img) }))
+      }
     }, [images])
   )
+
+  const handleOptionSelect = value => {
+    setSelectedOption(value)
+    setForm(prevForm => ({ ...prevForm, type: value }))
+  }
 
   const handleChange = (key, value) => {
     setForm(prevForm => ({ ...prevForm, [key]: value }))
@@ -74,55 +84,85 @@ const AddScreen = props => {
     setDescriptionHeight(Math.min(contentSize.height, 1000))
   }
 
+  let selectedTags = []
+
+  const handleTagsChange = tags => {
+    if (tags.length <= 6) {
+      selectedTags = tags
+      setForm(prevForm => ({ ...prevForm, tags }))
+    } else {
+      showAlert('error', 'You can only select up to 6 tags')
+    }
+  }
+
   const handlePost = async () => {
-    const { type, media, title, price, caption, tags, description } = form
-    if (media.length === 0 || !caption) {
+    const { type, media, title, price, caption, description, tags } = form
+    if (media.length === 0) {
+      showAlert('error', 'At least one image is mandatory for all posts')
+      return
+    }
+    const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/
+    if (price && !pricePattern.test(price)) {
       showAlert(
         'error',
-        'At least one image/video and a caption are mandatory for all posts.'
+        'Incorrect price format: Please use up to 2 decimal places and only one full stop'
       )
       return
     }
+    setLoading(true)
     try {
       const response = await api.addPost({
         type,
         media,
         title,
-        price,
+        price: price.replace(/[^0-9.]/g, ''),
         caption,
         tags,
         description
       })
+      if (response.status === 413) {
+        showAlert(
+          'error',
+          'Upload failed. Please ensure the total size of your photos does not exceed 20MB'
+        )
+        return
+      }
       if (response.status === 400) {
-        showAlert('error', response.data.message)
+        showAlert(
+          'error',
+          'Invalid file type (videos will be supported in a feature release)'
+        )
         return
       }
       if (response.success) {
-        showAlert('success', response.data.message)
-        navigation.navigate('Home')
-        return
+        navigation.navigate('Profile')
       }
-    } catch {
-      showAlert('error', 'Something went wrong, please try again later.')
-      return
+    } catch (error) {
+      showAlert('error', 'Something went wrong, please try again later')
+    } finally {
+      setLoading(false)
     }
   }
 
-  return isAuthenticated ? (
+  return (
     <>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 10 }}
+        contentContainerStyle={{ paddingHorizontal: 20 }}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
-          <Text style={styles.title}>What are you posting?</Text>
-          <DropDownMenu
-            options={options}
-            selectedValue={selectedOption}
-            onSelect={setSelectedOption}
-          />
+          <Text style={[styles.title, { textAlign: 'left' }]}>
+            What are you posting?
+          </Text>
+          <View style={{ marginLeft: 10 }}>
+            <DropDownMenu
+              options={options}
+              selectedValue={selectedOption}
+              onSelect={handleOptionSelect}
+            />
+          </View>
         </View>
-        <View style={{ height: 280 }}>
+        <View style={{}}>
           <ScrollView
             ref={scrollViewRef}
             onContentSizeChange={() =>
@@ -132,63 +172,61 @@ const AddScreen = props => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={[styles.containerLeft, { padding: 0 }]}
           >
-            {images.map((image, index) => (
-              <View
-                key={index}
-                style={[styles.gridPost, { backgroundColor: colors.card }]}
-              >
+            {images.map(image => (
+              <View key={image.uri} style={styles.imageGrid}>
                 <Image
                   source={{ uri: image.uri }}
                   resizeMode="contain"
-                  style={styles.image}
+                  style={styles.imageFit}
                 />
               </View>
             ))}
-            <View style={[styles.gridPost, { backgroundColor: colors.card }]}>
-              <Image
-                source={{
-                  uri: 'https://images.ctfassets.net/ub3bwfd53mwy/5zi8myLobtihb1cWl3tj8L/45a40e66765f26beddf7eeee29f74723/6_Image.jpg'
-                }}
-                resizeMode="contain"
-                style={styles.image}
-                value="media"
-              />
-            </View>
-            <View style={[styles.gridPost, { backgroundColor: colors.card }]}>
+            <View style={styles.imageGrid}>
               <ButtonIcon
                 iconName="add-photo-alternate"
                 iconSize={80}
                 onPress={pickImages}
               />
+              <Text style={styles.textLight}>(Max 5)</Text>
             </View>
             <Spacer />
           </ScrollView>
         </View>
 
-        <View style={styles.container}>
-          {selectedOption === 'SHOP' && (
+        <View
+          style={[styles.container, { maxWidth: 500 }, { alignSelf: 'center' }]}
+        >
+          {selectedOption === 'SHOP' ? (
             <TextInput
               style={styles.inputLight}
               placeholder="Title"
+              placeholderTextColor={colors.text}
               value={form.title}
               onChangeText={text => handleChange('title', text)}
-              maxLength={55}
+              maxLength={50}
               autoCapitalize="words"
             />
-          )}
-          {selectedOption === 'SHOP' && (
-            <TextInput
-              style={styles.inputLight}
-              placeholder="Currency, Price"
-              value={form.price}
-              onChangeText={text => handleChange('price', text)}
-              keyboardType="numeric"
-              maxLength={55}
-            />
-          )}
+          ) : null}
+          {selectedOption === 'SHOP' ? (
+            <View style={[styles.rowSpan, { padding: 0 }]}>
+              <Text style={[styles.textAccent, { marginRight: 10 }]}>
+                {me.preferences.currency}
+              </Text>
+              <TextInput
+                style={styles.inputLight}
+                placeholder="00.00"
+                placeholderTextColor={colors.text}
+                value={form.price.replace(/[^0-9.]/g, '')}
+                onChangeText={text => handleChange('price', text)}
+                keyboardType="numeric"
+                maxLength={50}
+              />
+            </View>
+          ) : null}
           <TextInput
             style={[styles.inputLight, { height: captionHeight }]}
-            placeholder="*Caption"
+            placeholder="Caption"
+            placeholderTextColor={colors.text}
             value={form.caption}
             onChangeText={text => handleChange('caption', text)}
             onContentSizeChange={event =>
@@ -197,10 +235,11 @@ const AddScreen = props => {
             multiline={true}
             maxLength={255}
           />
-          {selectedOption === 'SHOP' && (
+          {selectedOption === 'SHOP' ? (
             <TextInput
               style={[styles.inputLight, { height: descriptionHeight }]}
               placeholder="Description"
+              placeholderTextColor={colors.text}
               value={form.description}
               onChangeText={text => handleChange('description', text)}
               onContentSizeChange={event =>
@@ -209,21 +248,29 @@ const AddScreen = props => {
               multiline={true}
               maxLength={1000}
             />
-          )}
-          <Text style={styles.inputLight}>Tag selection placeholder</Text>
+          ) : null}
+          <View style={[styles.row, { padding: 10 }, { marginBottom: 10 }]}>
+            <Text style={styles.text}>Add tags to your post</Text>
+            <Text style={styles.textLight}>(Max 6)</Text>
+          </View>
+          <SelectTags onTagsChange={handleTagsChange} />
           <Spacer />
           <Spacer />
         </View>
       </ScrollView>
 
-      <TouchableOpacity style={styles.buttonAbsolute} onPress={handlePost}>
-        <Text style={styles.buttonText}>
-          {selectedOption === 'SHOP' ? 'Add to Shop' : 'Add'}
-        </Text>
-      </TouchableOpacity>
+      <View>
+        {loading ? (
+          <Loader />
+        ) : (
+          <TouchableOpacity style={styles.buttonAbsolute} onPress={handlePost}>
+            <Text style={styles.buttonText}>
+              {selectedOption === 'SHOP' ? 'Add to Shop' : 'Add'}
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </>
-  ) : (
-    <UnauthenticatedView />
   )
 }
 

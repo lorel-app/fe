@@ -23,7 +23,7 @@ const InputPhoneNumber = ({ phoneNumber, setPhoneNumber, setCountryCode }) => {
   }
 
   return (
-    <View style={styles.inputWithIcon}>
+    <View style={styles.row}>
       {/* Fix isFocus state to hide border */}
       {/* https://www.npmjs.com/package/react-native-phone-input */}
       <PhoneInput
