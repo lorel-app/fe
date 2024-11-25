@@ -96,8 +96,6 @@ const AddScreen = () => {
   }
 
   const handlePost = async () => {
-    // TMP!
-    throw new Error('Hello')
     const { type, media, title, price, caption, description, tags } = form
     if (media.length === 0) {
       showAlert('error', 'At least one image is mandatory for all posts')
