@@ -28,7 +28,7 @@ STRIPPED_TAG_NAME="${TAG_NAME#v}"
 export SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN"
 
 echo "Uploading source maps for release: $STRIPPED_TAG_NAME"
-npx sentry-cli sourcemaps upload ./dist --strip-prefix="~/_expo/static/js/web/" --url-prefix="app:///" -o=lorel -p=fe --release="$STRIPPED_TAG_NAME"
+npx sentry-cli sourcemaps upload ./dist/_expo/static/js/web --strip-common-prefix --url-prefix="app:///" -o=lorel -p=fe --release="$STRIPPED_TAG_NAME"
 
 if [ $? -ne 0 ]; then
   echo "Failed to upload source maps to Sentry."
