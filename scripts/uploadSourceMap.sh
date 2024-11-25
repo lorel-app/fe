@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Meant to be run in Cloud Build
+
 if [ -z "$1" ]; then
   echo "Error: TAG_NAME was not provided. Exiting."
   exit 1
@@ -7,6 +9,14 @@ fi
 
 if [ -z "$2" ]; then
   echo "Error: SENTRY_AUTH_TOKEN was not provided. Exiting."
+  exit 1
+fi
+
+echo "Updating package list and installing ca-certificates..."
+apt-get update && apt-get install -y ca-certificates
+
+if [ $? -ne 0 ]; then
+  echo "Failed to install ca-certificates. Exiting."
   exit 1
 fi
 
