@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as Sentry from '@sentry/react-native'
 import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -25,9 +26,20 @@ import SettingsScreen from '@/app/screens/Settings'
 import AboutScreen from '@/app/screens_static/About'
 import UserAgreementsScreen from './screens_static/UserAgreements'
 
+if (['dev', 'prod'].includes(process.env.EXPO_PUBLIC_ENV)) {
+  Sentry.init({
+    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+    tracesSampleRate: process.env.NODE_ENV === 'prod' ? 0.1 : 1.0,
+    profilesSampleRate: 1.0,
+    environment: process.env.EXPO_PUBLIC_ENV,
+    release: process.env.EXPO_PUBLIC_RELEASE,
+    dist: null
+  })
+}
+
 const Stack = createStackNavigator()
 
-export default function Index() {
+const app = function Index() {
   const [theme, setTheme] = React.useState('light')
   const [isReady, setIsReady] = React.useState(false)
 
@@ -145,3 +157,8 @@ const MainScreens = () => {
     </>
   )
 }
+
+// wrap the app with Sentry only if deployed
+export default ['dev', 'prod'].includes(process.env.EXPO_PUBLIC_ENV)
+  ? Sentry.wrap(app)
+  : app

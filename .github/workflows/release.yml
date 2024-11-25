@@ -51,8 +51,10 @@ jobs:
         shell: bash
       - name: Create test env
         run: |
-          echo "EXPO_PUBLIC_API_URL=http://localhost:3000" > .env
+          echo "EXPO_PUBLIC_ENV=test" > .env
+          echo "EXPO_PUBLIC_API_URL=http://localhost:3000" >> .env
           echo "EXPO_PUBLIC_WEBSOCKET_URL=ws://localhost:8081" >> .env
+          echo "EXPO_PUBLIC_APP_URL=http://localhost:8081" >> .env
       - name: Build
         run: npm run build:web
       - name: Serve & Test

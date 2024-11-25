@@ -33,11 +33,26 @@
       "favicon": "./assets/images/LogoTemp.png"
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "asyncRoutes": {
+            "web": false
+          }
+        }
+      ],
       [
         "expo-image-picker",
         {
           "photosPermission": "Lorel accesses your library to allow you to upload images and videos."
+        }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "lorel",
+          "project": "fe",
+          "url": "https://sentry.io/"
         }
       ]
     ],
