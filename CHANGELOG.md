@@ -1,3 +1,10 @@
+# [1.3.0-dev.4](https://github.com/lorel-app/fe/compare/v1.3.0-dev.3...v1.3.0-dev.4) (2024-11-25)
+
+
+### Bug Fixes
+
+* 🐛 maybe fix sourcemap artifacts filenames ([30e7af8](https://github.com/lorel-app/fe/commit/30e7af85c2ee008297731c4541c4fafbc42c732c))
+
 # [1.3.0-dev.3](https://github.com/lorel-app/fe/compare/v1.3.0-dev.2...v1.3.0-dev.3) (2024-11-25)
 
 
