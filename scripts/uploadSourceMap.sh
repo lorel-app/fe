@@ -1,14 +1,21 @@
-if [ -z "$TAG_NAME" ]; then
-  echo "Error: TAG_NAME is not set in the environment. Exiting."
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Error: TAG_NAME was not provided. Exiting."
   exit 1
 fi
 
-if [ -z "$SENTRY_AUTH_TOKEN" ]; then
-  echo "Error: SENTRY_AUTH_TOKEN is not set in the environment. Exiting."
+if [ -z "$2" ]; then
+  echo "Error: SENTRY_AUTH_TOKEN was not provided. Exiting."
   exit 1
 fi
 
+TAG_NAME="$1"
+SENTRY_AUTH_TOKEN="$2"
 STRIPPED_TAG_NAME="${TAG_NAME#v}"
+
+# workaround for cloudbuild
+export SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN"
 
 echo "Uploading source maps for release: $STRIPPED_TAG_NAME"
 npx sentry-cli sourcemaps upload ./dist -o=lorel -p=fe --release="$STRIPPED_TAG_NAME"
