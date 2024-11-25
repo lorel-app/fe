@@ -1,3 +1,10 @@
+# [1.3.0-dev.2](https://github.com/lorel-app/fe/compare/v1.3.0-dev.1...v1.3.0-dev.2) (2024-11-25)
+
+
+### Bug Fixes
+
+* 🐛 maybe fix cloudbuild ([826f262](https://github.com/lorel-app/fe/commit/826f262ef4d5fda8533df180e390b8c2db9c78bd))
+
 # [1.3.0-dev.1](https://github.com/lorel-app/fe/compare/v1.2.0...v1.3.0-dev.1) (2024-11-25)
 
 
