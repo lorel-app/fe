@@ -1,3 +1,10 @@
+# [1.3.0-dev.6](https://github.com/lorel-app/fe/compare/v1.3.0-dev.5...v1.3.0-dev.6) (2024-11-25)
+
+
+### Bug Fixes
+
+* 🐛 remove test error ([2f76b87](https://github.com/lorel-app/fe/commit/2f76b87f98fd73887c2bd053c9a27069e5edfa46))
+
 # [1.3.0-dev.5](https://github.com/lorel-app/fe/compare/v1.3.0-dev.4...v1.3.0-dev.5) (2024-11-25)
 
 
