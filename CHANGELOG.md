@@ -1,3 +1,10 @@
+# [1.3.0-dev.1](https://github.com/lorel-app/fe/compare/v1.2.0...v1.3.0-dev.1) (2024-11-25)
+
+
+### Features
+
+* 🫡 add sentry ([6ae441c](https://github.com/lorel-app/fe/commit/6ae441ccd0723f7dbc5715341631986a35e034ee))
+
 # [1.2.0](https://github.com/lorel-app/fe/compare/v1.1.0...v1.2.0) (2024-11-21)
 
 
