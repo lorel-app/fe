@@ -120,22 +120,26 @@ const AddScreen = () => {
         tags,
         description
       })
-      if (response.status === 413) {
-        showAlert(
-          'error',
-          'Upload failed. Please ensure the total size of your photos does not exceed 20MB'
-        )
-        return
-      }
-      if (response.status === 400) {
-        showAlert(
-          'error',
-          'Invalid file type (videos will be supported in a feature release)'
-        )
-        return
-      }
-      if (response.success) {
-        navigation.navigate('Profile')
+
+      switch (response.status) {
+        case 400:
+          showAlert(
+            'error',
+            'Invalid file type (videos will be supported in a future release)'
+          )
+          break
+        case 413:
+          showAlert(
+            'error',
+            'Upload failed. Please ensure the total size of your photos does not exceed 20MB'
+          )
+          break
+        case 201:
+          navigation.navigate('Profile')
+          break
+        default:
+          showAlert('error', 'Something went wrong, please try again later')
+          break
       }
     } catch (error) {
       showAlert('error', 'Something went wrong, please try again later')
