@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fe",
-    "slug": "fe",
+    "name": "Lorel",
+    "slug": "lorel",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/lorel-icon.png",
@@ -13,7 +13,8 @@
       "backgroundColor": "#EEEBE6"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lorel"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +25,9 @@
       "compileSdkVersion": 34,
       "targetSdkVersion": 34,
       "buildToolsVersion": "34.0.0",
-      "permissions": ["android.permission.RECORD_AUDIO"],
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
       "usesCleartextTraffic": true
     },
     "web": {
@@ -61,7 +64,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "c9f59e46-4dc9-4c50-b7dd-b731e4f0fa88"
+        "projectId": "26f4c35b-40ad-48d2-9187-2417994f8c8b"
       }
     }
   }

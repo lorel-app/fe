@@ -17,7 +17,14 @@
       }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+			"env": {
+        "EXPO_PUBLIC_ENV": "dev",
+        "EXPO_PUBLIC_API_URL": "https://api.dev.lorel.app",
+				"EXPO_PUBLIC_WEBSOCKET_URL": "wss://api.dev.lorel.app",
+				"EXPO_PUBLIC_APP_URL": "https://dev.lorel.app",
+				"EXPO_PUBLIC_SENTRY_DSN": "EXPO_PUBLIC_SENTRY_DSN"
+      }
     },
     "production": {
       "autoIncrement": true
