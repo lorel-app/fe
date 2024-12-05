@@ -133,7 +133,7 @@ export const useGlobalStyles = () => {
       margin: 15,
       padding: 10,
       // flex: 1
-      flexGrow: 1,
+      // flexGrow: 1,
       ...shadowStyle
     },
 
