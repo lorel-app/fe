@@ -109,7 +109,7 @@ const BuyScreen = ({ route }) => {
           </Text>
         </View>
 
-        {me.id === user.id ? (
+        {me && me.id === user.id ? (
           <TouchableOpacity
             style={[
               styles.button,
