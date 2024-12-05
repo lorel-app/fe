@@ -1,3 +1,10 @@
+# [1.3.0-dev.7](https://github.com/lorel-app/fe/compare/v1.3.0-dev.6...v1.3.0-dev.7) (2024-12-05)
+
+
+### Bug Fixes
+
+* 🐛 Removed flex-grow broken on native (+ updated logos) ([e0861b1](https://github.com/lorel-app/fe/commit/e0861b102580438368bd68093cafffdfd6b69917))
+
 # [1.3.0-dev.6](https://github.com/lorel-app/fe/compare/v1.3.0-dev.5...v1.3.0-dev.6) (2024-11-25)
 
 
