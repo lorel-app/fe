@@ -67,7 +67,7 @@ function Tabs() {
             <MaterialIcons
               style={styles.icon}
               name={tabIcons[route.name]}
-              size={20}
+              size={34}
               color={color}
             />
           )
@@ -76,7 +76,8 @@ function Tabs() {
         tabBarInactiveTintColor: colors.secondaryTint,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: colors.card
+          backgroundColor: colors.card,
+          padding: 0
         },
         headerShown: false
         // deprecated with expo sdk 52 - use useFocusEffect for now

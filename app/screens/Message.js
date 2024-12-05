@@ -18,6 +18,7 @@ import ChatBubble from '@/components/ChatBubble'
 import { useWebSocket } from '@/utils/websocket'
 import ReportModal from '@/components/Report'
 import ButtonIcon from '@/components/ButtonIcon'
+import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 const MessageScreen = ({ route }) => {
