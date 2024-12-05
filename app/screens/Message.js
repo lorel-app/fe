@@ -179,7 +179,7 @@ const MessageScreen = ({ route }) => {
       )}
       {!loading && messages.length === 0 && (
         <View style={[styles.containerFull]}>
-          <Text style={styles.buttonSmall}>
+          <Text style={[styles.buttonSmall, styles.text]}>
             Chats are not end-to-end encrypted yet.{'\n'} Do not share any
             sensitive information.
           </Text>
