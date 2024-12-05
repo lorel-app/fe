@@ -14,7 +14,7 @@ const SearchScreen = () => {
   const styles = useGlobalStyles()
   const { colors } = useTheme()
   const [loading, isLoading] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(true)
   const [searchUser, setSearchUser] = useState('')
   const [results, setResults] = useState([])
   const [resultType, setResultType] = useState('user')
