@@ -25,7 +25,6 @@ function Tabs() {
   const styles = useGlobalStyles()
   const { isAuthenticated } = useContext(AuthContext)
   const { newChatMessages } = useWebSocket()
-
   const tabScreens = [
     <Tab.Screen key="Home" name="Home" component={HomeScreen} />,
     <Tab.Screen key="Search" name="Search" component={SearchScreen} />
@@ -61,26 +60,27 @@ function Tabs() {
 
   return (
     <Tab.Navigator
+      detachInactiveScreens={true}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
           return (
             <MaterialIcons
               style={styles.icon}
               name={tabIcons[route.name]}
-              size={32}
+              size={20}
               color={color}
             />
           )
         },
-
         tabBarActiveTintColor: colors.secondary,
         tabBarInactiveTintColor: colors.secondaryTint,
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: colors.card
         },
-        headerShown: false,
-        unmountOnBlur: true
+        headerShown: false
+        // deprecated with expo sdk 52 - use useFocusEffect for now
+        // unmountOnBlur: true
       })}
     >
       {tabScreens}

@@ -60,7 +60,7 @@ const TabContent = ({ posts, fetchPosts, loading, user }) => {
       // ListEmptyComponent={
       //   <Text style={styles.textBold}>Nothing posted yet</Text>
       // }
-      nestedScrollEnabled={true}
+      // nestedScrollEnabled={true}
     />
   )
 }

@@ -107,7 +107,6 @@ export default function SignUpLogInModal({ visible, onClose }) {
       })
       response.success
         ? (onClose(),
-          showAlert('success', 'Logged in'),
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }]
@@ -164,11 +163,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
   return (
     <>
-      <ModalScreen
-        visible={visible}
-        onClose={onClose}
-        style={{ maxLength: 400 }}
-      >
+      <ModalScreen visible={visible} onClose={onClose}>
         <View style={styles.modalChildren}>
           <Text style={styles.title}>
             {isSignUp ? 'Sign Up (Step 1/3)' : 'Log In'}

@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import ButtonIcon from '@/components/ButtonIcon'
+import { useFocusEffect } from '@react-navigation/native'
 import Loader from '@/components/Loader'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -19,6 +20,15 @@ const SearchScreen = () => {
   const [results, setResults] = useState([])
   const [resultType, setResultType] = useState('user')
   let selectedTags = []
+
+  useFocusEffect(
+    useCallback(() => {
+      setSearchUser('')
+      setResults([])
+      setResultType('user')
+      setIsCollapsed(true)
+    }, [])
+  )
 
   const toggleCollapse = () => setIsCollapsed(!isCollapsed)
 

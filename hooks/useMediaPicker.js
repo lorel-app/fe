@@ -30,5 +30,9 @@ export function useMediaPicker() {
     }
   }
 
-  return { images, pickImages }
+  const clearImages = () => {
+    setImages([])
+  }
+
+  return { images, pickImages, clearImages }
 }

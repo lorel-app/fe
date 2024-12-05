@@ -37,7 +37,7 @@ const AddScreen = () => {
     { label: 'Item for Sale', value: 'SHOP', icon: 'local-mall' }
   ]
 
-  const { images, pickImages } = useMediaPicker()
+  const { images, pickImages, clearImages } = useMediaPicker()
   const [loading, setLoading] = useState(false)
 
   const [form, setForm] = useState({
@@ -62,6 +62,14 @@ const AddScreen = () => {
       }
     }, [images])
   )
+
+  const handleClearImages = () => {
+    setForm(prevForm => ({
+      ...prevForm,
+      media: []
+    }))
+    clearImages()
+  }
 
   const handleOptionSelect = value => {
     setSelectedOption(value)
@@ -135,7 +143,10 @@ const AddScreen = () => {
           )
           break
         case 201:
-          navigation.navigate('Profile')
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Profile' }]
+          })
           break
         default:
           showAlert('error', 'Something went wrong, please try again later')
@@ -195,6 +206,12 @@ const AddScreen = () => {
             </View>
             <Spacer />
           </ScrollView>
+          <TouchableOpacity
+            onPress={handleClearImages}
+            style={{ paddingBottom: 20 }}
+          >
+            <Text style={styles.link}>clear images</Text>
+          </TouchableOpacity>
         </View>
 
         <View

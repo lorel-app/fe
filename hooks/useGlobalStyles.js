@@ -336,6 +336,7 @@ export const useGlobalStyles = () => {
       alignItems: 'center',
       width: width * 0.9,
       maxWidth: 500,
+      // add maxHeight for phone
       ...shadowStyle
     },
     modalChildren: {
