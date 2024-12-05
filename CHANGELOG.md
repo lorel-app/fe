@@ -1,3 +1,10 @@
+# [1.3.0-dev.8](https://github.com/lorel-app/fe/compare/v1.3.0-dev.7...v1.3.0-dev.8) (2024-12-05)
+
+
+### Bug Fixes
+
+* 🐛 id not found when unauthenticated ([42c2590](https://github.com/lorel-app/fe/commit/42c2590f558491c09e85636877bad4b8f13ea91b))
+
 # [1.3.0-dev.7](https://github.com/lorel-app/fe/compare/v1.3.0-dev.6...v1.3.0-dev.7) (2024-12-05)
 
 
