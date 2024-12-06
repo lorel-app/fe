@@ -31,7 +31,11 @@ const DropDownMenu = ({
     <View>
       {!hasIconButton ? (
         <TouchableOpacity
-          style={[styles.button, styles.rowSpan]}
+          style={[
+            styles.button,
+            styles.row,
+            { justifyContent: 'space-between' }
+          ]}
           onPress={() => setIsOpen(!isOpen)}
         >
           <Text style={[styles.buttonText, { marginLeft: 5 }]}>

@@ -171,7 +171,9 @@ export default function SignUpLogInModal({ visible, onClose }) {
           <Spacer />
 
           <ScrollView
-            contentContainerStyle={{ maxHeight: 220 }}
+            //contentContainerStyle={{ maxHeight: 220 }}
+            style={[{ maxHeight: 220 }, { flexGrow: 0 }]}
+            nestedScrollEnabled={true}
             showsVerticalScrollIndicator={false}
           >
             {isSignUp ? (
@@ -207,7 +209,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               />
             ) : null}
 
-            <View style={styles.row}>
+            <View style={[styles.row, { minWidth: 250 }]}>
               <TextInput
                 style={styles.input}
                 placeholder="Password"
@@ -226,7 +228,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             </View>
 
             {isSignUp ? (
-              <View style={styles.row}>
+              <View style={[styles.row, { minWidth: 250 }]}>
                 <TextInput
                   style={styles.input}
                   placeholder="Confirm Password"
@@ -275,9 +277,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             ) : null}
           </ScrollView>
 
-          <View
-            style={[styles.divider, { width: '100%' }, { marginBottom: 20 }]}
-          ></View>
+          <View style={styles.divider}></View>
           <TouchableOpacity
             testID={'authenticate_button'}
             style={styles.button}

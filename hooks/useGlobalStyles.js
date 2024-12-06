@@ -80,7 +80,7 @@ export const useGlobalStyles = () => {
       flex: 1,
       paddingLeft: 10,
       paddingBottom: 10,
-      width: '100%'
+      width: width
     },
     containerFull: {
       flex: 1,
@@ -112,7 +112,7 @@ export const useGlobalStyles = () => {
       minHeight: width < 600 ? null : '100%',
       flexGrow: 1,
       padding: 15,
-      backgroundColor: colors.tint,
+      backgroundColor: colors.card,
       alignItems: 'center',
       borderRadius: 10,
       margin: 10,
@@ -120,8 +120,8 @@ export const useGlobalStyles = () => {
     },
 
     containerGrid: {
-      width: fullWidth / 3,
-      height: fullWidth / 3,
+      width: Math.round(fullWidth / 3),
+      height: Math.round(fullWidth / 3),
       padding: 2
     },
 
@@ -261,7 +261,11 @@ export const useGlobalStyles = () => {
       borderRadius: 10,
       marginVertical: 10,
       outlineStyle: 'none',
-      width: '100%'
+      flexDirection: 'row',
+      flex: 1,
+      width: '100%',
+      maxHeight: 50,
+      minWidth: 200
     },
     /// think about it
     inputFocused: {
@@ -282,9 +286,10 @@ export const useGlobalStyles = () => {
       padding: 10,
       borderRadius: 10,
       marginVertical: 10,
-      width: '100%',
       outlineStyle: 'none',
-      flexGrow: 1
+      flexDirection: 'row',
+      flex: 1,
+      width: '100%'
     },
     button: {
       backgroundColor: colors.primary,
@@ -336,7 +341,9 @@ export const useGlobalStyles = () => {
       alignItems: 'center',
       width: width * 0.9,
       maxWidth: 500,
-      // add maxHeight for phone
+      // flexDirection: 'column',
+      // flexGrow: 0,
+      // flexShrink: 1,
       ...shadowStyle
     },
     modalChildren: {
@@ -375,6 +382,7 @@ export const useGlobalStyles = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      flex: 1,
       width: '100%',
       padding: 10
     },
@@ -409,7 +417,7 @@ export const useGlobalStyles = () => {
     divider: {
       height: 1,
       backgroundColor: colors.primaryTint,
-      width: width * 0.9,
+      width: width * 0.8,
       maxWidth: 700,
       margin: 10,
       alignSelf: 'center'
