@@ -126,7 +126,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
 
       {type === 'SHOP' ? (
         <TouchableOpacity
-          style={styles.rowSpan}
+          style={[styles.rowSpan, { alignItems: 'start' }]}
           onPress={() => navigation.navigate('Buy', { post, user })}
         >
           <Text style={[styles.title, { textAlign: 'left' }]}>
@@ -167,7 +167,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
 
       <View style={[styles.rowSpan, { padding: 10 }]}>
         <View style={styles.rowFlex}>
-          <View style={[styles.row, { paddingBottom: 10 }]}>
+          <View style={[styles.rowWrap, { alignItems: 'end' }]}>
             {caption && (
               <Text style={[styles.text, { marginRight: 8 }]}>{caption}</Text>
             )}
@@ -178,7 +178,7 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
             )}
           </View>
 
-          <View style={styles.rowWrap}>
+          <View style={[styles.rowWrap, { paddingTop: 8 }]}>
             {tags?.map((tag, index) => (
               <TouchableOpacity key={index} style={styles.buttonSmall}>
                 <Text

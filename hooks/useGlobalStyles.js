@@ -132,8 +132,6 @@ export const useGlobalStyles = () => {
       borderRadius: 25,
       margin: 15,
       padding: 10,
-      // flex: 1
-      // flexGrow: 1,
       ...shadowStyle
     },
 
@@ -148,7 +146,7 @@ export const useGlobalStyles = () => {
 
     carouselContainer: {
       width: width,
-      flexGrow: 1
+      height: 'auto'
     },
     slide: {
       width: width,
@@ -177,8 +175,6 @@ export const useGlobalStyles = () => {
     },
 
     paginationContainer: {
-      bottom: 0,
-      position: 'relative',
       alignSelf: 'center'
     },
     pagination: {
@@ -382,7 +378,7 @@ export const useGlobalStyles = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      flex: 1,
+      flexGrow: 1,
       width: '100%',
       padding: 10
     },

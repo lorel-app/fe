@@ -129,17 +129,17 @@ const app = function Index() {
                       <Stack.Screen
                         name="User Settings"
                         component={SettingsScreen}
-                        options={{ headerShown: true }}
+                        options={{ headerShown: true, headerBackVisible: true }}
                       />
                       <Stack.Screen
                         name="About Lorel"
                         component={AboutScreen}
-                        options={{ headerShown: true }}
+                        options={{ headerShown: true, headerBackVisible: true }}
                       />
                       <Stack.Screen
                         name="User Agreements"
                         component={UserAgreementsScreen}
-                        options={{ headerShown: true }}
+                        options={{ headerShown: true, headerBackVisible: true }}
                       />
                     </Stack.Navigator>
                   </FollowingProvider>
