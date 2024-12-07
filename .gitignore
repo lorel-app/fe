@@ -19,7 +19,9 @@ web-build/
 expo-env.d.ts
 # @end expo-cli
 
-.env*
+.env
+.env.dev
+.env.prod
 
 # cypress screenshots
 cypress/screenshots/

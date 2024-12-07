@@ -1,50 +1,108 @@
-# Welcome to your Expo app 👋
+# Welcome to Lorel's Frontend 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Lorel is a cross-platform React Native [Expo](https://expo.dev) app.
 
-## Get started
+- 🐛 See known bugs: ["Bug List"](https://fair-bunny-6a8.notion.site/30cb87a8564d4a33ae322b51e0f6ac56?v=ce7d72da1f8c4565a6928e8373eb13c5)
+  <br/>
 
-1. Install dependencies
+## Sitemap
 
-   ```bash
-   npm install
-   ```
+See ["Diagrams"](https://fair-bunny-6a8.notion.site/30cb87a8564d4a33ae322b51e0f6ac56?v=ce7d72da1f8c4565a6928e8373eb13c5) > "Sitemap".
+<br/>
 
-2. Start the app
+## View Web
 
-   ```bash
-    npx expo start
-   ```
+- [Lorel dev](https://dev.lorel.app)
+- [Lorel prod](https://lorel.app)
+  <br/>
 
-In the output, you'll find options to open the app in a
+## View Native
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+_Built with [EAS](https://docs.expo.dev/build/setup/)_
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+#### Android
 
-## Get a fresh project
+1. 🚧 [Download prod apk](https://dev.lorel.app)
+2. 🚧
 
-When you're ready, run:
+#### ios
+
+1. 🚧 [Download prod apk](https://dev.lorel.app)
+2. 🚧 <br/>
+
+## Run locally
+
+1.  Install dependencies
 
 ```bash
-npm run reset-project
+npm ci
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+<hr/>
+2. Fix country-picker-modal package issue (typo in package.json referencing the wrong folder)
 
-## Learn more
+- _on linux / windows with wsl_
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+sed -i 's/"module": "[^"]*"/"module": "dist\/react-async-hook.esm.js"/' node_modules/react-native-country-picker-modal/node_modules/react-async-hook/package.json
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- _on mac_
 
-## Join the community
+```bash
+sed -i '' 's|"module": "[^"]*"|"module": "dist/react-async-hook.esm.js"|' node_modules/react-native-country-picker-modal/node_modules/react-async-hook/package.json
+```
 
-Join our community of developers creating universal apps.
+<hr/>
+3. Setup environment variables
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+_see env.template_
+
+<hr/>
+4. Start app
+
+#### **Browser**
+
+4.1 Open in new tab
+
+```bash
+npm run web
+```
+
+_Lorel beta is designed for mobile screen sizes_
+
+#### **Expo Go**
+
+4.1 Install [Expo Go](https://expo.dev/go)
+4.2 Start server
+
+```bash
+npx expo start
+```
+
+4.3 Press 's', then scan the QR code in the terminal
+_in the Expo Go app on Android or with the camera on ios_
+<br/>
+
+## Run e2e Tests Manually
+
+1. Start local server
+   _See previous section_
+
+```bash
+npx expo start
+```
+
+2. Open a new terminal
+
+Run all tests
+
+```bash
+npm run cypress:run
+```
+
+Choose specs to test
+
+```bash
+npm run cypress
+```
