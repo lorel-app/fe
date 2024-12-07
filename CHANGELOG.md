@@ -1,3 +1,19 @@
+# [1.3.0-dev.9](https://github.com/lorel-app/fe/compare/v1.3.0-dev.8...v1.3.0-dev.9) (2024-12-07)
+
+
+### Bug Fixes
+
+* 🐛 id not found when unauthenticated ([f3fda11](https://github.com/lorel-app/fe/commit/f3fda11365b4fc93439981d28f3c8560a6d31dc3))
+* 🐛 native bug clean, scrolls and modals ([85c40e3](https://github.com/lorel-app/fe/commit/85c40e38b4415ef7a1f9048208332544264c8bae))
+* 🐛 update test ([c3e9145](https://github.com/lorel-app/fe/commit/c3e91456f164f1ef4736ae7c621ee71e99c10ad2))
+* 🐛 uuid error when sending message ([785880d](https://github.com/lorel-app/fe/commit/785880d7d297ac203d42cc79f3144101ad160873))
+* 🐛 workarounds for deprecated unmountOnBlur ([00cfcaf](https://github.com/lorel-app/fe/commit/00cfcafb0226cad78de1047098aeb55b49870053))
+
+
+### Features
+
+* 🫡 setup ios builds ([39b0ff0](https://github.com/lorel-app/fe/commit/39b0ff0503738af98bca93ca394acbc733420027))
+
 # [1.3.0-dev.8](https://github.com/lorel-app/fe/compare/v1.3.0-dev.7...v1.3.0-dev.8) (2024-12-05)
 
 
