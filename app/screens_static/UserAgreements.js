@@ -349,12 +349,155 @@ const TermsConditions = ({ styles, sections }) => (
   </>
 )
 
+// const UserAgreementsScreen = ({ route }) => {
+//   const styles = useGlobalStyles()
+//   const initialSelectedTab = route.params?.selectedTab || 'privacy'
+//   const [selectedTab, setSelectedTab] = useState(initialSelectedTab)
+//   const scrollViewRef = useRef(null)
+//   const [sectionPositions, setSectionPositions] = useState({})
+
+//   const privacySections = [
+//     { title: '1. Introduction', ref: useRef(null) },
+//     { title: '2. Data Collection', ref: useRef(null) },
+//     { title: '3. How We Use Your Data', ref: useRef(null) },
+//     { title: '4. Legal Basis for Processing Data', ref: useRef(null) },
+//     { title: '5. Data Sharing and Disclosure', ref: useRef(null) },
+//     { title: '6. Data Retention', ref: useRef(null) },
+//     { title: '7. Your Rights Under GDPR', ref: useRef(null) },
+//     { title: '8. Data Security', ref: useRef(null) },
+//     { title: '9. Changes to this Policy', ref: useRef(null) },
+//     { title: '10. Contact Us', ref: useRef(null) }
+//   ]
+//   const termsSections = [
+//     { title: '1. Introduction', ref: useRef(null) },
+//     { title: '2. Acceptance of Terms', ref: useRef(null) },
+//     { title: '3. Use of the App', ref: useRef(null) },
+//     { title: '4. Prohibited Activities', ref: useRef(null) },
+//     { title: '5. Termination', ref: useRef(null) },
+//     { title: '6. Payment and Fees', ref: useRef(null) },
+//     { title: '7. Disclaimer of Warranties', ref: useRef(null) },
+//     { title: '8. Limitation of Liability', ref: useRef(null) },
+//     { title: '9. Changes to the Terms', ref: useRef(null) },
+//     { title: '10. Contact Us', ref: useRef(null) }
+//   ]
+
+//   const measureSectionPositions = sections => {
+//     const positions = {}
+//     sections.forEach((section, index) => {
+//       section.ref.current.measure((x, y, width, height) => {
+//         positions[index] = y
+//         if (Object.keys(positions).length === sections.length) {
+//           setSectionPositions(positions)
+//         }
+//       })
+//     })
+//   }
+//   // works for web
+//   // const measureSectionPositions = sections => {
+//   //   const positions = {}
+
+//   //   sections.forEach((section, index) => {
+//   //     section.ref.current.measureLayout(
+//   //       scrollViewRef.current,
+//   //       (x, y) => {
+//   //         positions[index] = y
+//   //         if (Object.keys(positions).length === sections.length) {
+//   //           setSectionPositions(positions)
+//   //         }
+//   //       },
+//   //       error => console.error('Error measuring layout:', error)
+//   //     )
+//   //   })
+//   // }
+
+//   useEffect(() => {
+//     const sections = selectedTab === 'privacy' ? privacySections : termsSections
+//     measureSectionPositions(sections)
+//   }, [selectedTab])
+
+//   // const handleScrollToSection = index => {
+//   //   const yPosition = sectionPositions[index]
+//   //   if (yPosition !== undefined) {
+//   //     scrollViewRef.current.scrollTo({ y: yPosition, animated: true })
+//   //   }
+//   // }
+//   const handleScrollToSection = index => {
+//     const yPosition = sectionPositions[index]
+//     if (yPosition !== undefined) {
+//       setTimeout(() => {
+//         // This makes sure the scroll happens after the layout is updated
+//         scrollViewRef.current.scrollTo({ y: yPosition, animated: true })
+//       }, 100) // Add a slight delay
+//     }
+//   }
+
+//   const handleTabChange = tab => {
+//     setSelectedTab(tab)
+//     scrollViewRef.current.scrollTo({ y: 0, animated: false })
+//   }
+
+//   const renderContent = () => {
+//     if (selectedTab === 'privacy') {
+//       return <PrivacyPolicy styles={styles} sections={privacySections} />
+//     }
+//     return <TermsConditions styles={styles} sections={termsSections} />
+//   }
+
+//   const renderIndex = () => {
+//     const sections = selectedTab === 'privacy' ? privacySections : termsSections
+//     return (
+//       <View style={[styles.rowWrap, styles.boxShadow, { padding: 10 }]}>
+//         {sections.map((section, index) => (
+//           <TouchableOpacity
+//             key={index}
+//             onPress={() => handleScrollToSection(index)}
+//             style={styles.buttonSmall}
+//           >
+//             <Text style={styles.textSmall}>{section.title}</Text>
+//           </TouchableOpacity>
+//         ))}
+//       </View>
+//     )
+//   }
+
+//   return (
+//     <>
+//       <View style={[styles.row, { alignSelf: 'center' }]}>
+//         <TabButton
+//           label="Privacy Policy"
+//           isSelected={selectedTab === 'privacy'}
+//           onPress={() => handleTabChange('privacy')}
+//           styles={styles}
+//         />
+//         <TabButton
+//           label="Terms & Conditions"
+//           isSelected={selectedTab === 'terms'}
+//           onPress={() => handleTabChange('terms')}
+//           styles={styles}
+//         />
+//       </View>
+
+//       {renderIndex()}
+
+//       <ScrollView
+//         ref={scrollViewRef}
+//         contentContainerStyle={[styles.containerLeft, { padding: 20 }]}
+//       >
+//         {renderContent()}
+//       </ScrollView>
+//     </>
+//   )
+// }
+
+// export default UserAgreementsScreen
+
 const UserAgreementsScreen = ({ route }) => {
   const styles = useGlobalStyles()
   const initialSelectedTab = route.params?.selectedTab || 'privacy'
   const [selectedTab, setSelectedTab] = useState(initialSelectedTab)
   const scrollViewRef = useRef(null)
   const [sectionPositions, setSectionPositions] = useState({})
+  const [isPositionsReady, setIsPositionsReady] = useState(false)
 
   const privacySections = [
     { title: '1. Introduction', ref: useRef(null) },
@@ -368,6 +511,7 @@ const UserAgreementsScreen = ({ route }) => {
     { title: '9. Changes to this Policy', ref: useRef(null) },
     { title: '10. Contact Us', ref: useRef(null) }
   ]
+
   const termsSections = [
     { title: '1. Introduction', ref: useRef(null) },
     { title: '2. Acceptance of Terms', ref: useRef(null) },
@@ -383,18 +527,14 @@ const UserAgreementsScreen = ({ route }) => {
 
   const measureSectionPositions = sections => {
     const positions = {}
-
     sections.forEach((section, index) => {
-      section.ref.current.measureLayout(
-        scrollViewRef.current,
-        (x, y) => {
-          positions[index] = y
-          if (Object.keys(positions).length === sections.length) {
-            setSectionPositions(positions)
-          }
-        },
-        error => console.error('Error measuring layout:', error)
-      )
+      section.ref.current.measure((x, y, width, height) => {
+        positions[index] = y
+        if (Object.keys(positions).length === sections.length) {
+          setSectionPositions(positions)
+          setIsPositionsReady(true)
+        }
+      })
     })
   }
 
@@ -404,15 +544,27 @@ const UserAgreementsScreen = ({ route }) => {
   }, [selectedTab])
 
   const handleScrollToSection = index => {
+    if (!isPositionsReady) {
+      console.log('Positions are not ready yet')
+      return
+    }
+
     const yPosition = sectionPositions[index]
     if (yPosition !== undefined) {
-      scrollViewRef.current.scrollTo({ y: yPosition, animated: true })
+      scrollViewRef.current.scrollTo({ y: yPosition, animated: true }, 100)
     }
+  }
+
+  const handleScrollViewLayout = event => {
+    const { height } = event.nativeEvent.layout
+    scrollViewRef.current.scrollTo({ y: 0 }, 100)
+    console.log('ScrollView height:', height)
   }
 
   const handleTabChange = tab => {
     setSelectedTab(tab)
-    scrollViewRef.current.scrollTo({ y: 0, animated: false })
+    setIsPositionsReady(false) // Reset positions on tab change
+    scrollViewRef.current.scrollTo({ y: 0, animated: false }, 100)
   }
 
   const renderContent = () => {
@@ -460,7 +612,9 @@ const UserAgreementsScreen = ({ route }) => {
 
       <ScrollView
         ref={scrollViewRef}
+        onLayout={handleScrollViewLayout}
         contentContainerStyle={[styles.containerLeft, { padding: 20 }]}
+        style={{ flex: 1 }}
       >
         {renderContent()}
       </ScrollView>

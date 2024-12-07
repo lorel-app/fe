@@ -69,6 +69,7 @@ function Tabs() {
               name={tabIcons[route.name]}
               size={34}
               color={color}
+              aria-label={tabIcons[route.name]}
             />
           )
         },

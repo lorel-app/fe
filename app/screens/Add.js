@@ -162,13 +162,14 @@ const AddScreen = () => {
   return (
     <>
       <ScrollView
+        testID="add_screen"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20 }}
         nestedScrollEnabled={true}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
           <Text style={[styles.title, { textAlign: 'left' }]}>
-            What are you posting?
+            What are you{'\n'}posting today?
           </Text>
           <View style={{ marginLeft: 10 }}>
             <DropDownMenu
@@ -233,7 +234,7 @@ const AddScreen = () => {
           {selectedOption === 'SHOP' ? (
             <View style={[styles.rowSpan, { padding: 0 }]}>
               <Text style={[styles.textAccent, { marginRight: 10 }]}>
-                {me.preferences.currency}
+                {me?.preferences?.currency || 'EUR'}
               </Text>
               <TextInput
                 style={styles.inputLight}
