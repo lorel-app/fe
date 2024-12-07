@@ -1,7 +1,10 @@
 import * as React from 'react'
 import * as Sentry from '@sentry/react-native'
 import { StatusBar } from 'expo-status-bar'
-import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native'
+import {
+  NavigationContainer,
+  NavigationIndependentTree
+} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import ThemeContext from '@/components/ThemeContext'
 import AppDarkTheme from '@/constants/AppDarkTheme'
@@ -69,82 +72,82 @@ const app = function Index() {
     <AuthProvider>
       <WebSocketProvider>
         <ThemeContext.Provider value={themeData}>
-					<NavigationIndependentTree>
-						<NavigationContainer
-							navigationInChildEnabled={true}
-							theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
-						>
-							<AlertProvider>
-								<ConfirmProvider>
-									<FollowingProvider>
-										<Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
-											<Stack.Screen
-												name="MainTabs"
-												component={MainScreens}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="Comment"
-												component={CommentScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="Buy"
-												component={BuyScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="User"
-												component={UserScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="UserPosts"
-												component={UserPostsScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="UserFollowers"
-												component={UserFollowersScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="Message"
-												component={MessageScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="EditProfile"
-												component={EditProfileScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="EditPost"
-												component={EditPostScreen}
-												options={{ headerShown: false }}
-											/>
-											<Stack.Screen
-												name="User Settings"
-												component={SettingsScreen}
-												options={{ headerShown: true }}
-											/>
-											<Stack.Screen
-												name="About Lorel"
-												component={AboutScreen}
-												options={{ headerShown: true }}
-											/>
-											<Stack.Screen
-												name="User Agreements"
-												component={UserAgreementsScreen}
-												options={{ headerShown: true }}
-											/>
-										</Stack.Navigator>
-									</FollowingProvider>
-								</ConfirmProvider>
-							</AlertProvider>
-							<StatusBar style={theme === 'light' ? 'dark' : 'light'} />
-						</NavigationContainer>
-					</NavigationIndependentTree>
+          <NavigationIndependentTree>
+            <NavigationContainer
+              navigationInChildEnabled={true}
+              theme={theme === 'light' ? AppLightTheme : AppDarkTheme}
+            >
+              <AlertProvider>
+                <ConfirmProvider>
+                  <FollowingProvider>
+                    <Stack.Navigator screenOptions={{ cardStyle: { flex: 1 } }}>
+                      <Stack.Screen
+                        name="MainTabs"
+                        component={MainScreens}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="Comment"
+                        component={CommentScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="Buy"
+                        component={BuyScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="User"
+                        component={UserScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="UserPosts"
+                        component={UserPostsScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="UserFollowers"
+                        component={UserFollowersScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="Message"
+                        component={MessageScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="EditProfile"
+                        component={EditProfileScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="EditPost"
+                        component={EditPostScreen}
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="User Settings"
+                        component={SettingsScreen}
+                        options={{ headerShown: true }}
+                      />
+                      <Stack.Screen
+                        name="About Lorel"
+                        component={AboutScreen}
+                        options={{ headerShown: true }}
+                      />
+                      <Stack.Screen
+                        name="User Agreements"
+                        component={UserAgreementsScreen}
+                        options={{ headerShown: true }}
+                      />
+                    </Stack.Navigator>
+                  </FollowingProvider>
+                </ConfirmProvider>
+              </AlertProvider>
+              <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
+            </NavigationContainer>
+          </NavigationIndependentTree>
         </ThemeContext.Provider>
       </WebSocketProvider>
     </AuthProvider>
