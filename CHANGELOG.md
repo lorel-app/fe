@@ -1,3 +1,10 @@
+# [1.3.0-dev.12](https://github.com/lorel-app/fe/compare/v1.3.0-dev.11...v1.3.0-dev.12) (2024-12-07)
+
+
+### Bug Fixes
+
+* 🐛 Post component flex break, backbutton visibility native ([310f7aa](https://github.com/lorel-app/fe/commit/310f7aa913dc5b7435c5138dc257cc57d96e7c8e))
+
 # [1.3.0-dev.11](https://github.com/lorel-app/fe/compare/v1.3.0-dev.10...v1.3.0-dev.11) (2024-12-07)
 
 
