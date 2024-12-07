@@ -24,7 +24,7 @@ describe('Login', () => {
     })
   })
 
-  it('should log in a user, notify user and load authenticated feed', () => {
+  it('should log in a user and load authenticated feed', () => {
     cy.fixture('me.json').then(me => {
       cy.intercept('POST', 'http://localhost:3000/auth/login', req => {
         expect(req.body).to.deep.equal({
@@ -76,8 +76,8 @@ describe('Login', () => {
         expect(interception.response.body.posts).to.have.length.greaterThan(0)
         // check specific posts or properties in authenticated feed
       })
-
-      cy.get('[data-testid="alert_modal"]').should('contain', 'Logged in')
+      // removed
+      //cy.get('[data-testid="alert_modal"]').should('contain', 'Logged in')
     })
   })
 

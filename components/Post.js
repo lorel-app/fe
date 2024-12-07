@@ -167,19 +167,16 @@ const Post = React.memo(({ post, hideCommentButton = false, onDeletePost }) => {
 
       <View style={[styles.rowSpan, { padding: 10 }]}>
         <View style={styles.rowFlex}>
-          {caption && (
-            <Text style={[styles.text, { paddingBottom: 10 }]}>
-              {caption}
-              {createdAt && (
-                <Text
-                  style={[styles.textLight, { paddingLeft: 10 }]}
-                  numberOfLines={1}
-                >
-                  {timeAgo(createdAt)}
-                </Text>
-              )}
-            </Text>
-          )}
+          <View style={[styles.row, { paddingBottom: 10 }]}>
+            {caption && (
+              <Text style={[styles.text, { marginRight: 8 }]}>{caption}</Text>
+            )}
+            {createdAt && (
+              <Text style={styles.textLight} numberOfLines={1}>
+                {timeAgo(createdAt)}
+              </Text>
+            )}
+          </View>
 
           <View style={styles.rowWrap}>
             {tags?.map((tag, index) => (

@@ -32,7 +32,7 @@ const AboutScreen = () => {
       <Text style={[styles.textAccent, { paddingVertical: 10 }]}>
         ABOUT LOREL
       </Text>
-      <Text style={[styles.text, { padding: 15 }]}>
+      <Text style={[styles.text, { padding: 15 }, { maxWidth: 600 }]}>
         Lorel's mission is to be a place where artists can showcase and sell
         their work, and where art lovers can discover and connect. Currently in
         its beta phase, Lorel is the brainchild of two software engineering

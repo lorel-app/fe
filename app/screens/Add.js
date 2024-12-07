@@ -164,6 +164,7 @@ const AddScreen = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20 }}
+        nestedScrollEnabled={true}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
           <Text style={[styles.title, { textAlign: 'left' }]}>
@@ -184,8 +185,9 @@ const AddScreen = () => {
               scrollViewRef.current.scrollToEnd({ animated: true })
             }
             horizontal
+            nestedScrollEnabled={true}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={[styles.containerLeft, { padding: 0 }]}
+            contentContainerStyle={styles.containerLeft}
           >
             {images.map(image => (
               <View key={image.uri} style={styles.imageGrid}>
