@@ -1,3 +1,10 @@
+# [1.3.0-dev.11](https://github.com/lorel-app/fe/compare/v1.3.0-dev.10...v1.3.0-dev.11) (2024-12-07)
+
+
+### Bug Fixes
+
+* 🐛 nested navigator problem for welcome screen ([8d03774](https://github.com/lorel-app/fe/commit/8d0377499338e66f59b5e5d31c032d1f9f3828c3))
+
 # [1.3.0-dev.10](https://github.com/lorel-app/fe/compare/v1.3.0-dev.9...v1.3.0-dev.10) (2024-12-07)
 
 
