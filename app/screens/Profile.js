@@ -91,6 +91,7 @@ const ProfileScreen = () => {
   return (
     <>
       <UserScreen
+        testID="profile_screen"
         route={{ params: { user, showHeader: false } }}
         navigation={navigation}
       />

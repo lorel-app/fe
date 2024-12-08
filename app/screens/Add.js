@@ -105,16 +105,16 @@ const AddScreen = () => {
 
   const handlePost = async () => {
     const { type, media, title, price, caption, description, tags } = form
-    if (media.length === 0) {
-      showAlert('error', 'At least one image is mandatory for all posts')
-      return
-    }
     const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/
     if (price && !pricePattern.test(price)) {
       showAlert(
         'error',
         'Incorrect price format: Please use up to 2 decimal places and only one full stop'
       )
+      return
+    }
+    if (media.length === 0) {
+      showAlert('error', 'At least one image is mandatory for all posts')
       return
     }
     setLoading(true)
@@ -171,7 +171,7 @@ const AddScreen = () => {
           <Text style={[styles.title, { textAlign: 'left' }]}>
             What are you{'\n'}posting today?
           </Text>
-          <View style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: 10 }} testID="post_dropdown">
             <DropDownMenu
               options={options}
               selectedValue={selectedOption}
@@ -237,6 +237,7 @@ const AddScreen = () => {
                 {me?.preferences?.currency || 'EUR'}
               </Text>
               <TextInput
+                testID="price_input"
                 style={styles.inputLight}
                 placeholder="00.00"
                 placeholderTextColor={colors.text}
@@ -248,6 +249,7 @@ const AddScreen = () => {
             </View>
           ) : null}
           <TextInput
+            testID="caption_input"
             style={[styles.inputLight, { height: captionHeight }]}
             placeholder="Caption"
             placeholderTextColor={colors.text}
@@ -287,7 +289,11 @@ const AddScreen = () => {
         {loading ? (
           <Loader />
         ) : (
-          <TouchableOpacity style={styles.buttonAbsolute} onPress={handlePost}>
+          <TouchableOpacity
+            testID="add_button"
+            style={styles.buttonAbsolute}
+            onPress={handlePost}
+          >
             <Text style={styles.buttonText}>
               {selectedOption === 'SHOP' ? 'Add to Shop' : 'Add'}
             </Text>
