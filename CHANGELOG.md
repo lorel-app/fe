@@ -1,3 +1,10 @@
+# [1.3.0-dev.13](https://github.com/lorel-app/fe/compare/v1.3.0-dev.12...v1.3.0-dev.13) (2024-12-08)
+
+
+### Features
+
+* 🫡 update addPost test ([1d3fe0d](https://github.com/lorel-app/fe/commit/1d3fe0d97c74f993204b2b69ec38ba11731c6457))
+
 # [1.3.0-dev.12](https://github.com/lorel-app/fe/compare/v1.3.0-dev.11...v1.3.0-dev.12) (2024-12-07)
 
 
