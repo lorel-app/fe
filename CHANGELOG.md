@@ -1,3 +1,10 @@
+# [1.3.0-dev.16](https://github.com/lorel-app/fe/compare/v1.3.0-dev.15...v1.3.0-dev.16) (2024-12-11)
+
+
+### Bug Fixes
+
+* 🐛 fix scroll on user agreements screen ([a2488ca](https://github.com/lorel-app/fe/commit/a2488ca727dd386c222e0fa01407ac414a9352f6))
+
 # [1.3.0-dev.15](https://github.com/lorel-app/fe/compare/v1.3.0-dev.14...v1.3.0-dev.15) (2024-12-11)
 
 
