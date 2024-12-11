@@ -131,7 +131,15 @@ const app = function Index() {
                       <Stack.Screen
                         name="User Settings"
                         component={SettingsScreen}
-                        options={{ headerShown: true, headerBackVisible: true }}
+                        options={{
+                          headerShown: true,
+                          headerBackVisible: true,
+                          headerBackTitleVisible: false,
+                          headerBackTitle: "",
+                          headerBackImage: Platform.OS === 'ios' ? () => (
+                            <Icon name="arrow-back-ios" size={24} color="black" style={{paddingLeft: 15}} /> 
+                          ) : undefined
+                        }}
                       />
                       <Stack.Screen
                         name="About Lorel"
@@ -149,7 +157,15 @@ const app = function Index() {
                       <Stack.Screen
                         name="User Agreements"
                         component={UserAgreementsScreen}
-                        options={{ headerShown: true, headerBackVisible: true }}
+                        options={{
+                          headerShown: true,
+                          headerBackVisible: true,
+                          headerBackTitleVisible: false,
+                          headerBackTitle: "",
+                          headerBackImage: Platform.OS === 'ios' ? () => (
+                            <Icon name="arrow-back-ios" size={24} color="black" style={{paddingLeft: 15}} /> 
+                          ) : undefined
+                        }}
                       />
                     </Stack.Navigator>
                   </FollowingProvider>

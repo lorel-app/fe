@@ -170,7 +170,7 @@ const AddScreen = () => {
         testID="add_screen"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20 }}
-        nestedScrollEnabled={true}
+        // nestedScrollEnabled={true}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
           <Text style={[styles.title, { textAlign: 'left' }]}>
@@ -184,16 +184,16 @@ const AddScreen = () => {
             />
           </View>
         </View>
-        <View style={{}}>
+        <>
           <ScrollView
-            ref={scrollViewRef}
+           ref={scrollViewRef}
             onContentSizeChange={() =>
               scrollViewRef.current.scrollToEnd({ animated: true })
             }
             horizontal
             nestedScrollEnabled={true}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.containerLeft}
+            contentContainerStyle={[{flexDirection: 'row'}, {flexGrow: 1}]}
           >
             {images.map(image => (
               <View key={image.uri} style={styles.imageGrid}>
@@ -220,7 +220,7 @@ const AddScreen = () => {
           >
             <Text style={styles.link}>clear images</Text>
           </TouchableOpacity>
-        </View>
+        </>
 
         <View
           style={[styles.container, { maxWidth: 500 }, { alignSelf: 'center' }]}
