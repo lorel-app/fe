@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, TouchableOpacity, Text, TextInput } from 'react-native'
+import { View, TouchableOpacity, Text, TextInput,KeyboardAvoidingView, Platform } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -71,7 +71,11 @@ const EditPostScreen = ({ route }) => {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView 
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+    style={{ flex: 1 }}
+    keyboardShouldPersistTaps="handled"
+  >
       {showHeader && (
         <HeaderStack title={`Edit your post`} hideFollowButton={true} />
       )}
@@ -178,7 +182,7 @@ const EditPostScreen = ({ route }) => {
       >
         <Text style={styles.buttonText}>save changes</Text>
       </TouchableOpacity>
-    </>
+    </KeyboardAvoidingView>
   )
 }
 

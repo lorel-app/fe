@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   Image,
+  KeyboardAvoidingView,
   Platform
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -160,7 +161,11 @@ const AddScreen = () => {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView 
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+    style={{ flex: 1 }}
+    keyboardShouldPersistTaps="handled"
+  >
       <ScrollView
         testID="add_screen"
         showsVerticalScrollIndicator={false}
@@ -300,7 +305,7 @@ const AddScreen = () => {
           </TouchableOpacity>
         )}
       </View>
-    </>
+    </KeyboardAvoidingView>
   )
 }
 

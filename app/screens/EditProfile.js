@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, Text, TextInput } from 'react-native'
+import { View, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
@@ -212,7 +212,11 @@ const EditProfileScreen = ({ route }) => {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView 
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+    style={{ flex: 1 }}
+    keyboardShouldPersistTaps="handled"
+  >
       {showHeader && <HeaderStack title={'Edit your profile'} user={user} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -428,7 +432,7 @@ const EditProfileScreen = ({ route }) => {
       >
         <Text style={styles.buttonText}>save changes</Text>
       </TouchableOpacity>
-    </>
+    </KeyboardAvoidingView>
   )
 }
 
