@@ -46,12 +46,15 @@ const AboutScreen = () => {
       <Text style={[styles.textAccent, { paddingVertical: 10 }]}>
         Coming soon...
       </Text>
-      <Text style={[styles.text, { padding: 15 }]}>
-        📹 Upload videos{'\n'}
-        💾 Save content{'\n'}
-        💳 Payment integration{'\n'}
-        🤝 Mediation of buying process
-      </Text>
+      <View style={{padding: 15}}>
+        <Text style={[styles.text, {padding: 4}]}>📹 Upload videos</Text>
+        <Text style={[styles.text, {padding: 4}]}>💾 Save content</Text>
+        <Text style={[styles.text, {padding: 4}]}>💳 Payment integration</Text>
+        <Text style={[styles.text, {padding: 4}]}>🤝 Mediation of buying process</Text>
+        <Text style={[styles.text, { padding: 4 }]}>🖼️ Group your art in collections</Text>
+        <Text style={[styles.text, { padding: 4 }]}>👩‍🎨 Collaborate with other artists</Text>  {/* Artist collaboration */}
+
+      </View>
       <View style={styles.grid}>
         <View style={styles.gridItem}>
           <Text style={styles.title}>👑</Text>

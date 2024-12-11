@@ -5,6 +5,8 @@ import {
   NavigationContainer,
   NavigationIndependentTree
 } from '@react-navigation/native'
+import { Platform } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createStackNavigator } from '@react-navigation/stack'
 import ThemeContext from '@/components/ThemeContext'
 import AppDarkTheme from '@/constants/AppDarkTheme'
@@ -134,7 +136,15 @@ const app = function Index() {
                       <Stack.Screen
                         name="About Lorel"
                         component={AboutScreen}
-                        options={{ headerShown: true, headerBackVisible: true }}
+                        options={{
+                          headerShown: true,
+                          headerBackVisible: true,
+                          headerBackTitleVisible: false,
+                          headerBackTitle: "",
+                          headerBackImage: Platform.OS === 'ios' ? () => (
+                            <Icon name="arrow-back-ios" size={24} color="black" style={{paddingLeft: 15}} /> 
+                          ) : undefined
+                        }}
                       />
                       <Stack.Screen
                         name="User Agreements"
