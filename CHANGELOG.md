@@ -1,3 +1,10 @@
+# [1.3.0-dev.14](https://github.com/lorel-app/fe/compare/v1.3.0-dev.13...v1.3.0-dev.14) (2024-12-11)
+
+
+### Bug Fixes
+
+* 🐛 Keyboard covers input on ios fix ([36bd59b](https://github.com/lorel-app/fe/commit/36bd59b683b322706da4026091bcee4c0b3453ea))
+
 # [1.3.0-dev.13](https://github.com/lorel-app/fe/compare/v1.3.0-dev.12...v1.3.0-dev.13) (2024-12-08)
 
 
