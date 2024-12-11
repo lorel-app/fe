@@ -1,3 +1,10 @@
+# [1.3.0-dev.15](https://github.com/lorel-app/fe/compare/v1.3.0-dev.14...v1.3.0-dev.15) (2024-12-11)
+
+
+### Bug Fixes
+
+* 🐛 Horizontal scroll and back buttons on native ([0efeee2](https://github.com/lorel-app/fe/commit/0efeee227a493d835b94fe95ada7700fae52b1af))
+
 # [1.3.0-dev.14](https://github.com/lorel-app/fe/compare/v1.3.0-dev.13...v1.3.0-dev.14) (2024-12-11)
 
 
