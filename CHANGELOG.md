@@ -1,3 +1,10 @@
+# [1.3.0-dev.18](https://github.com/lorel-app/fe/compare/v1.3.0-dev.17...v1.3.0-dev.18) (2024-12-14)
+
+
+### Bug Fixes
+
+* 🐛 Removed styles.containerLeft from Comment component ([ecd8301](https://github.com/lorel-app/fe/commit/ecd830166a003e08f2a4c88c5ce762191e0368d2))
+
 # [1.3.0-dev.17](https://github.com/lorel-app/fe/compare/v1.3.0-dev.16...v1.3.0-dev.17) (2024-12-14)
 
 
