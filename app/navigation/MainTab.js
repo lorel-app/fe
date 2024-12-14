@@ -80,7 +80,6 @@ function Tabs() {
         tabBarStyle: {
           backgroundColor: colors.card,
           padding: 0,
-          position: 'absolute',
           height: 50,
           borderTopWidth: 0
         },

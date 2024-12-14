@@ -114,11 +114,11 @@ const CommentScreen = ({ route }) => {
   }
 
   return (
-    <KeyboardAvoidingView 
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
-    style={{ flex: 1 }}
-    keyboardShouldPersistTaps="handled"
-  >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
       {showHeader && <HeaderStack title={'comments'} hideFollowButton={true} />}
       <FlatList
         ref={flatListRef}

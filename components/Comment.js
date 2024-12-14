@@ -36,7 +36,7 @@ const Comment = ({ comment, isMyPost = false, onDelete }) => {
   }
 
   return (
-    <View style={[{ maxWidth: 500 }, { flex: 1 }]}>
+    <View style={[{ maxWidth: 500 }, { marginHorizontal: 20 }]}>
       <View style={styles.rowSpan}>
         <TouchableOpacity
           style={styles.row}
