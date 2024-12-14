@@ -1,3 +1,10 @@
+# [1.3.0-dev.17](https://github.com/lorel-app/fe/compare/v1.3.0-dev.16...v1.3.0-dev.17) (2024-12-14)
+
+
+### Bug Fixes
+
+* 🐛 test for build, new scripts ([83e052b](https://github.com/lorel-app/fe/commit/83e052bc4d26b3e34841855c86c60135b9a31fe8))
+
 # [1.3.0-dev.16](https://github.com/lorel-app/fe/compare/v1.3.0-dev.15...v1.3.0-dev.16) (2024-12-11)
 
 
