@@ -1,3 +1,11 @@
+# [1.3.0-dev.19](https://github.com/lorel-app/fe/compare/v1.3.0-dev.18...v1.3.0-dev.19) (2024-12-14)
+
+
+### Bug Fixes
+
+* 🐛 Comment component invisible on native ([8237052](https://github.com/lorel-app/fe/commit/82370521facbab79fe04cb121e71c1b41e319ce1))
+* 🐛 Comment list not showing on native ([39da302](https://github.com/lorel-app/fe/commit/39da302d0c7268092de743049c6d5f9ab9924bdd))
+
 # [1.3.0-dev.18](https://github.com/lorel-app/fe/compare/v1.3.0-dev.17...v1.3.0-dev.18) (2024-12-14)
 
 
