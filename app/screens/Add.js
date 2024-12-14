@@ -161,11 +161,11 @@ const AddScreen = () => {
   }
 
   return (
-    <KeyboardAvoidingView 
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
-    style={{ flex: 1 }}
-    keyboardShouldPersistTaps="handled"
-  >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
       <ScrollView
         testID="add_screen"
         showsVerticalScrollIndicator={false}
@@ -186,14 +186,14 @@ const AddScreen = () => {
         </View>
         <>
           <ScrollView
-           ref={scrollViewRef}
+            ref={scrollViewRef}
             onContentSizeChange={() =>
               scrollViewRef.current.scrollToEnd({ animated: true })
             }
             horizontal
             nestedScrollEnabled={true}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={[{flexDirection: 'row'}, {flexGrow: 1}]}
+            contentContainerStyle={[{ flexDirection: 'row' }, { flexGrow: 1 }]}
           >
             {images.map(image => (
               <View key={image.uri} style={styles.imageGrid}>
@@ -255,7 +255,11 @@ const AddScreen = () => {
           ) : null}
           <TextInput
             testID="caption_input"
-            style={[styles.inputLight, { height: captionHeight }]}
+            style={[
+              styles.inputLight,
+              { height: captionHeight },
+              { minHeight: 50 }
+            ]}
             placeholder="Caption"
             placeholderTextColor={colors.text}
             value={form.caption}
@@ -268,7 +272,11 @@ const AddScreen = () => {
           />
           {selectedOption === 'SHOP' ? (
             <TextInput
-              style={[styles.inputLight, { height: descriptionHeight }]}
+              style={[
+                styles.inputLight,
+                { height: descriptionHeight },
+                { minHeight: 50 }
+              ]}
               placeholder="Description"
               placeholderTextColor={colors.text}
               value={form.description}

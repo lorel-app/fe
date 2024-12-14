@@ -1,5 +1,13 @@
 import React, { useState, useCallback } from 'react'
-import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform } from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native'
 import ButtonIcon from '@/components/ButtonIcon'
 import { useFocusEffect } from '@react-navigation/native'
 import Loader from '@/components/Loader'
@@ -95,11 +103,11 @@ const SearchScreen = () => {
   }
 
   return (
-    <KeyboardAvoidingView 
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
-    style={{ flex: 1 }}
-    keyboardShouldPersistTaps="handled"
-  >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
       <View
         style={[styles.containerSticky, { backgroundColor: colors.background }]}
       >
@@ -114,7 +122,7 @@ const SearchScreen = () => {
               ]}
             >
               <TextInput
-                style={styles.inputLight}
+                style={[styles.inputLight, { minHeight: 50 }]}
                 placeholder="Search users"
                 placeholderTextColor={colors.text}
                 value={searchUser}

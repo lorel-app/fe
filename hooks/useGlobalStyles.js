@@ -378,7 +378,7 @@ export const useGlobalStyles = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      flexGrow: 1,
+      //flex: 1,
       width: '100%',
       padding: 10
     },

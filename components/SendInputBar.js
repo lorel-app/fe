@@ -49,7 +49,7 @@ const SendInputBar = ({ onSend, placeholder, isSending }) => {
       style={[
         styles.sendBarInput,
         {
-          paddingBottom: Platform.OS === 'ios' && keyboardVisible ? 20 : 0
+          marginBottom: Platform.OS === 'ios' && keyboardVisible ? 40 : 0
         }
       ]}
     >

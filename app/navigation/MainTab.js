@@ -62,6 +62,7 @@ function Tabs() {
     <Tab.Navigator
       detachInactiveScreens={true}
       screenOptions={({ route }) => ({
+        safeAreaInsets: { bottom: 0 },
         tabBarIcon: ({ color }) => {
           return (
             <MaterialIcons
@@ -78,7 +79,10 @@ function Tabs() {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: colors.card,
-          padding: 0
+          padding: 0,
+          position: 'absolute',
+          height: 50,
+          borderTopWidth: 0
         },
         headerShown: false
         // deprecated with expo sdk 52 - use useFocusEffect for now
