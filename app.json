@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/lorel-splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "conver",
       "backgroundColor": "#EEEBE6"
     },
     "ios": {
@@ -18,16 +18,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/lorel-splash.png",
+        "foregroundImage": "./assets/images/lorel-icon.png",
         "backgroundColor": "#EEEBE6"
       },
       "package": "com.lorel",
       "compileSdkVersion": 34,
       "targetSdkVersion": 34,
       "buildToolsVersion": "34.0.0",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "usesCleartextTraffic": true
     },
     "web": {

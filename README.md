@@ -28,11 +28,12 @@ _Built with [EAS](https://docs.expo.dev/build/setup/)_
 #### ios
 
 1. 🚧 [Download prod apk](https://dev.lorel.app)
-2. 🚧 <br/>
+2. 🚧
+   <br/>
 
 ## Run locally
 
-1.  Install dependencies
+1. Install dependencies
 
 ```bash
 npm ci
@@ -73,6 +74,8 @@ _Lorel beta is designed for mobile screen sizes_
 
 #### **Expo Go**
 
+_a sandbox that enables you to quickly experiment with building native and web apps_
+
 4.1 Install [Expo Go](https://expo.dev/go)
 4.2 Start server
 
@@ -82,6 +85,8 @@ npx expo start
 
 4.3 Press 's', then scan the QR code in the terminal
 _in the Expo Go app on Android or with the camera on ios_
+
+**See [ all available options](https://docs.expo.dev/get-started/set-up-your-environment/)**
 <br/>
 
 ## Run e2e Tests Manually
