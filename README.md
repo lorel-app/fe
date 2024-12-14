@@ -52,14 +52,15 @@ _Built with [EAS](https://docs.expo.dev/build/setup/)_
 
 #### Android
 
-1. [Download this apk](https://dev.lorel.app)
-2. 🚧
+1. Download and open [Lorel.apk](https://storage.googleapis.com/lorel-assets/lorel.apk)
 
 #### ios
 
 1. Download TestFlight on the App Store
-2. [Use this link to access it](https://testflight.apple.com/join/cTU1hbTf)
-   <br/>
+2. Use [this link](https://testflight.apple.com/join/cTU1hbTf) to access it
+
+_Please contact us if you run into a problem_
+<br/>
 
 ## 🏠 Run locally
 
