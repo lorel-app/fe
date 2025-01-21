@@ -6,7 +6,7 @@ import React, {
   useRef
 } from 'react'
 import { useTheme, useFocusEffect } from '@react-navigation/native'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, Text, View, KeyboardAvoidingView, Platform } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import api from '@/utils/api'
@@ -18,6 +18,7 @@ import ChatBubble from '@/components/ChatBubble'
 import { useWebSocket } from '@/utils/websocket'
 import ReportModal from '@/components/Report'
 import ButtonIcon from '@/components/ButtonIcon'
+import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 const MessageScreen = ({ route }) => {
@@ -159,7 +160,11 @@ const MessageScreen = ({ route }) => {
   )
 
   return (
-    <>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
       {showHeader && (
         <>
           <HeaderStack
@@ -179,7 +184,7 @@ const MessageScreen = ({ route }) => {
       )}
       {!loading && messages.length === 0 && (
         <View style={[styles.containerFull]}>
-          <Text style={styles.buttonSmall}>
+          <Text style={[styles.buttonSmall, styles.text]}>
             Chats are not end-to-end encrypted yet.{'\n'} Do not share any
             sensitive information.
           </Text>
@@ -217,7 +222,7 @@ const MessageScreen = ({ route }) => {
         id={conversationId}
         type="CONVERSATION"
       />
-    </>
+    </KeyboardAvoidingView>
   )
 }
 

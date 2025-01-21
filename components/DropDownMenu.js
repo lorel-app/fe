@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTheme } from '@react-navigation/native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
+import { useFocusEffect } from '@react-navigation/native'
 
 const DropDownMenu = ({
   options,
@@ -15,6 +16,12 @@ const DropDownMenu = ({
 
   const [isOpen, setIsOpen] = useState(false)
 
+  useFocusEffect(
+    useCallback(() => {
+      setIsOpen(false)
+    }, [])
+  )
+
   const handleSelect = value => {
     onSelect(value)
     setIsOpen(false)
@@ -24,7 +31,11 @@ const DropDownMenu = ({
     <View>
       {!hasIconButton ? (
         <TouchableOpacity
-          style={[styles.button, styles.rowSpan]}
+          style={[
+            styles.button,
+            styles.row,
+            { justifyContent: 'space-between' }
+          ]}
           onPress={() => setIsOpen(!isOpen)}
         >
           <Text style={[styles.buttonText, { marginLeft: 5 }]}>

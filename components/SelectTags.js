@@ -53,9 +53,10 @@ const SelectTags = ({ onTagsChange }) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        maxHeight: 230
+        flexWrap: 'wrap'
       }}
+      style={{ maxHeight: 230 }}
+      nestedScrollEnabled={true}
     >
       {tagArray.map(tag => (
         <TouchableOpacity

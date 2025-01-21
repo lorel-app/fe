@@ -355,6 +355,7 @@ const UserAgreementsScreen = ({ route }) => {
   const [selectedTab, setSelectedTab] = useState(initialSelectedTab)
   const scrollViewRef = useRef(null)
   const [sectionPositions, setSectionPositions] = useState({})
+  const [isPositionsReady, setIsPositionsReady] = useState(false)
 
   const privacySections = [
     { title: '1. Introduction', ref: useRef(null) },
@@ -368,6 +369,7 @@ const UserAgreementsScreen = ({ route }) => {
     { title: '9. Changes to this Policy', ref: useRef(null) },
     { title: '10. Contact Us', ref: useRef(null) }
   ]
+
   const termsSections = [
     { title: '1. Introduction', ref: useRef(null) },
     { title: '2. Acceptance of Terms', ref: useRef(null) },
@@ -383,18 +385,14 @@ const UserAgreementsScreen = ({ route }) => {
 
   const measureSectionPositions = sections => {
     const positions = {}
-
     sections.forEach((section, index) => {
-      section.ref.current.measureLayout(
-        scrollViewRef.current,
-        (x, y) => {
-          positions[index] = y
-          if (Object.keys(positions).length === sections.length) {
-            setSectionPositions(positions)
-          }
-        },
-        error => console.error('Error measuring layout:', error)
-      )
+      section.ref.current.measure((x, y, width, height) => {
+        positions[index] = y
+        if (Object.keys(positions).length === sections.length) {
+          setSectionPositions(positions)
+          setIsPositionsReady(true)
+        }
+      })
     })
   }
 
@@ -404,15 +402,25 @@ const UserAgreementsScreen = ({ route }) => {
   }, [selectedTab])
 
   const handleScrollToSection = index => {
+    if (!isPositionsReady) {
+      return
+    }
+
     const yPosition = sectionPositions[index]
     if (yPosition !== undefined) {
-      scrollViewRef.current.scrollTo({ y: yPosition, animated: true })
+      scrollViewRef.current.scrollTo({ y: yPosition, animated: true }, 100)
     }
+  }
+
+  const handleScrollViewLayout = event => {
+    const { height } = event.nativeEvent.layout
+    scrollViewRef.current.scrollTo({ y: 0 }, 100)
   }
 
   const handleTabChange = tab => {
     setSelectedTab(tab)
-    scrollViewRef.current.scrollTo({ y: 0, animated: false })
+    setIsPositionsReady(false)
+    scrollViewRef.current.scrollTo({ y: 0, animated: false }, 100)
   }
 
   const renderContent = () => {
@@ -460,7 +468,9 @@ const UserAgreementsScreen = ({ route }) => {
 
       <ScrollView
         ref={scrollViewRef}
-        contentContainerStyle={[styles.containerLeft, { padding: 20 }]}
+        onLayout={handleScrollViewLayout}
+        contentContainerStyle={[{ padding: 20 }]}
+        style={{ flex: 1 }}
       >
         {renderContent()}
       </ScrollView>

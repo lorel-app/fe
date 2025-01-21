@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useTheme, useFocusEffect } from '@react-navigation/native'
-import { FlatList, Text } from 'react-native'
+import { FlatList, Text, KeyboardAvoidingView, Platform } from 'react-native'
 import { useGlobalStyles } from '@/hooks/useGlobalStyles'
 import { useAlertModal } from '@/hooks/useAlertModal'
 import { useNavigation } from '@react-navigation/native'
@@ -114,7 +114,11 @@ const CommentScreen = ({ route }) => {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
       {showHeader && <HeaderStack title={'comments'} hideFollowButton={true} />}
       <FlatList
         ref={flatListRef}
@@ -154,7 +158,7 @@ const CommentScreen = ({ route }) => {
         placeholderTextColor={colors.text}
         isSending={isSending}
       />
-    </>
+    </KeyboardAvoidingView>
   )
 }
 

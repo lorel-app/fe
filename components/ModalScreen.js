@@ -1,9 +1,9 @@
 import React from 'react'
 import {
-  Text,
   Modal,
   View,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Platform
 } from 'react-native'
 import ButtonIcon from '@/components/ButtonIcon'
@@ -25,6 +25,11 @@ export default function ModalScreen({ visible, onClose, children }) {
       visible={visible}
       onRequestClose={onClose}
     >
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+        style={{ flex: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
       <TouchableWithoutFeedback onPress={() => {}}>
         <View style={styles.overlay}>
           <View style={styles.modalView}>
@@ -38,6 +43,7 @@ export default function ModalScreen({ visible, onClose, children }) {
           </View>
         </View>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </Modal>
   )
 }

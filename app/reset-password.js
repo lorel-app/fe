@@ -59,7 +59,7 @@ const ResetPasswordScreen = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,64}$/
     if (!passwordRegex.test(password)) {
       window.alert(
-        'Passwords must be at least 8 characters long and contain at least 1 uppercase letter, lowercase letter, and number'
+        'Passwords must be at least 8 characters long and contain at least 1 uppercase letter, lowercase letter, a symbol, and number'
       )
       return
     }

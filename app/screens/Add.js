@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   Image,
+  KeyboardAvoidingView,
   Platform
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -37,7 +38,7 @@ const AddScreen = () => {
     { label: 'Item for Sale', value: 'SHOP', icon: 'local-mall' }
   ]
 
-  const { images, pickImages } = useMediaPicker()
+  const { images, pickImages, clearImages } = useMediaPicker()
   const [loading, setLoading] = useState(false)
 
   const [form, setForm] = useState({
@@ -62,6 +63,14 @@ const AddScreen = () => {
       }
     }, [images])
   )
+
+  const handleClearImages = () => {
+    setForm(prevForm => ({
+      ...prevForm,
+      media: []
+    }))
+    clearImages()
+  }
 
   const handleOptionSelect = value => {
     setSelectedOption(value)
@@ -97,16 +106,16 @@ const AddScreen = () => {
 
   const handlePost = async () => {
     const { type, media, title, price, caption, description, tags } = form
-    if (media.length === 0) {
-      showAlert('error', 'At least one image is mandatory for all posts')
-      return
-    }
     const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/
     if (price && !pricePattern.test(price)) {
       showAlert(
         'error',
         'Incorrect price format: Please use up to 2 decimal places and only one full stop'
       )
+      return
+    }
+    if (media.length === 0) {
+      showAlert('error', 'At least one image is mandatory for all posts')
       return
     }
     setLoading(true)
@@ -120,22 +129,29 @@ const AddScreen = () => {
         tags,
         description
       })
-      if (response.status === 413) {
-        showAlert(
-          'error',
-          'Upload failed. Please ensure the total size of your photos does not exceed 20MB'
-        )
-        return
-      }
-      if (response.status === 400) {
-        showAlert(
-          'error',
-          'Invalid file type (videos will be supported in a feature release)'
-        )
-        return
-      }
-      if (response.success) {
-        navigation.navigate('Profile')
+
+      switch (response.status) {
+        case 400:
+          showAlert(
+            'error',
+            'Invalid file type (videos will be supported in a future release)'
+          )
+          break
+        case 413:
+          showAlert(
+            'error',
+            'Upload failed. Please ensure the total size of your photos does not exceed 20MB'
+          )
+          break
+        case 201:
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Profile' }]
+          })
+          break
+        default:
+          showAlert('error', 'Something went wrong, please try again later')
+          break
       }
     } catch (error) {
       showAlert('error', 'Something went wrong, please try again later')
@@ -145,16 +161,22 @@ const AddScreen = () => {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
       <ScrollView
+        testID="add_screen"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20 }}
+        // nestedScrollEnabled={true}
       >
         <View style={[styles.rowSpan, { zIndex: 1 }]}>
           <Text style={[styles.title, { textAlign: 'left' }]}>
-            What are you posting?
+            What are you{'\n'}posting today?
           </Text>
-          <View style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: 10 }} testID="post_dropdown">
             <DropDownMenu
               options={options}
               selectedValue={selectedOption}
@@ -162,15 +184,16 @@ const AddScreen = () => {
             />
           </View>
         </View>
-        <View style={{}}>
+        <>
           <ScrollView
             ref={scrollViewRef}
             onContentSizeChange={() =>
               scrollViewRef.current.scrollToEnd({ animated: true })
             }
             horizontal
+            nestedScrollEnabled={true}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={[styles.containerLeft, { padding: 0 }]}
+            contentContainerStyle={[{ flexDirection: 'row' }, { flexGrow: 1 }]}
           >
             {images.map(image => (
               <View key={image.uri} style={styles.imageGrid}>
@@ -191,7 +214,13 @@ const AddScreen = () => {
             </View>
             <Spacer />
           </ScrollView>
-        </View>
+          <TouchableOpacity
+            onPress={handleClearImages}
+            style={{ paddingBottom: 20 }}
+          >
+            <Text style={styles.link}>clear images</Text>
+          </TouchableOpacity>
+        </>
 
         <View
           style={[styles.container, { maxWidth: 500 }, { alignSelf: 'center' }]}
@@ -210,9 +239,10 @@ const AddScreen = () => {
           {selectedOption === 'SHOP' ? (
             <View style={[styles.rowSpan, { padding: 0 }]}>
               <Text style={[styles.textAccent, { marginRight: 10 }]}>
-                {me.preferences.currency}
+                {me?.preferences?.currency || 'EUR'}
               </Text>
               <TextInput
+                testID="price_input"
                 style={styles.inputLight}
                 placeholder="00.00"
                 placeholderTextColor={colors.text}
@@ -224,7 +254,12 @@ const AddScreen = () => {
             </View>
           ) : null}
           <TextInput
-            style={[styles.inputLight, { height: captionHeight }]}
+            testID="caption_input"
+            style={[
+              styles.inputLight,
+              { height: captionHeight },
+              { minHeight: 50 }
+            ]}
             placeholder="Caption"
             placeholderTextColor={colors.text}
             value={form.caption}
@@ -237,7 +272,11 @@ const AddScreen = () => {
           />
           {selectedOption === 'SHOP' ? (
             <TextInput
-              style={[styles.inputLight, { height: descriptionHeight }]}
+              style={[
+                styles.inputLight,
+                { height: descriptionHeight },
+                { minHeight: 50 }
+              ]}
               placeholder="Description"
               placeholderTextColor={colors.text}
               value={form.description}
@@ -263,14 +302,18 @@ const AddScreen = () => {
         {loading ? (
           <Loader />
         ) : (
-          <TouchableOpacity style={styles.buttonAbsolute} onPress={handlePost}>
+          <TouchableOpacity
+            testID="add_button"
+            style={styles.buttonAbsolute}
+            onPress={handlePost}
+          >
             <Text style={styles.buttonText}>
               {selectedOption === 'SHOP' ? 'Add to Shop' : 'Add'}
             </Text>
           </TouchableOpacity>
         )}
       </View>
-    </>
+    </KeyboardAvoidingView>
   )
 }
 

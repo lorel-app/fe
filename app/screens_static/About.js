@@ -7,11 +7,9 @@ import { useAlertModal } from '@/hooks/useAlertModal'
 import { ScrollView } from 'react-native-gesture-handler'
 import ReportModal from '@/components/Report'
 import Spacer from '@/components/Spacer'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const AboutScreen = () => {
   const styles = useGlobalStyles()
-  const { colors } = useTheme()
   const { isAuthenticated } = useContext(AuthContext)
   const showAlert = useAlertModal()
   const [isReportModalVisible, setIsReportModalVisible] = useState(false)
@@ -31,24 +29,37 @@ const AboutScreen = () => {
       contentContainerStyle={[styles.container, { padding: 10 }]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.textAccent}>ABOUT LOREL 👑</Text>
-      <Text style={styles.textAccent}>UNDER CONSTRUCTION</Text>
-      <Text>
-        Lorel was born out of a few key observations in the world of art and
-        creativity: Lorel aims to fill that gap. Think of us as a mix of Behance
-        and Vinted—a place where artists can showcase and sell their work, and
-        where art lovers can discover and connect with talent. Currently in its
-        beta phase, Lorel is the brainchild of two software engineering students
-        based in Berlin, developing the platform as part of our capstone
-        project. Our mission is to create a space where art can thrive, both
-        online and offline, with a focus on accessibility, community, and
+      <Text style={[styles.textAccent, { paddingVertical: 10 }]}>
+        ABOUT LOREL
+      </Text>
+      <Text style={[styles.text, { padding: 15 }, { maxWidth: 600 }]}>
+        Lorel's mission is to be a place where artists can showcase and sell
+        their work, and where art lovers can discover and connect. Currently in
+        its beta phase, Lorel is the brainchild of two software engineering
+        students based in Berlin, developing the platform as part of our
+        capstone project. Our mission is to create a space where art can thrive,
+        both online and offline, with a focus on accessibility, community, and
         inspiration for all.
       </Text>
+
+      <View style={styles.divider}></View>
+      <Text style={[styles.textAccent, { paddingVertical: 10 }]}>
+        Coming soon...
+      </Text>
+      <View style={{padding: 15}}>
+        <Text style={[styles.text, {padding: 4}]}>📹 Upload videos</Text>
+        <Text style={[styles.text, {padding: 4}]}>💾 Save content</Text>
+        <Text style={[styles.text, {padding: 4}]}>💳 Payment integration</Text>
+        <Text style={[styles.text, {padding: 4}]}>🤝 Mediation of buying process</Text>
+        <Text style={[styles.text, { padding: 4 }]}>🖼️ Group your art in collections</Text>
+        <Text style={[styles.text, { padding: 4 }]}>👩‍🎨 Collaborate with other artists</Text>  {/* Artist collaboration */}
+
+      </View>
       <View style={styles.grid}>
         <View style={styles.gridItem}>
-          {/* <Icon name="art" /> */}
           <Text style={styles.title}>👑</Text>
           <Text style={styles.title}>Made for Artists</Text>
+          <Spacer />
           <Text style={styles.text}>
             Artists and creators who wish to build a name for themselves, often
             have limited choices. Mostly, they can either build their own
@@ -64,6 +75,7 @@ const AboutScreen = () => {
         <View style={styles.gridItem}>
           <Text style={styles.title}>🎨</Text>
           <Text style={styles.title}>Embrace the Traditional</Text>
+          <Spacer />
           <Text style={styles.text}>
             While some online platforms for artists and creators have gained
             traction in the art industry, they tend to focus on
@@ -78,10 +90,11 @@ const AboutScreen = () => {
         <View style={styles.gridItem}>
           <Text style={styles.title}>✨</Text>
           <Text style={styles.title}>Inspire & Sell</Text>
+          <Spacer />
           <Text style={styles.text}>
             For buyers and gallerists searching for art, the current options are
             limited to Google, word-of-mouth, or the most popular social media
-            platforms. While Behance has become a staple in the design world,
+            platforms. Like Behance has become a staple in the design world,
             there's no similar platform that caters specifically to the broader
             art community.
           </Text>

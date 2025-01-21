@@ -71,7 +71,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
     if (!passwordRegex.test(password)) {
       showAlert(
         'error',
-        'Passwords must be at least 8 characters long and contain at least 1 uppercase letter, lowercase letter, and number'
+        'Passwords must be at least 8 characters long and contain at least 1 uppercase letter, lowercase letter, a symbol, and number'
       )
       return
     }
@@ -107,7 +107,6 @@ export default function SignUpLogInModal({ visible, onClose }) {
       })
       response.success
         ? (onClose(),
-          showAlert('success', 'Logged in'),
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }]
@@ -164,11 +163,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
 
   return (
     <>
-      <ModalScreen
-        visible={visible}
-        onClose={onClose}
-        style={{ maxLength: 400 }}
-      >
+      <ModalScreen visible={visible} onClose={onClose}>
         <View style={styles.modalChildren}>
           <Text style={styles.title}>
             {isSignUp ? 'Sign Up (Step 1/3)' : 'Log In'}
@@ -176,7 +171,9 @@ export default function SignUpLogInModal({ visible, onClose }) {
           <Spacer />
 
           <ScrollView
-            contentContainerStyle={{ maxHeight: 220 }}
+            //contentContainerStyle={{ maxHeight: 220 }}
+            style={[{ maxHeight: 220 }, { flexGrow: 0 }]}
+            nestedScrollEnabled={true}
             showsVerticalScrollIndicator={false}
           >
             {isSignUp ? (
@@ -212,7 +209,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
               />
             ) : null}
 
-            <View style={styles.row}>
+            <View style={[styles.row, { minWidth: 250 }]}>
               <TextInput
                 style={styles.input}
                 placeholder="Password"
@@ -231,7 +228,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             </View>
 
             {isSignUp ? (
-              <View style={styles.row}>
+              <View style={[styles.row, { minWidth: 250 }]}>
                 <TextInput
                   style={styles.input}
                   placeholder="Confirm Password"
@@ -280,9 +277,7 @@ export default function SignUpLogInModal({ visible, onClose }) {
             ) : null}
           </ScrollView>
 
-          <View
-            style={[styles.divider, { width: '100%' }, { marginBottom: 20 }]}
-          ></View>
+          <View style={styles.divider}></View>
           <TouchableOpacity
             testID={'authenticate_button'}
             style={styles.button}

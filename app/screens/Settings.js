@@ -235,7 +235,7 @@ const ChangePasswordModal = ({ visible, onClose }) => {
       onClose()
       showAlert(
         'error',
-        'Failed because passwords must be at least 8 characters long and contain at least 1 uppercase letter, lowercase letter, and number'
+        'Passwords must be at least 8 characters long and contain at least 1 uppercase letter, lowercase letter, a symbol, and number'
       )
       return
     }

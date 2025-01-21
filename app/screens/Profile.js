@@ -91,6 +91,7 @@ const ProfileScreen = () => {
   return (
     <>
       <UserScreen
+        testID="profile_screen"
         route={{ params: { user, showHeader: false } }}
         navigation={navigation}
       />
@@ -121,13 +122,32 @@ const UsernameModal = ({ visible, onClose }) => {
       showAlert('error', 'Field is empty')
       return
     }
+    const usernameRegex = /^[a-zA-Z0-9._]{3,30}$/
+    if (!usernameRegex.test(newUsername)) {
+      showAlert(
+        'error',
+        'Usernames must be at least 3 characters long and can only contain letters, numbers, periods, and underscores'
+      )
+      return
+    }
     const response = await api.editProfile({
       username: newUsername.toLowerCase()
     })
     onClose()
-    response.success
-      ? showAlert('success', 'Username changed successfully')
-      : showAlert('error', response.data.message)
+    switch (response.status) {
+      case 400:
+        showAlert('error', 'Usernames can only be updated once every 24 hours')
+        break
+      case 409:
+        showAlert('error', 'Username already taken')
+        break
+      case 200:
+        showAlert('success', 'Username changed successfully')
+        break
+      default:
+        showAlert('error', 'Something went wrong, please try again later')
+        break
+    }
   }
 
   return (

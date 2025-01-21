@@ -1,24 +1,25 @@
 {
   "expo": {
-    "name": "fe",
-    "slug": "fe",
+    "name": "Lorel",
+    "slug": "lorel",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/LogoTemp.png",
+    "icon": "./assets/images/lorel-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/LogoTemp.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/lorel-splash.png",
+      "resizeMode": "conver",
+      "backgroundColor": "#EEEBE6"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lorel"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/LogoTemp.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/lorel-icon.png",
+        "backgroundColor": "#EEEBE6"
       },
       "package": "com.lorel",
       "compileSdkVersion": 34,
@@ -30,14 +31,29 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/LogoTemp.png"
+      "favicon": "./assets/images/lorel-icon.png"
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "asyncRoutes": {
+            "web": false
+          }
+        }
+      ],
       [
         "expo-image-picker",
         {
           "photosPermission": "Lorel accesses your library to allow you to upload images and videos."
+        }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "lorel",
+          "project": "fe",
+          "url": "https://sentry.io/"
         }
       ]
     ],
@@ -46,7 +62,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "c9f59e46-4dc9-4c50-b7dd-b731e4f0fa88"
+        "projectId": "26f4c35b-40ad-48d2-9187-2417994f8c8b"
       }
     }
   }

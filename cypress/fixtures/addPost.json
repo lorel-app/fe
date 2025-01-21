@@ -1,0 +1,25 @@
+{
+  "validPost": {
+    "title": "Title",
+    "caption": "Exciting new content",
+    "description": "Description",
+    "price": "19.99",
+    "media": ["image1.png"]
+  },
+  "postWithNoMedia": {
+    "title": "",
+    "caption": "Exciting new content",
+    "description": "",
+    "price": "19.99",
+    "tags": [],
+    "media": []
+  },
+  "postWithBadPrice": {
+    "title": "Title",
+    "caption": "Exciting new content",
+    "description": "",
+    "price": "1..0",
+    "tags": ["tag1", "tag2"],
+    "media": ["image1.png"]
+  }
+}
