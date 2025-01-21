@@ -1,3 +1,38 @@
+# [1.3.0](https://github.com/lorel-app/fe/compare/v1.2.0...v1.3.0) (2025-01-21)
+
+
+### Bug Fixes
+
+* 🐛 Comment component invisible on native ([8237052](https://github.com/lorel-app/fe/commit/82370521facbab79fe04cb121e71c1b41e319ce1))
+* 🐛 Comment list not showing on native ([39da302](https://github.com/lorel-app/fe/commit/39da302d0c7268092de743049c6d5f9ab9924bdd))
+* 🐛 fix scroll on user agreements screen ([a2488ca](https://github.com/lorel-app/fe/commit/a2488ca727dd386c222e0fa01407ac414a9352f6))
+* 🐛 Horizontal scroll and back buttons on native ([0efeee2](https://github.com/lorel-app/fe/commit/0efeee227a493d835b94fe95ada7700fae52b1af))
+* 🐛 id not found when unauthenticated ([42c2590](https://github.com/lorel-app/fe/commit/42c2590f558491c09e85636877bad4b8f13ea91b))
+* 🐛 id not found when unauthenticated ([f3fda11](https://github.com/lorel-app/fe/commit/f3fda11365b4fc93439981d28f3c8560a6d31dc3))
+* 🐛 Keyboard covers input on ios fix ([36bd59b](https://github.com/lorel-app/fe/commit/36bd59b683b322706da4026091bcee4c0b3453ea))
+* 🐛 maybe fix cloudbuild ([ebd62d7](https://github.com/lorel-app/fe/commit/ebd62d77431a889592c740b296d0074433c9c008))
+* 🐛 maybe fix cloudbuild ([826f262](https://github.com/lorel-app/fe/commit/826f262ef4d5fda8533df180e390b8c2db9c78bd))
+* 🐛 maybe fix sourcemap artifacts filenames ([1a77aaf](https://github.com/lorel-app/fe/commit/1a77aaf6cedbafefb1de5a48b5af7504d16ad3c0))
+* 🐛 maybe fix sourcemap artifacts filenames ([30e7af8](https://github.com/lorel-app/fe/commit/30e7af85c2ee008297731c4541c4fafbc42c732c))
+* 🐛 native bug clean, scrolls and modals ([85c40e3](https://github.com/lorel-app/fe/commit/85c40e38b4415ef7a1f9048208332544264c8bae))
+* 🐛 nested navigator problem for welcome screen ([8d03774](https://github.com/lorel-app/fe/commit/8d0377499338e66f59b5e5d31c032d1f9f3828c3))
+* 🐛 Post component flex break, backbutton visibility native ([310f7aa](https://github.com/lorel-app/fe/commit/310f7aa913dc5b7435c5138dc257cc57d96e7c8e))
+* 🐛 remove test error ([2f76b87](https://github.com/lorel-app/fe/commit/2f76b87f98fd73887c2bd053c9a27069e5edfa46))
+* 🐛 Removed flex-grow broken on native (+ updated logos) ([e0861b1](https://github.com/lorel-app/fe/commit/e0861b102580438368bd68093cafffdfd6b69917))
+* 🐛 Removed styles.containerLeft from Comment component ([ecd8301](https://github.com/lorel-app/fe/commit/ecd830166a003e08f2a4c88c5ce762191e0368d2))
+* 🐛 test for build, new scripts ([83e052b](https://github.com/lorel-app/fe/commit/83e052bc4d26b3e34841855c86c60135b9a31fe8))
+* 🐛 update test ([c3e9145](https://github.com/lorel-app/fe/commit/c3e91456f164f1ef4736ae7c621ee71e99c10ad2))
+* 🐛 uuid error when sending message ([785880d](https://github.com/lorel-app/fe/commit/785880d7d297ac203d42cc79f3144101ad160873))
+* 🐛 workarounds for deprecated unmountOnBlur ([00cfcaf](https://github.com/lorel-app/fe/commit/00cfcafb0226cad78de1047098aeb55b49870053))
+
+
+### Features
+
+* 🫡 Add post test ([7464276](https://github.com/lorel-app/fe/commit/7464276ccc9aacdc314a888a7b73bc4cc30137ad))
+* 🫡 add sentry ([6ae441c](https://github.com/lorel-app/fe/commit/6ae441ccd0723f7dbc5715341631986a35e034ee))
+* 🫡 setup ios builds ([39b0ff0](https://github.com/lorel-app/fe/commit/39b0ff0503738af98bca93ca394acbc733420027))
+* 🫡 update addPost test ([1d3fe0d](https://github.com/lorel-app/fe/commit/1d3fe0d97c74f993204b2b69ec38ba11731c6457))
+
 # [1.3.0-dev.19](https://github.com/lorel-app/fe/compare/v1.3.0-dev.18...v1.3.0-dev.19) (2024-12-14)
 
 
